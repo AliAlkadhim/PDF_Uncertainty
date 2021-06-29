@@ -157,7 +157,6 @@ with open(filename, 'r') as f:
 arr = np.genfromtxt(lines)
 
 
-
 import numpy as np
 #make a list of dtypes for each of the columns that we want
 
@@ -193,21 +192,6 @@ cov_mat_sig = np.array(covariance_matrix(means))
 cov_mat_sig
 
 
-mean = [0, 0]
-cov = [[1, 0], [0, 100]]  # di
-import matplotlib.pyplot as plt
-x, y = np.random.multivariate_normal(mean, cov, 5000).T
-plt.plot(x, y, 'x')
-plt.axis('equal')
-plt.show()
-
-
-#for line in lines[9:n]:
-line0 = lines[9]
-import re
-re.split('      ', line0).lstrip()
-
-
 filename = 'minuit.out.txt'
 infile = open(filename, 'r')
 lines = infile.readlines()
@@ -218,15 +202,3 @@ with open('minuit.in.txt', 'w') as second:
             second.write(i)
 infile.close()
 second.close()
-
-
-h = 6.626*10**(-34)
-E_d = 5*70
-c=3*10**8
-l=1*10**(-9)
-E_photon = h*c /l 
-n = E_d/E_photon
-n
-
-
-
