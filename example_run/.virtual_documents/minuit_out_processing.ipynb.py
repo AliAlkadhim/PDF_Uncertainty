@@ -51,7 +51,7 @@ infile.close()
 
 
 import os
-import re; import pandas as pd
+import re; import pandas as pd; import numpy as np
 params=[]
 generated_params = []
 error_list=[]
@@ -64,6 +64,8 @@ from itertools import *
 #make a chain iterator of our wanted lines from the output file, we want to exclude
 #those lines that have "constant" for the error, since these are not the PDF parameters and we can't use them
 chain = chain(islice(lines, 106, 111), islice(lines, 111, 121))
+chain_cov_mat = islice(lines, 127, 143)
+
 #for line in lines[106:121]:
 for line in chain:
     #print(line)
@@ -83,42 +85,109 @@ for line in chain:
          params.append(float(value))
     for error in errors.split():
         if error =='constant':
+            #'constant' just means the parameter does not have error!
             error_list.append(0.0)
         else:
             error_list.append(float(error))
     
-#         sampled_param = np.random.uniform(low = j-error, high=j+error)
-# means=np.array(means).astype(float)
-        
-#print(means)
-    #print(values)
-    #print(words[2].split())
-    #values= words[2].split()[0]
-    #print(values)4
-    #for ind, word in enumerate(split_line):
-    #print(split_line)
-        #print(word)
-#     with open('minuit.oin.txt', 'r') as second:
-#         split_line
-#         second.write()
-    
-    
+
 infile.close()
 params = np.asarray(params); error_list =np.asarray(error_list)
 
-#############GENERATE PARAMETERS
-generated_params=[]
+
+
+#############GENERATE UNIFORM PARAMETERS
+generated_uniform_params=[]
 for i in range(len(params)):
     param, error = params[i], error_list[i]
     generated_param = np.random.uniform(low = param-error, high=param+error)
-    generated_params.append(generated_param)
-
-
+    generated_uniform_params.append(generated_param)
 
     
     
     
-print( params, generated_params, '\n\n', len(params), len(generated_params))
+print( params, generated_uniform_params, '\n\n', len(params), len(generated_uniform_params))
+
+
+import matplotlib.pyplot as plt
+x_pos = np.arange(len(params))
+widths = 0.45
+plt.bar(x_pos, params, widths, label='parameters')
+plt.bar(x_pos + widths, generated_uniform_params, widths, label='generated uniform parameters')
+plt.xlabel('Parameter'); plt.ylabel('Parameter value')
+plt.legend()
+
+
+
+for line in lines[127:143]:
+    rows = line.strip().split('\n')
+    triang_rows = rows[0]
+#     for row in triang_rows.split('\n'):
+
+#     for row in triang_rows.strip().split('\s'):
+    for row in triang_rows.strip().split('\s'):
+
+        print(row, '\n')
+
+
+# for line in chain_cov_mat:
+#     row = line.strip().split()
+#     for i in range(14):
+#         for row_val in row[i].split():
+            
+#             for j in range(14):
+#                 for col_val in row[i][j].split():
+#                     COV[row_val][col] = float(row[i][j])
+cov_list=[]
+COV = np.empty((14,14))
+
+# delimeters = "-", " "
+# regexPattern = '|'.join(map(re.escape, delimiters))
+pattern = re.compile(r'[\s\S.\d\D\w\W]\d\.\d\d\d[E]-\d\d')
+#matches = pattern.finditer(text_to_search)
+# for match in matches:
+#     print(match)
+for line in lines[127:143]:
+    rows = line.strip().split('\n')
+    triang_rows = rows[0]
+#     for row in triang_rows.split('\n'):
+
+#     for row in triang_rows.strip().split('\s'):
+    for row in triang_rows.strip().split('\s'):
+
+        matches = pattern.finditer(row)
+        inner_list=[]
+        for match in matches:
+            inner_list.append(float(row[match.span()[0]:match.span()[1]]))
+            #cov_list.append(float(row[match.span()[0]:match.span()[1]]))
+        cov_list.append(inner_list)
+            
+#         split_row = re.split(regexPattern, row)
+#         for val in split_row:
+#             cov_list.append(float(val))
+        
+        #for val in row:
+            
+#     for value in value_0:
+        
+#         cov_list.append(float(value))
+cov_list
+
+
+cov_list[0] = [0.632e-03]
+cov_list[1] = [0.872E-03, 0.117E-01]
+cov_list[:4]
+
+
+cov_list =[el for el in cov_list if el get_ipython().getoutput("=[]]")
+
+
+len(cov_list)
+
+
+length = max(map(len, cov_list))
+cov = np.array([xi+[None]*(length-len(xi)) for xi in cov_list])
+cov.shape
 
 
 ############WRITE GENERATED PARAMETERS INTO NEW MINUIT.IN FILE
