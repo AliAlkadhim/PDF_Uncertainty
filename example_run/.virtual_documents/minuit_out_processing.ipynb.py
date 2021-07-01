@@ -81,8 +81,9 @@ for line in chain:
     errors=words[3]
     #print(errors)
     for value in values.split():
-#         #print(i)
-         params.append(float(value))
+        params.append(float(value))
+        
+    
     for error in errors.split():
         if error =='constant':
             #'constant' just means the parameter does not have error!
@@ -130,6 +131,131 @@ for line in lines[127:143]:
         print(row, '\n')
 
 
+COV = np.empty((14,14))
+cov_list = [None]*14
+cov_list[0] = [0.632E-03] 
+cov_list[1] = [0.000872, 0.0117]
+cov_list[2] =[-0.844E-03,-0.893E-03, 0.120E-02]
+cov_list[3]=[-0.122E-03,-0.150E-03, 0.197E-03, 0.581E-04]
+
+
+cov_list[4] =[0.937E-05, 0.223E-04, -0.833E-05, -0.198E-05, 0.287E-04]
+cov_list[4]
+
+
+COV[13] = np.array([0.349E-02,-0.135E-01,-0.437E-02,-0.589E-03, 0.215E-03, 0.131E-04,-0.652E-02, 0.240E-02, 0.188E-02,-0.218E-01, 0.363E-01, 0.110E-03, 0.182E-04, 0.370E+00])
+COV[12] = np.array([-0.558E-05,-0.582E-06, 0.425E-05, 0.155E-05, 0.768E-06,-0.388E-07, 0.580E-05, 0.193E-05,-0.315E-05, 0.182E-04,-0.388E-04, 0.518E-05, 0.304E-05,0])
+COV[11] = np.array([-0.774E-05, 0.139E-04, 0.497E-05, 0.232E-05, 0.327E-05,-0.318E-06, 0.436E-04, 0.570E-05, 0.243E-06, 0.168E-04,-0.739E-04, 0.156E-04,0,0])
+COV[10]= np.array([-0.191E-02, 0.429E-02, 0.264E-02, 0.335E-03,-0.221E-03,-0.661E-03, 0.638E-02,-0.487E-03,-0.170E-02, 0.253E-01, 0.982E-01,0,0,0]) 
+COV[9] = np.array([0.935E-03,-0.214E-02,-0.136E-02,-0.173E-03, 0.242E-03, 0.473E-03, 0.194E-03, 0.662E-03, 0.120E-03, 0.498E-01,0,0,0,0])
+COV[8] = np.array([0.246E-03,-0.593E-03,-0.290E-03,-0.491E-04, 0.140E-04,-0.398E-03, 0.296E-02, 0.170E-02, 0.158E-01, 0,0,0,0,0 ])
+COV[7] = np.array([0.510E-04, 0.855E-04,-0.644E-04,-0.101E-04,-0.111E-04,-0.975E-05,-0.446E-03, 0.540E-03,0,0,0,0,0,0])
+COV[6] = np.array([0.165E-03, 0.298E-04,-0.274E-03,-0.198E-04,-0.574E-03, 0.421E-02, 0.755E-01,0,0,0,0,0,0,0])
+COV[5] = np.array([0.460E-04, -0.829E-04, -0.565E-04, -0.914E-05, 0.403E-04, 0.861E-03,0,0,0,0,0,0,0,0] )
+COV[4] = np.array([0.937E-05, 0.223E-04, -0.833E-05, -0.198E-05, 0.287E-04,0,0,0,0,0,0,0,0,0])
+COV[3] = np.array([-0.122E-03,-0.150E-03, 0.197E-03, 0.581E-04,0,0,0,0,0,0,0,0,0,0])
+COV[2]=np.array([-0.844E-03,-0.893E-03, 0.120E-02,0,0,0,0,0,0,0,0,0,0,0])
+COV[1] = np.array([0.000872, 0.0117,0,0,0,0,0,0,0,0,0,0,0,0])
+COV[0] = np.array([0.632E-03,0,0,0,0,0,0,0,0,0,0,0,0,0] )
+for i in range(len(COV)):
+    for j in range(len(COV[i])):
+        COV[i][j] = COV[j][i]
+COV
+
+
+COV.shape
+
+
+cov_diag = COV.diagonal()
+np.sqrt(cov_diag)
+
+
+params = [-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810]
+means = np.array(params)
+means.shape
+
+
+
+d=COV.shape[0] #this has to be 13 since
+n=100000 #number of samples, could be anything
+
+def get_mvn_samples(mu,cov,n,d):
+    samples = np.zeros((n,d))
+    for i in range(n):      
+        samples[i,:] = np.random.multivariate_normal(mu, cov, 1)
+    
+    return samples
+
+
+MVN = get_mvn_samples(mu=means, cov=COV, n=10000, d=d)
+MVN
+
+
+MVN.shape
+
+
+Bg = MVN[:,0]
+plt.hist(Bg.flatten(), bins=50)
+
+
+Cg = MVN[:,1]
+plt.hist(Cg.flatten(), bins=50)
+
+
+for i in range(13):
+    plt.hist(MVN[:,i], bins=100)
+
+
+fig, axes = plt.subplots(nrows=4, ncols=4)
+axes[0,0].hist(MVN[:,0],bins=100)
+axes[0,1].hist(MVN[:,1],bins=100)
+axes[0,2].hist(MVN[:,2],bins=100)
+axes[0,3].hist(MVN[:,3],bins=100)
+axes[1,0].hist(MVN[:,4],bins=100)
+axes[1,1].hist(MVN[:,5],bins=100)
+axes[1,2].hist(MVN[:,6],bins=100)
+axes[1,3].hist(MVN[:,7],bins=100)
+axes[2,0].hist(MVN[:,8],bins=100)
+axes[2,1].hist(MVN[:,9],bins=100)
+axes[2,2].hist(MVN[:,10],bins=100)
+axes[2,3].hist(MVN[:,11],bins=100)
+axes[3,0].hist(MVN[:,12],bins=100)
+axes[3,1].hist(MVN[:,13],bins=100)
+axes[3,2].hist(MVN[:,13],bins=100)
+axes[3,3].hist(MVN[:,13],bins=100)
+
+
+
+
+
+
+cov_list[5] = [0.460E-04, -0.829E-04, -0.565E-04, -0.914E-05, 0.403E-04, 0.861E-03] 
+cov_list[6]= [0.165E-03, 0.298E-04,-0.274E-03,-0.198E-04,-0.574E-03, 0.421E-02, 0.755E-01]
+cov_list[7] = [0.510E-04, 0.855E-04,-0.644E-04,-0.101E-04,-0.111E-04,-0.975E-05,-0.446E-03, 0.540E-03]
+cov_list[8] =[0.246E-03,-0.593E-03,-0.290E-03,-0.491E-04, 0.140E-04,-0.398E-03, 0.296E-02, 0.170E-02, 0.158E-01 ]
+cov_list[9] =[0.935E-03,-0.214E-02,-0.136E-02,-0.173E-03, 0.242E-03, 0.473E-03, 0.194E-03, 0.662E-03, 0.120E-03, 0.498E-01]
+cov_list[10] = [-0.191E-02, 0.429E-02, 0.264E-02, 0.335E-03,-0.221E-03,-0.661E-03, 0.638E-02,-0.487E-03,-0.170E-02, 0.253E-01, 0.982E-01 ]
+cov_list[11] = [-0.774E-05, 0.139E-04, 0.497E-05, 0.232E-05, 0.327E-05,-0.318E-06, 0.436E-04, 0.570E-05, 0.243E-06, 0.168E-04,-0.739E-04, 0.156E-04]
+cov_list[12] = [-0.558E-05,-0.582E-06, 0.425E-05, 0.155E-05, 0.768E-06,-0.388E-07, 0.580E-05, 0.193E-05,-0.315E-05, 0.182E-04,-0.388E-04, 0.518E-05, 0.304E-05]
+cov_list[13] = [0.349E-02,-0.135E-01,-0.437E-02,-0.589E-03, 0.215E-03, 0.131E-04,-0.652E-02, 0.240E-02, 0.188E-02,-0.218E-01, 0.363E-01, 0.110E-03, 0.182E-04, 0.370E+00]
+
+
+cov_list
+
+
+cov_list_list = [[None]*14]*14;
+
+
+COV = np.empty((14,14))
+for i in range(len(COV)):
+    cov_list_list[i]= cov_list[i]
+#     for j in range(len(COV[i])):
+#         COV[i][j] = cov_list_list[i][j]
+            
+#COV
+cov_list_list
+
+
 # for line in chain_cov_mat:
 #     row = line.strip().split()
 #     for i in range(14):
@@ -152,7 +278,6 @@ for line in lines[127:143]:
     triang_rows = rows[0]
 #     for row in triang_rows.split('\n'):
 
-#     for row in triang_rows.strip().split('\s'):
     for row in triang_rows.strip().split('\s'):
 
         matches = pattern.finditer(row)
@@ -161,7 +286,6 @@ for line in lines[127:143]:
             inner_list.append(float(row[match.span()[0]:match.span()[1]]))
             #cov_list.append(float(row[match.span()[0]:match.span()[1]]))
         cov_list.append(inner_list)
-            
 #         split_row = re.split(regexPattern, row)
 #         for val in split_row:
 #             cov_list.append(float(val))
@@ -179,7 +303,8 @@ cov_list[1] = [0.872E-03, 0.117E-01]
 cov_list[:4]
 
 
-cov_list =[el for el in cov_list if el get_ipython().getoutput("=[]]")
+COV = np.empty((14,14))
+
 
 
 len(cov_list)
