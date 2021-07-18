@@ -1,0 +1,15 @@
+NInputFiles = 12
+
+InputFileNames(1) = 'CMS_8TeV_jets_Ybin3___CMS_8TeV_jets_Ybin3.dat',
+InputFileNames(2) = 'CMS_8TeV_jets_Ybin1___CMS_8TeV_jets_Ybin1.dat',
+InputFileNames(3) = 'CMS_8TeV_jets_Ybin4___CMS_8TeV_jets_Ybin4.dat',
+InputFileNames(4) = 'CMS_8TeV_jets_Ybin5___CMS_8TeV_jets_Ybin5.dat',
+InputFileNames(5) = 'CMS_8TeV_jets_Ybin6.dat',
+InputFileNames(6) = 'CMS_8TeV_jets_Ybin4.dat',
+InputFileNames(7) = 'CMS_8TeV_jets_Ybin5.dat',
+InputFileNames(8) = 'CMS_8TeV_jets_Ybin6___CMS_8TeV_jets_Ybin6.dat',
+InputFileNames(9) = 'CMS_8TeV_jets_Ybin1.dat',
+InputFileNames(10) = 'CMS_8TeV_jets_Ybin2.dat',
+InputFileNames(11) = 'CMS_8TeV_jets_Ybin3.dat',
+InputFileNames(12) = 'CMS_8TeV_jets_Ybin2___CMS_8TeV_jets_Ybin2.dat',
+
