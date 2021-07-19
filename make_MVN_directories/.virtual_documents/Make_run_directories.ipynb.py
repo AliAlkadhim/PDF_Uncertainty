@@ -118,6 +118,9 @@ for run in dirs:
     #sp.run('cp ./ewparam.txt run', shell=True)
 
 
+
+
+
 get_ipython().getoutput("pwd")
 
 
