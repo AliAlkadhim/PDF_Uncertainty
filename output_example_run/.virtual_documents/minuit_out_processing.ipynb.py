@@ -194,6 +194,12 @@ MVN
 MVN.shape
 
 
+np.save('MVN.npy',MVN)
+
+
+get_ipython().getoutput("pwd")
+
+
 Bg = MVN[:,0]
 plt.hist(Bg.flatten(), bins=50)
 
@@ -214,23 +220,23 @@ colors=sns.color_palette("rocket",3)
 plt.style.use('seaborn-paper')
 
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
-axes[0,0].hist(MVN[:,0],bins=100, label='Bg')
+axes[0,0].hist(MVN[:,0],bins=100, label='Bg',weights=np.array([91]*10000))
 #axes[0,0].set(title='Bg', xlabel='value')
-axes[0,1].hist(MVN[:,1],bins=100, label='Cg')
-axes[0,2].hist(MVN[:,2],bins=100,label='Aprig')
-axes[0,3].hist(MVN[:,3],bins=100, label='Buv')
-axes[1,0].hist(MVN[:,4],bins=100, label='Cuv')
-axes[1,1].hist(MVN[:,5],bins=100,label='Euv')
-axes[1,2].hist(MVN[:,6],bins=100, label='Bdv')
-axes[1,3].hist(MVN[:,7],bins=100, label='Cdv')
-axes[2,0].hist(MVN[:,8],bins=100, label='CUbar')
-axes[2,1].hist(MVN[:,9],bins=100,label='DUbar')
-axes[2,2].hist(MVN[:,10],bins=100,label='ADbar')
-axes[2,3].hist(MVN[:,11],bins=100,label='BDbar')
-axes[3,0].hist(MVN[:,12],bins=100,label='CDbar')
-axes[3,1].hist(MVN[:,13],bins=100,label='CDbar')
-axes[3,2].hist(MVN[:,13],bins=100,label='CDbar')
-axes[3,3].hist(MVN[:,13],bins=100,label='CDbar')
+axes[0,1].hist(MVN[:,1],bins=100, label='Cg',weights=np.array([91]*10000))
+axes[0,2].hist(MVN[:,2],bins=100,label='Aprig',weights=np.array([91]*10000))
+axes[0,3].hist(MVN[:,3],bins=100, label='Buv',weights=np.array([91]*10000))
+axes[1,0].hist(MVN[:,4],bins=100, label='Cuv',weights=np.array([91]*10000))
+axes[1,1].hist(MVN[:,5],bins=100,label='Euv',weights=np.array([91]*10000))
+axes[1,2].hist(MVN[:,6],bins=100, label='Bdv',weights=np.array([91]*10000))
+axes[1,3].hist(MVN[:,7],bins=100, label='Cdv',weights=np.array([91]*10000))
+axes[2,0].hist(MVN[:,8],bins=100, label='CUbar',weights=np.array([91]*10000))
+axes[2,1].hist(MVN[:,9],bins=100,label='DUbar',weights=np.array([91]*10000))
+axes[2,2].hist(MVN[:,10],bins=100,label='ADbar',weights=np.array([91]*10000))
+axes[2,3].hist(MVN[:,11],bins=100,label='BDbar',weights=np.array([91]*10000))
+axes[3,0].hist(MVN[:,12],bins=100,label='CDbar',weights=np.array([91]*10000))
+axes[3,1].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
+axes[3,2].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
+axes[3,3].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
 plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
 titles = ['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
@@ -241,12 +247,22 @@ for i, ax in enumerate(axes.flatten()):
 # plt.tick_params(labelsize=14)
 # plt.tick_params(labelbottom=True, labeltop=False, labelright=False, labelleft=True)
 plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
-plt.savefig('HERAPDF_params_MVN.png', dpi=300, bbox_inches='tight')
+#plt.savefig('HERAPDF_params_MVN.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 
 cor_Chi2 = 91.502780349924393     
 Log_penalty_Chi2 = 5.8705183749659522 
+
+import subprocess
+subprocess.run('ls', capture_output=True)
+
+
+dirs=[]
+for i in range(10):
+    dirs.append('dir_{}'.format(i))
+dirs
+
 
 
 
