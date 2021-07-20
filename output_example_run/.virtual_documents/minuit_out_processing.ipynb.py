@@ -187,17 +187,20 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
-MVN = get_mvn_samples(mu=means, cov=COV, n=10000, d=d)
+MVN = get_mvn_samples(mu=means, cov=COV, n=1000, d=d)
 MVN
 
 
 MVN.shape
 
 
+get_ipython().getoutput("pwd")
+
+
 MVN[:,13]
 
 
-np.save('MVN.npy',MVN)
+np.save('MVN_1000.npy',MVN)
 
 
 get_ipython().getoutput("pwd")

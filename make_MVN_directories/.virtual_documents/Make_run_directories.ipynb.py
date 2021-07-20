@@ -1,7 +1,7 @@
 dirs=[]
-for i in range(10):
+for i in range(999):
     dirs.append('run_{}'.format(i))
-dirs
+#dirs
 
 
 import os
@@ -76,7 +76,7 @@ print( params, generated_params, '\n\n', len(params), len(generated_params))
 
 
 import numpy as np
-MVN = np.load('MVN.npy')
+MVN = np.load('MVN_1000.npy')
 MVN
 
 
@@ -101,9 +101,9 @@ os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MV
 
 import os; import subprocess as sp;from shutil import copyfile
 dirs=[]
-for i in range(10):
+for i in range(999):
     dirs.append('run_{}'.format(i))
-dirs
+#dirs
 
 os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
 steering = 'steering.txt'
@@ -157,6 +157,9 @@ for run_ind, run in enumerate(dirs):
 
 
 
+
+
+
 # import os; import subprocess as sp;from shutil import copyfile
 # steering = 'steering.txt'
 # for run in dirs:
@@ -202,14 +205,22 @@ for run_ind, run in enumerate(dirs):
     run_path = os.path.abspath(run)
     output_path = os.path.join(run_path, 'output')
     os.chdir(output_path)
-    print(os.getcwd())
-#     with open('Results.txt', 'r') as f:
-#         lines = f.readlines()
-#         chi2_line = lines[12]
-#         chi2 = chi2_line.split()[2]
-#         weights.append(float(chi2))
+    #print(os.getcwd())
+    with open('Results.txt', 'r') as f:
+        lines = f.readlines()
+        chi2_line = lines[12]
+        chi2 = chi2_line.split()[2]
+        weights.append(float(chi2))
     os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
 
+
+
+weights
+
+
+first_fit=MVN[:,0:13][0]; first_weight=weights[0]
+print('the first fit parameter values are: ', first_fit, '\nthe associated weight for this fit is', first_weight)
+print('hence the number of fits has to be the same as the number of weights')
 
 
 import re
