@@ -74,7 +74,7 @@
  **********
            BLANK COMMAND IGNORED.
  **********
- **    3 **CALL FCN3 
+ **    3 **CALL FCN    2.000    
  **********
  **********
  **    4 ***MIGRAD   0.2000E+06

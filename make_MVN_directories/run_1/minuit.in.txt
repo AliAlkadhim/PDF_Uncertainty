@@ -19,7 +19,7 @@ parameters
 
 
 
-call fcn3
+call fcn 2
 *migrad 200000
 *hesse
 set print 3

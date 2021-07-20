@@ -6,26 +6,29 @@
  new  14p HERAPDF                                  
  ******************************************************************************
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.03960518358748011
- TRUNCATED TO:-0.0396051835874801
+     ORIGINAL:-0.034196131648845406
+ TRUNCATED TO:-0.0341961316488454
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     2 'Bg        '  -0.39605E-01  constant
-     3 'Cg        '    5.5788      constant
-     7 'Aprig     '   0.13755      constant
-     8 'Bprig     '  -0.39151      constant
+     2 'Bg        '  -0.34196E-01  constant
+     3 'Cg        '    5.7503      constant
+     7 'Aprig     '   0.12165      constant
+     8 'Bprig     '  -0.40182      constant
      9 'Cprig     '    25.000      constant
-    12 'Buv       '   0.80898      constant
-    13 'Cuv       '    4.7965      constant
-    15 'Euv       '    9.9003      constant
-    22 'Bdv       '    1.0271      constant
-    23 'Cdv       '    4.8341      constant
-    33 'CUbar     '    7.2055      constant
-    34 'DUbar     '    1.4040      constant
-    41 'ADbar     '   0.26915      constant
-    42 'BDbar     '  -0.12875      constant
-    43 'CDbar     '    9.4475      constant
+    12 'Buv       '   0.80174      constant
+    13 'Cuv       '    4.7739      constant
+    15 'Euv       '    9.9022      constant
+    22 'Bdv       '    1.0516      constant
+    23 'Cdv       '    4.8621      constant
+    33 'CUbar     '    7.1061      constant
+    34 'DUbar     '    1.4130      constant
+    41 'ADbar     '   0.26658      constant
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.12936777214582443
+ TRUNCATED TO:-0.1293677721458244
+    42 'BDbar     '  -0.12937      constant
+    43 'CDbar     '    8.7544      constant
     ***************************************************************************
 
  PARAMETER DEFINITIONS:
@@ -36,26 +39,26 @@
 
  MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
 
- FCN=   1367.297     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
+ FCN=   1367.741     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
 
   EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
   NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   2    Bg        -0.39605E-01   constant   
-   3    Cg          5.5788       constant   
-   7    Aprig      0.13755       constant   
-   8    Bprig     -0.39151       constant   
+   2    Bg        -0.34196E-01   constant   
+   3    Cg          5.7503       constant   
+   7    Aprig      0.12165       constant   
+   8    Bprig     -0.40182       constant   
    9    Cprig       25.000       constant   
-  12    Buv        0.80898       constant   
-  13    Cuv         4.7965       constant   
-  15    Euv         9.9003       constant   
-  22    Bdv         1.0271       constant   
-  23    Cdv         4.8341       constant   
-  33    CUbar       7.2055       constant   
-  34    DUbar       1.4040       constant   
-  41    ADbar      0.26915       constant   
-  42    BDbar     -0.12875       constant   
-  43    CDbar       9.4475       constant   
+  12    Buv        0.80174       constant   
+  13    Cuv         4.7739       constant   
+  15    Euv         9.9022       constant   
+  22    Bdv         1.0516       constant   
+  23    Cdv         4.8621       constant   
+  33    CUbar       7.1061       constant   
+  34    DUbar       1.4130       constant   
+  41    ADbar      0.26658       constant   
+  42    BDbar     -0.12937       constant   
+  43    CDbar       8.7544       constant   
  101    alphas     0.11800       constant   
  102    fs         0.40000       constant   
  103    fcharm      0.0000       constant   
@@ -68,7 +71,7 @@
  **********
            BLANK COMMAND IGNORED.
  **********
- **    3 **CALL FCN3 
+ **    3 **CALL FCN    3.000    
  **********
  **********
  **    4 ***MIGRAD   0.2000E+06
@@ -88,7 +91,4 @@
  **********
  **    8 **RETURN 
  **********
-
- CALL TO USER FUNCTION WITH IFLAG = 3
-
  ..........MINUIT TERMINATED AND RETURNS TO USER PROGRAM.            

@@ -6,29 +6,32 @@
  new  14p HERAPDF                                  
  ******************************************************************************
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.06144827729018938
- TRUNCATED TO:-0.0614482772901893
+     ORIGINAL:-0.09669681513698106
+ TRUNCATED TO:-0.0966968151369810
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     2 'Bg        '  -0.61448E-01  constant
-     3 'Cg        '    5.4806      constant
-     7 'Aprig     '   0.16932      constant
-     8 'Bprig     '  -0.38082      constant
-     9 'Cprig     '    25.000      constant
-    12 'Buv       '   0.81511      constant
-    13 'Cuv       '    4.8425      constant
-    15 'Euv       '    9.9025      constant
-    22 'Bdv       '    1.0181      constant
-    23 'Cdv       '    4.9847      constant
-    33 'CUbar     '    6.6259      constant
-    34 'DUbar     '    1.2847      constant
-    41 'ADbar     '   0.26851      constant
+     2 'Bg        '  -0.96697E-01  constant
+     3 'Cg        '    5.5429      constant
+     7 'Aprig     '   0.22502      constant
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.12719040286755562
- TRUNCATED TO:-0.1271904028675556
-    42 'BDbar     '  -0.12719      constant
-    43 'CDbar     '    9.8383      constant
+     ORIGINAL:-0.36814172435719766
+ TRUNCATED TO:-0.3681417243571976
+     8 'Bprig     '  -0.36814      constant
+     9 'Cprig     '    25.000      constant
+    12 'Buv       '   0.81261      constant
+    13 'Cuv       '    4.8213      constant
+    15 'Euv       '    9.8880      constant
+    22 'Bdv       '    1.0230      constant
+    23 'Cdv       '    4.7239      constant
+    33 'CUbar     '    7.0042      constant
+    34 'DUbar     '    2.0315      constant
+    41 'ADbar     '   0.27301      constant
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.12584572412111636
+ TRUNCATED TO:-0.1258457241211163
+    42 'BDbar     '  -0.12585      constant
+    43 'CDbar     '    9.9666      constant
     ***************************************************************************
 
  PARAMETER DEFINITIONS:
@@ -39,26 +42,26 @@
 
  MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
 
- FCN=   1369.870     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
+ FCN=   1369.325     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
 
   EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
   NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   2    Bg        -0.61448E-01   constant   
-   3    Cg          5.4806       constant   
-   7    Aprig      0.16932       constant   
-   8    Bprig     -0.38082       constant   
+   2    Bg        -0.96697E-01   constant   
+   3    Cg          5.5429       constant   
+   7    Aprig      0.22502       constant   
+   8    Bprig     -0.36814       constant   
    9    Cprig       25.000       constant   
-  12    Buv        0.81511       constant   
-  13    Cuv         4.8425       constant   
-  15    Euv         9.9025       constant   
-  22    Bdv         1.0181       constant   
-  23    Cdv         4.9847       constant   
-  33    CUbar       6.6259       constant   
-  34    DUbar       1.2847       constant   
-  41    ADbar      0.26851       constant   
-  42    BDbar     -0.12719       constant   
-  43    CDbar       9.8383       constant   
+  12    Buv        0.81261       constant   
+  13    Cuv         4.8213       constant   
+  15    Euv         9.8880       constant   
+  22    Bdv         1.0230       constant   
+  23    Cdv         4.7239       constant   
+  33    CUbar       7.0042       constant   
+  34    DUbar       2.0315       constant   
+  41    ADbar      0.27301       constant   
+  42    BDbar     -0.12585       constant   
+  43    CDbar       9.9666       constant   
  101    alphas     0.11800       constant   
  102    fs         0.40000       constant   
  103    fcharm      0.0000       constant   
@@ -71,7 +74,7 @@
  **********
            BLANK COMMAND IGNORED.
  **********
- **    3 **CALL FCN3 
+ **    3 **CALL FCN    2.000    
  **********
  **********
  **    4 ***MIGRAD   0.2000E+06

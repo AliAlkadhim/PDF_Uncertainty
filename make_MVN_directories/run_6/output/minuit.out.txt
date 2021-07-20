@@ -6,26 +6,29 @@
  new  14p HERAPDF                                  
  ******************************************************************************
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.07849060047528561
- TRUNCATED TO:-0.0784906004752856
+     ORIGINAL:-0.05616968343190399
+ TRUNCATED TO:-0.0561696834319039
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     2 'Bg        '  -0.78491E-01  constant
-     3 'Cg        '    5.5656      constant
-     7 'Aprig     '   0.19062      constant
-     8 'Bprig     '  -0.38182      constant
+     2 'Bg        '  -0.56170E-01  constant
+     3 'Cg        '    5.5676      constant
+     7 'Aprig     '   0.15711      constant
+     8 'Bprig     '  -0.39011      constant
      9 'Cprig     '    25.000      constant
-    12 'Buv       '   0.80749      constant
-    13 'Cuv       '    4.7989      constant
-    15 'Euv       '    9.6862      constant
-    22 'Bdv       '    1.0372      constant
-    23 'Cdv       '    4.8059      constant
-    33 'CUbar     '    6.7034      constant
-    34 'DUbar     '    1.6275      constant
-    41 'ADbar     '   0.26586      constant
-    42 'BDbar     '  -0.12841      constant
-    43 'CDbar     '    10.104      constant
+    12 'Buv       '   0.81462      constant
+    13 'Cuv       '    4.8203      constant
+    15 'Euv       '    9.9917      constant
+    22 'Bdv       '    1.0351      constant
+    23 'Cdv       '    4.9041      constant
+    33 'CUbar     '    7.0683      constant
+    34 'DUbar     '    1.2819      constant
+    41 'ADbar     '   0.27753      constant
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.12535434312325294
+ TRUNCATED TO:-0.1253543431232529
+    42 'BDbar     '  -0.12535      constant
+    43 'CDbar     '    9.6782      constant
     ***************************************************************************
 
  PARAMETER DEFINITIONS:
@@ -36,26 +39,26 @@
 
  MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
 
- FCN=   1365.626     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
+ FCN=   1368.544     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
 
   EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
   NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   2    Bg        -0.78491E-01   constant   
-   3    Cg          5.5656       constant   
-   7    Aprig      0.19062       constant   
-   8    Bprig     -0.38182       constant   
+   2    Bg        -0.56170E-01   constant   
+   3    Cg          5.5676       constant   
+   7    Aprig      0.15711       constant   
+   8    Bprig     -0.39011       constant   
    9    Cprig       25.000       constant   
-  12    Buv        0.80749       constant   
-  13    Cuv         4.7989       constant   
-  15    Euv         9.6862       constant   
-  22    Bdv         1.0372       constant   
-  23    Cdv         4.8059       constant   
-  33    CUbar       6.7034       constant   
-  34    DUbar       1.6275       constant   
-  41    ADbar      0.26586       constant   
-  42    BDbar     -0.12841       constant   
-  43    CDbar       10.104       constant   
+  12    Buv        0.81462       constant   
+  13    Cuv         4.8203       constant   
+  15    Euv         9.9917       constant   
+  22    Bdv         1.0351       constant   
+  23    Cdv         4.9041       constant   
+  33    CUbar       7.0683       constant   
+  34    DUbar       1.2819       constant   
+  41    ADbar      0.27753       constant   
+  42    BDbar     -0.12535       constant   
+  43    CDbar       9.6782       constant   
  101    alphas     0.11800       constant   
  102    fs         0.40000       constant   
  103    fcharm      0.0000       constant   
@@ -68,7 +71,7 @@
  **********
            BLANK COMMAND IGNORED.
  **********
- **    3 **CALL FCN3 
+ **    3 **CALL FCN    2.000    
  **********
  **********
  **    4 ***MIGRAD   0.2000E+06
