@@ -1,0 +1,100 @@
+ ***************************************************************************
+  MINUIT RELEASE 96.03  INITIALIZED.   DIMENSIONS 200/ 50  EPSMAC=  0.89E-15
+ ***************************************************************************
+                          MINUIT DATA BLOCK NO.   1
+ ***************************************************************************
+ new  14p HERAPDF                                  
+ ******************************************************************************
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.049807185611667144
+ TRUNCATED TO:-0.0498071856116671
+
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+     2 'Bg        '  -0.49807E-01  constant
+     3 'Cg        '    5.5290      constant
+     7 'Aprig     '   0.14882      constant
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.38315869399615543
+ TRUNCATED TO:-0.3831586939961554
+     8 'Bprig     '  -0.38316      constant
+     9 'Cprig     '    25.000      constant
+    12 'Buv       '   0.80902      constant
+    13 'Cuv       '    4.8359      constant
+    15 'Euv       '    10.415      constant
+    22 'Bdv       '    1.0320      constant
+    23 'Cdv       '    4.8226      constant
+    33 'CUbar     '    7.2418      constant
+    34 'DUbar     '    1.4018      constant
+    41 'ADbar     '   0.27291      constant
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.12571383014313986
+ TRUNCATED TO:-0.1257138301431398
+    42 'BDbar     '  -0.12571      constant
+    43 'CDbar     '    9.7259      constant
+    ***************************************************************************
+
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+   101 'alphas    '   0.11800      constant
+   102 'fs        '   0.40000      constant
+   103 'fcharm    '    0.0000      constant
+
+ MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
+
+ FCN=   1367.556     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
+                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
+
+  EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
+  NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
+   2    Bg        -0.49807E-01   constant   
+   3    Cg          5.5290       constant   
+   7    Aprig      0.14882       constant   
+   8    Bprig     -0.38316       constant   
+   9    Cprig       25.000       constant   
+  12    Buv        0.80902       constant   
+  13    Cuv         4.8359       constant   
+  15    Euv         10.415       constant   
+  22    Bdv         1.0320       constant   
+  23    Cdv         4.8226       constant   
+  33    CUbar       7.2418       constant   
+  34    DUbar       1.4018       constant   
+  41    ADbar      0.27291       constant   
+  42    BDbar     -0.12571       constant   
+  43    CDbar       9.7259       constant   
+ 101    alphas     0.11800       constant   
+ 102    fs         0.40000       constant   
+ 103    fcharm      0.0000       constant   
+ **********
+ **    1 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    2 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    3 **CALL FCN    2.000    
+ **********
+ **********
+ **    4 ***MIGRAD   0.2000E+06
+ **********
+           UNKNOWN COMMAND IGNORED:*MIGRAD 
+ **********
+ **    5 ***HESSE 
+ **********
+           UNKNOWN COMMAND IGNORED:*HESSE 
+ **********
+ **    6 **SET PRINT    3.000    
+ **********
+ **********
+ **    7 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    8 **RETURN 
+ **********
+
+ CALL TO USER FUNCTION WITH IFLAG = 3
+
+ ..........MINUIT TERMINATED AND RETURNS TO USER PROGRAM.            

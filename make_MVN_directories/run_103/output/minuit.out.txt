@@ -1,0 +1,94 @@
+ ***************************************************************************
+  MINUIT RELEASE 96.03  INITIALIZED.   DIMENSIONS 200/ 50  EPSMAC=  0.89E-15
+ ***************************************************************************
+                          MINUIT DATA BLOCK NO.   1
+ ***************************************************************************
+ new  14p HERAPDF                                  
+ ******************************************************************************
+ MINUIT WARNING: INPUT DATA WORD TOO LONG.
+     ORIGINAL:-0.08729558874618787
+ TRUNCATED TO:-0.0872955887461878
+
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+     2 'Bg        '  -0.87296E-01  constant
+     3 'Cg        '    5.4650      constant
+     7 'Aprig     '   0.20587      constant
+     8 'Bprig     '  -0.37232      constant
+     9 'Cprig     '    25.000      constant
+    12 'Buv       '   0.80485      constant
+    13 'Cuv       '    4.8451      constant
+    15 'Euv       '    10.150      constant
+    22 'Bdv       '   0.98067      constant
+    23 'Cdv       '    4.7196      constant
+    33 'CUbar     '    7.0573      constant
+    34 'DUbar     '    1.7987      constant
+    41 'ADbar     '   0.25954      constant
+    42 'BDbar     '  -0.13074      constant
+    43 'CDbar     '    9.1184      constant
+    ***************************************************************************
+
+ PARAMETER DEFINITIONS:
+    NO.   NAME         VALUE      STEP SIZE      LIMITS
+   101 'alphas    '   0.11800      constant
+   102 'fs        '   0.40000      constant
+   103 'fcharm    '    0.0000      constant
+
+ MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
+
+ FCN=   1371.068     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
+                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
+
+  EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
+  NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
+   2    Bg        -0.87296E-01   constant   
+   3    Cg          5.4650       constant   
+   7    Aprig      0.20587       constant   
+   8    Bprig     -0.37232       constant   
+   9    Cprig       25.000       constant   
+  12    Buv        0.80485       constant   
+  13    Cuv         4.8451       constant   
+  15    Euv         10.150       constant   
+  22    Bdv        0.98067       constant   
+  23    Cdv         4.7196       constant   
+  33    CUbar       7.0573       constant   
+  34    DUbar       1.7987       constant   
+  41    ADbar      0.25954       constant   
+  42    BDbar     -0.13074       constant   
+  43    CDbar       9.1184       constant   
+ 101    alphas     0.11800       constant   
+ 102    fs         0.40000       constant   
+ 103    fcharm      0.0000       constant   
+ **********
+ **    1 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    2 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    3 **CALL FCN    2.000    
+ **********
+ **********
+ **    4 ***MIGRAD   0.2000E+06
+ **********
+           UNKNOWN COMMAND IGNORED:*MIGRAD 
+ **********
+ **    5 ***HESSE 
+ **********
+           UNKNOWN COMMAND IGNORED:*HESSE 
+ **********
+ **    6 **SET PRINT    3.000    
+ **********
+ **********
+ **    7 ** 
+ **********
+           BLANK COMMAND IGNORED.
+ **********
+ **    8 **RETURN 
+ **********
+
+ CALL TO USER FUNCTION WITH IFLAG = 3
+
+ ..........MINUIT TERMINATED AND RETURNS TO USER PROGRAM.            

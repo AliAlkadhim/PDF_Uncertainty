@@ -159,7 +159,7 @@ for run_ind, run in enumerate(dirs):
 
 import os; import subprocess as sp;from shutil import copyfile
 dirs=[]
-for i in range(999):
+for i in range(1000):
     dirs.append('run_{}'.format(i))
 #dirs
 
@@ -262,7 +262,7 @@ for run_ind, run in enumerate(dirs):
 
 weights=[]
 dirs=[]
-for i in range(19):
+for i in range(79):
     dirs.append('run_{}'.format(i))
     
 os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
@@ -289,8 +289,8 @@ print('hence the number of fits has to be the same as the number of weights')
 
 
 import matplotlib.pyplot as plt
-Bg = first_fit=MVN[:,0][0:19]
-plt.hist(Bg, bins=20, weights=weights)
+Bg = first_fit=MVN[:,0][0:79]
+plt.hist(Bg, bins=10, weights=weights)
 
 
 import re
@@ -307,6 +307,45 @@ with open('Results.txt', 'r') as f:
     #matches = pattern.finditer(lines)
         
     print(chi2)
+
+
+import seaborn as sns
+colors=sns.color_palette("rocket",3)
+# sns.set_style("white")
+
+# sns.set_context("poster")
+plt.style.use('seaborn-paper')
+
+fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
+axes[0,0].hist(MVN[:,0][0:79],bins=15, label='Bg',weights=weights)
+#axes[0,0].set(title='Bg', xlabel='value')
+axes[0,1].hist(MVN[:,1][0:79],bins=15, label='Cg',weights=weights)
+axes[0,2].hist(MVN[:,2][0:79],bins=15,label='Aprig',weights=weights)
+axes[0,3].hist(MVN[:,3][0:79],bins=15, label='Buv',weights=weights)
+axes[1,0].hist(MVN[:,4][0:79],bins=15, label='Cuv',weights=weights)
+axes[1,1].hist(MVN[:,5][0:79],bins=15,label='Euv',weights=weights)
+axes[1,2].hist(MVN[:,6][0:79],bins=15, label='Bdv',weights=weights)
+axes[1,3].hist(MVN[:,7][0:79],bins=15, label='Cdv',weights=weights)
+axes[2,0].hist(MVN[:,8][0:79],bins=15, label='CUbar',weights=weights)
+axes[2,1].hist(MVN[:,9][0:79],bins=15,label='DUbar',weights=weights)
+axes[2,2].hist(MVN[:,10][0:79],bins=15,label='ADbar',weights=weights)
+axes[2,3].hist(MVN[:,11][0:79],bins=15,label='BDbar',weights=weights)
+axes[3,0].hist(MVN[:,12][0:79],bins=15,label='CDbar',weights=weights)
+axes[3,1].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
+axes[3,2].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
+axes[3,3].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
+plt.tight_layout(); plt.suptitle('HERAPDF Weighted Parameters')
+titles = ['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
+for i, ax in enumerate(axes.flatten()):
+    ax.set(title=titles[i], xlabel='value')
+    ax.legend()
+# plt.minorticks_on()
+# plt.tick_params(direction='in',right=True, top=True)
+# plt.tick_params(labelsize=14)
+# plt.tick_params(labelbottom=True, labeltop=False, labelright=False, labelleft=True)
+plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+#plt.savefig('HERAPDF_params_MVN.png', dpi=300, bbox_inches='tight')
+plt.show()
 
 
 get_ipython().getoutput("pwd")
