@@ -194,6 +194,9 @@ MVN
 MVN.shape
 
 
+MVN[:,13]
+
+
 np.save('MVN.npy',MVN)
 
 

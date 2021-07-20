@@ -75,7 +75,64 @@ for i in range(len(params)):
 print( params, generated_params, '\n\n', len(params), len(generated_params))
 
 
+
+
+
 get_ipython().getoutput("pwd")
+
+
+MVN[:,13][0]
+
+
+MVN.shape
+
+
+for i in range(13):
+    print(MVN[:,i][0])
+
+
+
+
+import os; import subprocess as sp;from shutil import copyfile
+steering = 'steering.txt'
+for run_ind, run in enumerate(dirs):
+    os.makedirs(run, exist_ok=True)
+    print(os.path.abspath(run))
+    path=os.path.abspath(run)
+    copyfile('ewparam.txt', os.path.join(path, 'ewparam.txt'))
+    copyfile('steering.txt', os.path.join(path, 'steering.txt'))
+    minuit_in_path = os.path.join(path, 'minuit.in.txt')
+    with open(minuit_in_path, 'w') as second:
+        #second = os.path.abspath(second)
+        second.write('set title\n')
+        second.write('new  14p HERAPDF\n')
+        second.write('parameters\n')
+        #lets put 0 for the fourth column, meaning that this parameter is fixed
+        second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN[:,0][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN[:,1][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN[:,2][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN[:,3][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '9'+ '    ' + "'Cprig'"+'    '+str(25.000)+ '    '+'0.\n')
+        #note that Cprig is a constant, not a parameter value!
+        second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN[:,4][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN[:,5][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN[:,6][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN[:,7][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN[:,8][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN[:,9][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN[:,10][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN[:,11][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN[:,12][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN[:,13][run_ind])+ '    '+'0.\n')
+        second.write('\n\n\n')
+        second.write('migrad 200000\n')
+        second.write('hesse\n')
+        second.write('set print 3\n\n')
+        second.write('return')
+
+    #sp.run('cp ./ewparam.txt run', shell=True)
+
+
 
 
 import os; import subprocess as sp;from shutil import copyfile
