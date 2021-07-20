@@ -1,5 +1,6 @@
-Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. This uses xFitter (https://www.xfitter.org/xFitter/), make sure you have LHAPDF and APLEF enabled with xFitter, with:
-cd [path to xFitter];   ./configure --enable-lhapdf --enable-nnpdf --enable
+Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. This uses xFitter (https://www.xfitter.org/xFitter/), make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
+
+cd [path to xFitter];   ./configure --enable-lhapdf --enable-nnpdf --enable applgrid 
 
 Install any LHAPDF PDF set, with lhapdf command, or from https://lhapdf.hepforge.org/pdfsets (and unpack)
   
