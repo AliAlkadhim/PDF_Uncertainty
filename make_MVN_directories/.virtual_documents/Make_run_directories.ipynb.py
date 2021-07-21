@@ -260,9 +260,9 @@ for run_ind, run in enumerate(dirs):
 #     #sp.run('cp ./ewparam.txt run', shell=True)
 
 
-weights=[]
+chi2_list=[]
 dirs=[]
-for i in range(79):
+for i in range(254):
     dirs.append('run_{}'.format(i))
     
 os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
@@ -275,12 +275,18 @@ for run_ind, run in enumerate(dirs):
         lines = f.readlines()
         chi2_line = lines[12]
         chi2 = chi2_line.split()[2]
-        weights.append(float(chi2))
+        chi2_list.append(float(chi2))
     os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
 
 
 
-weights
+chi2_list = np.array(chi2_list)
+plt.hist(chi2_list, bins=20)
+plt.xlabel(r'Correlated $\chi^2$', fontsize=16)
+
+
+weights=np.array(weights[:,:])
+# np.exp(0.5 * (weights**2))
 
 
 first_fit=MVN[:,0:13][0]; first_weight=weights[0]
@@ -317,23 +323,23 @@ colors=sns.color_palette("rocket",3)
 plt.style.use('seaborn-paper')
 
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
-axes[0,0].hist(MVN[:,0][0:79],bins=15, label='Bg',weights=weights)
+axes[0,0].hist(MVN[:,0][0:254],bins=20, label='Bg',weights=weights)
 #axes[0,0].set(title='Bg', xlabel='value')
-axes[0,1].hist(MVN[:,1][0:79],bins=15, label='Cg',weights=weights)
-axes[0,2].hist(MVN[:,2][0:79],bins=15,label='Aprig',weights=weights)
-axes[0,3].hist(MVN[:,3][0:79],bins=15, label='Buv',weights=weights)
-axes[1,0].hist(MVN[:,4][0:79],bins=15, label='Cuv',weights=weights)
-axes[1,1].hist(MVN[:,5][0:79],bins=15,label='Euv',weights=weights)
-axes[1,2].hist(MVN[:,6][0:79],bins=15, label='Bdv',weights=weights)
-axes[1,3].hist(MVN[:,7][0:79],bins=15, label='Cdv',weights=weights)
-axes[2,0].hist(MVN[:,8][0:79],bins=15, label='CUbar',weights=weights)
-axes[2,1].hist(MVN[:,9][0:79],bins=15,label='DUbar',weights=weights)
-axes[2,2].hist(MVN[:,10][0:79],bins=15,label='ADbar',weights=weights)
-axes[2,3].hist(MVN[:,11][0:79],bins=15,label='BDbar',weights=weights)
-axes[3,0].hist(MVN[:,12][0:79],bins=15,label='CDbar',weights=weights)
-axes[3,1].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
-axes[3,2].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
-axes[3,3].hist(MVN[:,13][0:79],bins=15,label='CDbar',weights=weights)
+axes[0,1].hist(MVN[:,1][0:254],bins=20, label='Cg',weights=weights)
+axes[0,2].hist(MVN[:,2][0:254],bins=20,label='Aprig',weights=weights)
+axes[0,3].hist(MVN[:,3][0:254],bins=20, label='Buv',weights=weights)
+axes[1,0].hist(MVN[:,4][0:254],bins=20, label='Cuv',weights=weights)
+axes[1,1].hist(MVN[:,5][0:254],bins=20,label='Euv',weights=weights)
+axes[1,2].hist(MVN[:,6][0:254],bins=20, label='Bdv',weights=weights)
+axes[1,3].hist(MVN[:,7][0:254],bins=20, label='Cdv',weights=weights)
+axes[2,0].hist(MVN[:,8][0:254],bins=20, label='CUbar',weights=weights)
+axes[2,1].hist(MVN[:,9][0:254],bins=20,label='DUbar',weights=weights)
+axes[2,2].hist(MVN[:,10][0:254],bins=20,label='ADbar',weights=weights)
+axes[2,3].hist(MVN[:,11][0:254],bins=20,label='BDbar',weights=weights)
+axes[3,0].hist(MVN[:,12][0:254],bins=20,label='CDbar',weights=weights)
+axes[3,1].hist(MVN[:,13][0:254],bins=20,label='CDbar',weights=weights)
+axes[3,2].hist(MVN[:,13][0:254],bins=20,label='CDbar',weights=weights)
+axes[3,3].hist(MVN[:,13][0:254],bins=20,label='CDbar',weights=weights)
 plt.tight_layout(); plt.suptitle('HERAPDF Weighted Parameters')
 titles = ['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
@@ -353,7 +359,6 @@ get_ipython().getoutput("pwd")
 
 chi2 = []
 # for run_ind, run in enumerate(dirs):
-    
 
 
 
