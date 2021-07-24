@@ -197,11 +197,37 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
-MVN = get_mvn_samples(mu=means, cov=COV, n=1000, d=d)
+MVN = get_mvn_samples(mu=means, cov=COV, n=100000, d=d)
 MVN
 
 
-MVN.shape
+print(MVN[0,:], MVN[0,:].shape, MVN.shape)
+
+
+MVN.dtype
+
+
+from numpy import asarray
+from numpy import savetxt
+# define data
+# save to csv file
+savetxt('MVN.dat', MVN, delimiter=', ', header = str(MVN.shape[0]),  fmt='get_ipython().run_line_magic("1.5f',", " comments='')")
+#the comments='' gets rid of the # in front of my number of lines for the header
+
+
+# from numpy import loadtxt
+
+# data = loadtxt('MVN.dat', delimiter=',', comments='')
+# data
+
+
+with open('ex.dat','w') as f:
+    f.write(list(MVN[0,:]))
+
+
+with open('MVN.dat', 'w') as f:
+    for i in range(MVN.shape[0]):
+        f.write(MVN[i, :])
 
 
 get_ipython().getoutput("pwd")
