@@ -2,9 +2,10 @@ Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. Thi
 
 cd [path to xFitter];   ./configure --enable-lhapdf --enable-nnpdf --enable applgrid 
 
-If you don't have xFitter (or its dependencies such as QCDNUM, lapack, etc.) installed, first run ./install-xfitter/install-lapack
-then
-run ./install_xifitter/install-xfitter 
+If you don't have xFitter (or its dependencies such as QCDNUM, lapack, etc.) installed, first run 
+cd install_xfitter && chmod +x install-lapack && ./install-lapack
+then run
+chmod +x install-xfitter && ./install-xfitter 
 
 Install any LHAPDF PDF set, with lhapdf command, or from https://lhapdf.hepforge.org/pdfsets (and unpack)
   
