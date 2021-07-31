@@ -1,0 +1,29 @@
+#! /usr/bin/env bash
+
+# These variables need to exist
+prefix=/home/ali/Desktop/Research/xfitter/xfitter-2.0.1
+exec_prefix=${prefix}
+
+if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
+    echo
+    echo "xfitter-config: configuration tool for XFitter"
+    echo "                webpage: https://wiki-zeuthen.desy.de/xFitter"
+    echo
+    echo "Usage: xfitter-config [[--help|-h] | [--prefix] | [--ldflags]]"
+    echo "Options:"
+    echo "  --help | -h    : show this help message"
+    echo "  --prefix       : show the installation prefix (cf. autoconf)"
+    echo
+    echo "  --version      : returns Xfitter release version number"
+fi
+
+OUT=""
+
+tmp=$( echo "$*" | egrep -- '--\<prefix\>')
+test -n "$tmp" && OUT="$OUT /home/ali/Desktop/Research/xfitter/xfitter-2.0.1"
+
+## Version
+tmp=$( echo "$*" | egrep -- '--\<version\>')
+test -n "$tmp" && OUT="$OUT 2.0.1"
+
+echo $OUT

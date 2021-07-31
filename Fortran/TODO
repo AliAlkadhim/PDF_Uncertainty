@@ -1,0 +1,46 @@
+TODO:
+1. change MVN to doubles in python: no that's not the issue because double dtype is still float64
+2. in unminimized_chi2, try not doing if the parameter is not 0, then save it, because the 0 values are needed since their indeces are not selected... more work needed to understand this
+3. parminuit(i) is compied into parminuitsave(i): I think I need to change parminuit(i) to be from my parameters. parminuit(i) comes from pkeep(i).
+4. Perhaps I need to change MNE to 14 in endmini.inc. we are looping to 14 in unminimizedchi2 and in fcn... A_MNE and MVN_cp are 14...
+5. call read_MVN before saving parminuitsave to pars_saved.txt in uniminimized_chi2.
+6. parminuit is in fcn.f and src/dataset_tools.f, parminuitsave is also in src/theory_dispatcher.f. in theory_dispatcher, there is the line
+          XParValueByName = parminuitsave(iExtraParamMinuit(idx))
+7. Maybe I need to generate the data in the same format as the minuit.in.txt format, 
+parameters
+    2   'Bg'   -0.061953    0.027133
+so that the indeces and names of parameters are used correctly by pdf_param.f....
+8. npar is the number of parameters, = NparFCN, which is in fcn.inc. It is written in the common block by
+
+9. I think the whole point is not to call minimization. If we minimize I think we should get the same chi2. What is useful is to write a print statement for the parameter values at that particular point in the minimization and their corresponding chi2 value. Calls to fcn= IfcnCount       : goes from 1 to 3, at each iteration, there is a parameterset.
+10. parminuitsave(i) is different than the central parameter set in minuit.in.txt; parminuitsave(i) is the parameter values at this particular point of the minimization -> Then the chi2 is calculated between a set of parminuitsave(i) and the central set of parameters (in minuit.in.txt) at each iteration of the minimization.... Then the set of values with the smallest chi2 (compared to the central set) is printed out. 
+
+first set
+-.06195300
+5.56236700
+0.16611800
+-.38310000
+**********
+0.81047600
+4.82351200
+9.92136600
+1.02999500
+4.84627900
+7.05969400
+1.54809800
+0.26879800
+-.12729700
+9.58624600
+0.11800000
+0.40000000
+ .50308D+03.13859D+01
+
+
+
+
+Comparison of different chi2 outputs
+.54366D+05.14977D+03
+
+.54366D+05.14977D+03
+
+

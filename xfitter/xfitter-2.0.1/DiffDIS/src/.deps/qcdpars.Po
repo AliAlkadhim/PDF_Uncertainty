@@ -1,0 +1,8 @@
+qcdpars.o: qcdpars.cc /usr/include/stdc-predef.h ../include/qcdpars.h \
+ ../include/types.h
+
+/usr/include/stdc-predef.h:
+
+../include/qcdpars.h:
+
+../include/types.h:

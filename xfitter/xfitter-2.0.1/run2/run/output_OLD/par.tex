@@ -1,0 +1,48 @@
+\documentclass[14pt]{report}
+\usepackage{extsizes}
+\usepackage[paperwidth=21cm,paperheight=21cm,left=0.2cm,right=0.2cm,top=0.2cm,bottom=0.2cm]{geometry}
+\usepackage{pxfonts}
+\pagestyle{empty}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\definecolor{lightgray}{gray}{0.85}
+\usepackage{color}
+\begin{document}
+\begin{table}
+  \begin{center}
+  \rowcolors{2}{lightgray}{}
+  \resizebox*{!}{\textwidth}{
+    \begin{tabular}{lp{4.45cm}}
+      \toprule
+ Parameter   & output  \\ 
+      \midrule
+  'Bg' & $-0.062 \pm 0.027$  \\ 
+  'Cg' & $5.56 \pm 0.32$  \\ 
+  'Aprig' & $0.166 \pm 0.028$  \\ 
+  'Bprig' & $-0.3831 \pm 0.0098$  \\ 
+  'Cprig' & $\textcolor{blue}{ 25.00 }$  \\ 
+  'Buv' & $0.810 \pm 0.016$  \\ 
+  'Cuv' & $4.824 \pm 0.064$  \\ 
+  'Euv' & $9.92 \pm 0.84$  \\ 
+  'Bdv' & $1.030 \pm 0.061$  \\ 
+  'Cdv' & $4.85 \pm 0.30$  \\ 
+  'CUbar' & $7.06 \pm 0.81$  \\ 
+  'DUbar' & $1.5 \pm 1.1$  \\ 
+  'ADbar' & $0.2688 \pm 0.0080$  \\ 
+  'BDbar' & $-0.1273 \pm 0.0036$  \\ 
+  'CDbar' & $9.6 \pm 1.4$  \\ 
+  'alphas' & $\textcolor{blue}{ 0.1180 }$  \\ 
+  'fs' & $\textcolor{blue}{ 0.4000 }$  \\ 
+      \midrule
+  \rowcolor{white}
+ Fit status   & \textcolor{red}{ not-a-fit }  \\ 
+  \rowcolor{white}
+ Uncertainties   & not-a-fit  \\ 
+      \bottomrule
+    \end{tabular}
+  }
+  \end{center}
+\end{table}
+
+\end{document}
