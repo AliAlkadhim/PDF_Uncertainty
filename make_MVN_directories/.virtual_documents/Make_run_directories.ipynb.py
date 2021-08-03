@@ -89,6 +89,103 @@ MVN[:,13][0]
 MVN.shape
 
 
+import os
+num_samples=1000
+path = os.getcwd()
+for sample_ind in range(1000):
+    minuit_in_path = os.path.join(path, 'minuit.in.txt')
+    with open(minuit_in_path, 'w') as second:
+        second.write('set title\n')
+        second.write('new  14p HERAPDF\n')
+        second.write('parameters\n')
+        #lets put 0 for the fourth column, meaning that this parameter is fixed
+        second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN[:,0][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN[:,1][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN[:,2][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN[:,3][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '9'+ '    ' + "'Cprig'"+'    '+str(25.000)+ '    '+'0.\n')
+        #note that Cprig is a constant, not a parameter value!
+        second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN[:,4][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN[:,5][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN[:,6][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN[:,7][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN[:,8][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN[:,9][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN[:,10][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN[:,11][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN[:,12][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN[:,13][sample_ind])+ '    '+'0.\n')
+        second.write('\n\n\n')
+        #for complete fit, do
+#         second.write('migrad 200000\n')
+#         second.write('hesse\n')
+#         second.write('set print 3\n\n')
+        #to run only 3 iterations, do 
+        second.write('call fcn 3\n')
+        second.write('set print 3\n\n')
+        second.write('return')
+        
+    
+
+
+
+
+import os; import subprocess as sp;from shutil import copyfile
+sample_nu=[]
+for i in range(1000):
+    sample_nu.append('run_{}'.format(i))
+#dirs
+
+os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
+steering = 'steering.txt'
+for run_ind, run in enumerate(dirs):
+    os.makedirs(run, exist_ok=True)
+    print(os.path.abspath(run))
+    path=os.path.abspath(run)
+    copyfile('ewparam.txt', os.path.join(path, 'ewparam.txt'))
+    copyfile('steering.txt', os.path.join(path, 'steering.txt'))
+    minuit_in_path = os.path.join(path, 'minuit.in.txt')
+    with open(minuit_in_path, 'w') as second:
+        #second = os.path.abspath(second)
+        second.write('set title\n')
+        second.write('new  14p HERAPDF\n')
+        second.write('parameters\n')
+        #lets put 0 for the fourth column, meaning that this parameter is fixed
+        second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN[:,0][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN[:,1][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN[:,2][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN[:,3][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '9'+ '    ' + "'Cprig'"+'    '+str(25.000)+ '    '+'0.\n')
+        #note that Cprig is a constant, not a parameter value!
+        second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN[:,4][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN[:,5][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN[:,6][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN[:,7][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN[:,8][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN[:,9][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN[:,10][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN[:,11][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN[:,12][run_ind])+ '    '+'0.\n')
+        second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN[:,13][run_ind])+ '    '+'0.\n')
+        second.write('\n\n\n')
+        #for complete fit, do
+#         second.write('migrad 200000\n')
+#         second.write('hesse\n')
+#         second.write('set print 3\n\n')
+        #to run only 3 iterations, do 
+        second.write('call fcn 2\n')
+        second.write('*migrad 200000\n')
+        second.write('*hesse\n')
+        second.write('set print 3\n\n')
+        second.write('return')
+    os.chdir(path)
+    sp.run('ln -s /home/ali/Desktop/Research/xfitter/xfitter-2.0.1/datafiles', shell=True)
+    sp.run('xfitter', shell=True)
+    os.chdir('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/make_MVN_directories')
+
+    #sp.run('cp ./ewparam.txt run', shell=True)
+
+
 for i in range(13):
     print(MVN[:,i][0])
 

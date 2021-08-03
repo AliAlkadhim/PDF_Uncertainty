@@ -187,7 +187,7 @@ means.shape
 
 
 d=COV.shape[0] #this has to be 13 since
-n=1000 #number of samples, could be anything
+n=100 #number of samples, could be anything
 
 def get_mvn_samples(mu,cov,n,d):
     samples = np.zeros((n,d))
@@ -197,8 +197,8 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
-MVN = get_mvn_samples(mu=means, cov=COV, n=100000, d=d)
-MVN
+MVN_10 = get_mvn_samples(mu=means, cov=COV, n=10, d=d)
+MVN_10
 
 
 MVN_double = get_mvn_samples(mu=means, cov=COV, n=10000, d=d)
@@ -243,7 +243,7 @@ get_ipython().getoutput("pwd")
 MVN[:,13]
 
 
-np.save('MVN_1000.npy',MVN)
+np.save('MVN_10.npy',MVN_10)
 
 
 get_ipython().getoutput("pwd")

@@ -2,8 +2,8 @@ TODO:
 1. change MVN to doubles in python: no that's not the issue because double dtype is still float64
 2. in unminimized_chi2, try not doing if the parameter is not 0, then save it, because the 0 values are needed since their indeces are not selected... more work needed to understand this
 3. parminuit(i) is compied into parminuitsave(i): I think I need to change parminuit(i) to be from my parameters. parminuit(i) comes from pkeep(i).
-4. Perhaps I need to change MNE to 14 in endmini.inc. we are looping to 14 in unminimizedchi2 and in fcn... A_MNE and MVN_cp are 14...
-5. call read_MVN before saving parminuitsave to pars_saved.txt in uniminimized_chi2.
+4. Perhaps I need to change MNE to 14 in endmini.inc. we are looping to 14 in unminimizedchi2 and in fcn... A_MNE and MVN_cp are 14...: NO not the issue
+5. call read_MVN before saving parminuitsave to pars_saved.txt in uniminimized_chi2.: NO
 6. parminuit is in fcn.f and src/dataset_tools.f, parminuitsave is also in src/theory_dispatcher.f. in theory_dispatcher, there is the line
           XParValueByName = parminuitsave(iExtraParamMinuit(idx))
 7. Maybe I need to generate the data in the same format as the minuit.in.txt format, 
