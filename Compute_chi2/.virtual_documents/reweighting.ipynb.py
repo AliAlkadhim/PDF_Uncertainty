@@ -145,52 +145,7 @@ for i in range(13):
 print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
 
 
-weights = np.empty((3999, 14))
-for i in range(13):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
-    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
-print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
 
-
-# filter_mask = np.empty(np.shape(weights), dtype=bool)
-# filtered_weights_list =[]
-
-# for i in range(14):
-#     mean_i = np.mean(weights[:,i])
-#     std_i = np.std(weights[:,i])
-#     filter_mask[:,i] = (weights[:,i] > mean_i - 4 * std_i)
-#     filter_mask[:,i] = (filter_mask[:,i] < mean_i + 4 * std_i)
-#     filtered_weights[:,i] = weights[:,i][filter_mask[:,i]]
-#     filtered_weights_list.append(filtered_weights[:,i])
-
-#filter_mask, filter_mask.shape
-#weights[filter_mask]
-#filtered_weights
-#for i in range(14):
-
-# filtered_weights = filtered_weights[filter_mask]
-# filtered_weights
-
-#print(filter_mask.shape, filter_mask, '\n\n')
-# print(filtered_weights.shape, filtered_weights[:,0])
-
-
-filtered_weights=[]
-for i in range(13):
-    mean_i = np.mean(weights[:,i])
-    std_i = np.std(weights[:,i])
-    final_list = [x for x in weights[:,i] if (x > mean_i - 4 * std_i)]
-    final_list = [x for x in final_list if (x < mean + 4 * sd)]
-    filtered_weights.append(final_list)
-    
-filtered_weights_ = [np.array(x) for x in filtered_weights]
-print('UNFILTERED WEIGHTS\n')
-print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
-print('\n \n\n FILTERED WEIGHTS\n')
-print(np.array(filtered_weights_).shape, '\n\n', filtered_weights_[0], '\n\n', filtered_weights_[0].mean(), '\n\n', filtered_weights_[0].std())
-fig, ax = plt.subplots(1, 2)
-ax[0].hist(filtered_weights_[0], bins=100, range=(0,10))
-ax[1].hist(weights[:,0], bins=100, range=(0,10))
 
 
 import matplotlib.pyplot as plt
@@ -230,6 +185,57 @@ plt.tight_layout()
 plt.show()
 
 
+
+
+
+filtered_weights=[]
+for i in range(13):
+    mean_i = np.mean(weights[:,i])
+    std_i = np.std(weights[:,i])
+    final_list = [x for x in weights[:,i] if (x > mean_i - 4 * std_i)]
+    final_list = [x for x in final_list if (x < mean + 4 * sd)]
+    filtered_weights.append(final_list)
+    
+filtered_weights_ = [np.array(x) for x in filtered_weights]
+print('UNFILTERED WEIGHTS\n')
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+print('\n \n\n FILTERED WEIGHTS\n')
+print(np.array(filtered_weights_).shape, '\n\n', filtered_weights_[0], '\n\n', filtered_weights_[0].mean(), '\n\n', filtered_weights_[0].std())
+fig, ax = plt.subplots(1, 2)
+ax[0].hist(filtered_weights_[0], bins=100, range=(0,10))
+ax[1].hist(weights[:,0], bins=100, range=(0,10))
+
+
+weights = np.empty((3999, 14))
+for i in range(13):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+
+
+# filter_mask = np.empty(np.shape(weights), dtype=bool)
+# filtered_weights_list =[]
+
+# for i in range(14):
+#     mean_i = np.mean(weights[:,i])
+#     std_i = np.std(weights[:,i])
+#     filter_mask[:,i] = (weights[:,i] > mean_i - 4 * std_i)
+#     filter_mask[:,i] = (filter_mask[:,i] < mean_i + 4 * std_i)
+#     filtered_weights[:,i] = weights[:,i][filter_mask[:,i]]
+#     filtered_weights_list.append(filtered_weights[:,i])
+
+#filter_mask, filter_mask.shape
+#weights[filter_mask]
+#filtered_weights
+#for i in range(14):
+
+# filtered_weights = filtered_weights[filter_mask]
+# filtered_weights
+
+#print(filter_mask.shape, filter_mask, '\n\n')
+# print(filtered_weights.shape, filtered_weights[:,0])
+
+
 import matplotlib.pyplot as plt
 
 
@@ -252,7 +258,7 @@ for i in range(14):
 #PLOT WEIGHTED DISTRIBUTIONS
 for i in range(14):
     axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=filtered_weights_[i], bins=100, color = 'r')
-    axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set(title=titles[i] + ' Weighted and Filtered', xlabel='value')
     axes[i,1].set_ylim(0,180)
     
     
