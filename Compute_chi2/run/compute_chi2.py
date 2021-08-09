@@ -1,9 +1,9 @@
 import os
 import numpy as np
 import re
-MVN_4000 = np.load('MVN_4000.npy')
+MVN_25k = np.load('../MVN_samples/MVN_25k.npy')
 
-num_samples=4000
+num_samples=25000
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -13,22 +13,22 @@ for sample_ind in range(num_samples):
         second.write('new  14p HERAPDF\n')
         second.write('parameters\n')
         #lets put 0 for the fourth column, meaning that this parameter is fixed
-        second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN_4000[:,0][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN_4000[:,1][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN_4000[:,2][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN_4000[:,3][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN_25k[:,0][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN_25k[:,1][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN_25k[:,2][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN_25k[:,3][sample_ind])+ '    '+'0.\n')
         second.write('    '+ '9'+ '    ' + "'Cprig'"+'    '+str(25.000)+ '    '+'0.\n')
         #note that Cprig is a constant, not a parameter value!
-        second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN_4000[:,4][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN_4000[:,5][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN_4000[:,6][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN_4000[:,7][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN_4000[:,8][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN_4000[:,9][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN_4000[:,10][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN_4000[:,11][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN_4000[:,12][sample_ind])+ '    '+'0.\n')
-        second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN_4000[:,13][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN_25k[:,4][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN_25k[:,5][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN_25k[:,6][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN_25k[:,7][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN_25k[:,8][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN_25k[:,9][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN_25k[:,10][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN_25k[:,11][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN_25k[:,12][sample_ind])+ '    '+'0.\n')
+        second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN_25k[:,13][sample_ind])+ '    '+'0.\n')
         second.write('\n\n\n')
         #for complete fit, do
 #         second.write('migrad 200000\n')
@@ -65,8 +65,8 @@ for sample_ind in range(num_samples):
 #ith open('MVN_10_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)
-chi2_array_4000 = np.array(chi2_vals)
-np.save('chi2_array_4000.npy', chi2_array_4000)
+chi2_array_25k  = np.array(chi2_vals)
+np.save('chi2_array_25k.npy', chi2_array_25k)
 print(chi2_vals)
 #print(s)
 #print(matches)

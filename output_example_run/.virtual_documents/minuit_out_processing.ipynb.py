@@ -187,7 +187,7 @@ means.shape
 
 
 d=COV.shape[0] #this has to be 13 since
-n=100 #number of samples, could be anything
+n=25000 #number of samples, could be anything
 
 def get_mvn_samples(mu,cov,n,d):
     samples = np.zeros((n,d))
@@ -199,6 +199,11 @@ def get_mvn_samples(mu,cov,n,d):
 
 MVN_4000 = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)
 MVN_4000.dtype
+
+
+MVN_25k = get_mvn_samples(mu=means, cov=COV, n=25000, d=d)
+np.save('MVN_25k.npy', MVN_25k)
+MVN_25k
 
 
 MVN_double = get_mvn_samples(mu=means, cov=COV, n=10000, d=d)
@@ -246,10 +251,6 @@ savetxt('MVN.dat', MVN, delimiter=', ', header = str(MVN.shape[0]),  fmt='get_ip
 
 # data = loadtxt('MVN.dat', delimiter=',', comments='')
 # data
-
-
-with open('ex.dat','w') as f:
-    f.write(list(MVN[0,:]))
 
 
 with open('MVN.dat', 'w') as f:
