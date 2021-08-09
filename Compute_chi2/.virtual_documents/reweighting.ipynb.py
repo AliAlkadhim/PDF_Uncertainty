@@ -17,12 +17,12 @@ from IPython.display import Image
 Image(filename='Best_fit_PDF_values.png')
 
 
-Cg = MVN[:,1]
-     plt.hist(Cg.flatten(), bins=50)
+Cg = MVN_4000[:,1]
+plt.hist(Cg.flatten(), bins=50)
 
 
 for i in range(13):
-    plt.hist(MVN[:,i], bins=100)
+    plt.hist(MVN_4000[:,i], bins=100)
 
 
 import seaborn as sns
@@ -75,14 +75,6 @@ chi2_diff
 np.log(MVN_4000_chi2)
 
 
-weights=np.exp(-0.5*(chi2_diff**2)); 
-weights = weights/np.sum(weights)
-weights
-
-
-weights_per_dof=np.exp(-0.5*(MVN_4000_chi2_per_dof**2)); weights_per_dof
-
-
 np.min(Bg)
 
 
@@ -100,6 +92,188 @@ plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('weights w')
 
 import matplotlib.pyplot as plt
 Bg = MVN_4000[:-1,0]
+weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
+weights_Bg = 4000*weights_Bg/np.sum(weights_Bg)
+
+plt, axs = plt.subplots(1,2,figsize=(14,7))
+axs[0].hist(Bg.flatten(), bins=100)
+axs[0].set_title('Bg Unweighted Distribution')
+axs[1].hist(Bg.flatten(), bins=100, weights=weights_Bg, color='r')
+axs[1].set_title('Bg Weighted Distribution')
+axs[1].set_ylim(0,150)
+axs[0].set_ylim(0,150)
+print(weights_Bg)
+
+
+Bg = MVN_4000[:-1,0]; weights_Bg
+
+
+params=[]
+for i in range(13):
+    params.append(MVN_4000[:-1,i])
+params[0]
+
+
+# weights = np.empty((3999, 2))
+# weights[:,0] = np.exp(-0.5 * (chi2_diff))
+# weights[:,0] = 4000* weights[:,0]/ np.sum(weights[:,0])
+# weights[:,0]
+
+
+weights = np.empty((3999, 2))
+weights.shape
+
+
+weights = np.empty((3999, 14))
+for i in range(13):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+weights[:,0]
+
+
+for i in range(3):
+    print(weights[:,i][i])
+
+
+weights[:,0]
+
+
+weights = np.empty((3999, 14))
+for i in range(13):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+
+
+weights = np.empty((3999, 14))
+for i in range(13):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+
+
+# filter_mask = np.empty(np.shape(weights), dtype=bool)
+# filtered_weights_list =[]
+
+# for i in range(14):
+#     mean_i = np.mean(weights[:,i])
+#     std_i = np.std(weights[:,i])
+#     filter_mask[:,i] = (weights[:,i] > mean_i - 4 * std_i)
+#     filter_mask[:,i] = (filter_mask[:,i] < mean_i + 4 * std_i)
+#     filtered_weights[:,i] = weights[:,i][filter_mask[:,i]]
+#     filtered_weights_list.append(filtered_weights[:,i])
+
+#filter_mask, filter_mask.shape
+#weights[filter_mask]
+#filtered_weights
+#for i in range(14):
+
+# filtered_weights = filtered_weights[filter_mask]
+# filtered_weights
+
+#print(filter_mask.shape, filter_mask, '\n\n')
+# print(filtered_weights.shape, filtered_weights[:,0])
+
+
+filtered_weights=[]
+for i in range(13):
+    mean_i = np.mean(weights[:,i])
+    std_i = np.std(weights[:,i])
+    final_list = [x for x in weights[:,i] if (x > mean_i - 4 * std_i)]
+    final_list = [x for x in final_list if (x < mean + 4 * sd)]
+    filtered_weights.append(final_list)
+    
+filtered_weights_ = [np.array(x) for x in filtered_weights]
+print('UNFILTERED WEIGHTS\n')
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+print('\n \n\n FILTERED WEIGHTS\n')
+print(np.array(filtered_weights_).shape, '\n\n', filtered_weights_[0], '\n\n', filtered_weights_[0].mean(), '\n\n', filtered_weights_[0].std())
+fig, ax = plt.subplots(1, 2)
+ax[0].hist(filtered_weights_[0], bins=100, range=(0,10))
+ax[1].hist(weights[:,0], bins=100, range=(0,10))
+
+
+import matplotlib.pyplot as plt
+
+weights = np.empty((3999, 14))
+for i in range(13):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+print(weights[:,0])
+#There could be one weights that happens to be very large at 0
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
+
+
+fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
+#for i, ax in enumerate(axes.flatten()):
+
+#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
+for i in range(14):
+    axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=100)
+
+    axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_ylim(0,180)
+
+#PLOT WEIGHTED DISTRIBUTIONS
+for i in range(14):
+    axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=weights[:,i], bins=100, color = 'r')
+    axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_ylim(0,180)
+    
+    
+    #axes[i,0].legend()
+# # plt.minorticks_on()
+plt.tight_layout()
+#plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+plt.show()
+
+
+import matplotlib.pyplot as plt
+
+
+#There could be one weights that happens to be very large at 0
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
+
+
+fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
+#for i, ax in enumerate(axes.flatten()):
+
+#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
+for i in range(14):
+    axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=100)
+
+    axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_ylim(0,180)
+
+#PLOT WEIGHTED DISTRIBUTIONS
+for i in range(14):
+    axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=filtered_weights_[i], bins=100, color = 'r')
+    axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_ylim(0,180)
+    
+    
+    #axes[i,0].legend()
+# # plt.minorticks_on()
+plt.tight_layout()
+#plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+plt.show()
+
+
+param_names =['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
+Bg = MVN_4000[:-1,0]
+Cg = MVN_4000[:-1,1]
+params = [Bg, Cg]
+weights = np.exp(-0.5 * (chi2_diff))/params
+weights = 4000 * weights/ np.sum(weights)
+weights
+
+
+
+
 weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
 weights_Bg = 4000*weights_Bg/np.sum(weights_Bg)
 
