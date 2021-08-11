@@ -4,7 +4,17 @@ cd [path to xFitter];   ./configure --enable-lhapdf --enable-apfel --enable-appl
 
 If you don't have xFitter (or its dependencies such as QCDNUM, lapack, etc.) installed, first run 
 cd install_xfitter && chmod +x install-lapack && ./install-lapack
-then run
+(it is recommended that you make one directory, for example "external" and install everything on there, then export it as a global environment variable with 
+
+export EXTERNAL=$HOME/external
+
+then, add it to PATH and LD_LIBRARY_PATH, with
+
+export PATH=$EXTERNAL/bin:$PATH && export LD_LIBRARY_PATH=$EXTERNAL/lib:LD_LIBRARY_PATH
+)
+
+then, in your installation directoy, run
+
 chmod +x install-xfitter && ./install-xfitter 
 
 Install any LHAPDF PDF set, with lhapdf command, or from https://lhapdf.hepforge.org/pdfsets (and unpack)
