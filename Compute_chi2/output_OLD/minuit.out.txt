@@ -6,29 +6,29 @@
  new  14p HERAPDF                                  
  ******************************************************************************
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.03773587965402937
- TRUNCATED TO:-0.0377358796540293
+     ORIGINAL:-0.07224448446832418
+ TRUNCATED TO:-0.0722444844683241
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     2 'Bg        '  -0.37736E-01  constant
-     3 'Cg        '    5.5957      constant
-     7 'Aprig     '   0.12918      constant
-     8 'Bprig     '  -0.38555      constant
+     2 'Bg        '  -0.72244E-01  constant
+     3 'Cg        '    5.4836      constant
+     7 'Aprig     '   0.19636      constant
+     8 'Bprig     '  -0.36917      constant
      9 'Cprig     '    25.000      constant
-    12 'Buv       '   0.80603      constant
-    13 'Cuv       '    4.8035      constant
-    15 'Euv       '    9.6659      constant
-    22 'Bdv       '    1.0657      constant
-    23 'Cdv       '    4.9390      constant
-    33 'CUbar     '    7.1252      constant
-    34 'DUbar     '    1.8672      constant
-    41 'ADbar     '   0.26860      constant
+    12 'Buv       '   0.81002      constant
+    13 'Cuv       '    4.8141      constant
+    15 'Euv       '    9.6061      constant
+    22 'Bdv       '   0.99846      constant
+    23 'Cdv       '    4.6873      constant
+    33 'CUbar     '    7.2018      constant
+    34 'DUbar     '    1.5333      constant
+    41 'ADbar     '   0.26354      constant
  MINUIT WARNING: INPUT DATA WORD TOO LONG.
-     ORIGINAL:-0.12700450870824287
- TRUNCATED TO:-0.1270045087082428
-    42 'BDbar     '  -0.12700      constant
-    43 'CDbar     '    10.359      constant
+     ORIGINAL:-0.12830377964371428
+ TRUNCATED TO:-0.1283037796437142
+    42 'BDbar     '  -0.12830      constant
+    43 'CDbar     '    9.2177      constant
     ***************************************************************************
 
  PARAMETER DEFINITIONS:
@@ -38,49 +38,3 @@
    103 'fcharm    '    0.0000      constant
 
  MINUIT: FIRST CALL TO USER FUNCTION, WITH IFLAG=1
-
- FCN=   505.9625     FROM PARAMETR  STATUS=RESET          2 CALLS        2 TOTAL
-                     EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
-
-  EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
-  NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   2    Bg        -0.37736E-01   constant   
-   3    Cg          5.5957       constant   
-   7    Aprig      0.12918       constant   
-   8    Bprig     -0.38555       constant   
-   9    Cprig       25.000       constant   
-  12    Buv        0.80603       constant   
-  13    Cuv         4.8035       constant   
-  15    Euv         9.6659       constant   
-  22    Bdv         1.0657       constant   
-  23    Cdv         4.9390       constant   
-  33    CUbar       7.1252       constant   
-  34    DUbar       1.8672       constant   
-  41    ADbar      0.26860       constant   
-  42    BDbar     -0.12700       constant   
-  43    CDbar       10.359       constant   
- 101    alphas     0.11800       constant   
- 102    fs         0.40000       constant   
- 103    fcharm      0.0000       constant   
- **********
- **    1 ** 
- **********
-           BLANK COMMAND IGNORED.
- **********
- **    2 ** 
- **********
-           BLANK COMMAND IGNORED.
- **********
- **    3 **CALL FCN    3.000    
- **********
- **********
- **    4 **SET PRINT    3.000    
- **********
- **********
- **    5 ** 
- **********
-           BLANK COMMAND IGNORED.
- **********
- **    6 **RETURN 
- **********
- ..........MINUIT TERMINATED AND RETURNS TO USER PROGRAM.            

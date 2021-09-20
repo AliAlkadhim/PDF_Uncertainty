@@ -1,0 +1,10 @@
+The code in this directory is meant to be ran on the FSU cluster. It is essentially the same except for different paths and system architecture.
+
+
+
+WORKFLOW:
+go to Run/example_batch directory
+chmod 777 qsub_command.sh run_job.sh make_qsub_directories.sh compute_chi2.sh
+./make_qsub_directories
+./qsub_command.sh
+

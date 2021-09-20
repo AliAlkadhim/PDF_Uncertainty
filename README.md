@@ -1,6 +1,6 @@
 Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. This uses xFitter 2.0.1 (https://www.xfitter.org/xFitter/), make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
 
-cd [path to xFitter];   ./configure --enable-lhapdf --enable-apfel --enable-applgrid  
+cd [path to xFitter];   ./configure ./configure --prefix=<installation path> --enable-lhapdf --enable-apfel --enable-applgrid  
 
 If you don't have xFitter (or its dependencies such as QCDNUM, lapack, etc.) installed, first run 
 cd install_xfitter && chmod +x install-lapack && ./install-lapack

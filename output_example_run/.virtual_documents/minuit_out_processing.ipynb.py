@@ -163,9 +163,12 @@ for i in range(len(COV)):
 COV
 
 
+np.save('MVN_4000_COV.npy', COV)
+
+
 y = COV.view(type=np.matrix)
 def matprint(mat, fmt="g"):
-    col_maxes = [max([len(("{:"+fmt+"}").format(x)) for x in col]) for col in mat.T]
+    col_maxee = [max([len(("{:"+fmt+"}").format(x)) for x in col]) for col in mat.T]
     for x in mat:
         for i, y in enumerate(x):
             print(("{:"+str(col_maxes[i])+fmt+"}").format(y), end="  ")
@@ -181,13 +184,14 @@ np.sqrt(cov_diag)
 
 
 params = [-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810]
+#np.save('params_means.npy', np.array(params))
 means = np.array(params)
 means.shape
 
 
 
 d=COV.shape[0] #this has to be 13 since
-n=25000 #number of samples, could be anything
+n=50000 #number of samples, could be anything
 
 def get_mvn_samples(mu,cov,n,d):
     samples = np.zeros((n,d))
@@ -199,6 +203,11 @@ def get_mvn_samples(mu,cov,n,d):
 
 MVN_4000 = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)
 MVN_4000.dtype
+
+
+MVN_50k = get_mvn_samples(mu=means, cov=COV, n=50000, d=d)
+np.save('../Compute_chi2/MVN_samples/MVN_50k.npy', MVN_50k)
+MVN_50k
 
 
 MVN_25k = get_mvn_samples(mu=means, cov=COV, n=25000, d=d)
