@@ -3,7 +3,7 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 4
+    NInputFiles = 8
  
   ! Input files:
 
@@ -15,6 +15,25 @@
 !    InputFileNames(6) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat'
 !    InputFileNames(7) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat'
 
+
+  !************!
+  !  Tevatron  ! WORKS
+  !************!
+
+  ! CDF Jets, W, Z production:
+
+
+ InputFileNames(5)='datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
+   InputFileNames(6)=  'datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
+   InputFileNames(7)= 'datafiles/tevatron/cdf/wzProduction/0908.3914/CDF_Z_Boson_Rapidity-thexp.dat',
+
+
+  !****************!
+  !  Fixed Target  !
+  !****************!
+
+  ! BCDMS F2 proton:
+   InputFileNames(8)= 'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.100gev-thexp.dat',
 
 &End
 

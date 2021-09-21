@@ -1,3 +1,0 @@
-JScif.o: JScif.c /usr/include/stdc-predef.h
-
-/usr/include/stdc-predef.h:

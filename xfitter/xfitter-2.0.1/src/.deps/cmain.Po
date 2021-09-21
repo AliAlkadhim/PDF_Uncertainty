@@ -1,3 +1,0 @@
-cmain.o: cmain.cxx /usr/include/stdc-predef.h
-
-/usr/include/stdc-predef.h:
