@@ -7,19 +7,19 @@
  
   ! Input files:
 
-    'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920.dat',
-    'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820.dat',
- 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575.dat',
- 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460.dat',
- 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem.dat',
- 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat',
- 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat',
+    InputFileNames(1) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920.dat'
+    InputFileNames(2) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820.dat'
+!    InputFileNames(3) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575.dat'
+!    InputFileNames(4) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460.dat'
+!    InputFileNames(5) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem.dat'
+!    InputFileNames(6) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat'
+!    InputFileNames(7) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat'
 
   ! BCDMS F2 proton:
-    'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.100gev-thexp.dat',
-    'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.120gev-thexp.dat',
-    'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.200gev-thexp.dat',
-    'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.280gev-thexp.dat',
+    InputFileNames(3) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.100gev-thexp.dat',
+    InputFileNames(4) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.120gev-thexp.dat',
+    InputFileNames(5) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.200gev-thexp.dat',
+    InputFileNames(6) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.280gev-thexp.dat',
 
 &End
 
