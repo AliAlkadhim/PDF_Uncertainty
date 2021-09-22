@@ -51,8 +51,11 @@
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Ds_pty_Normy-thexp.dat',
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Lambdac_y_Normy-thexp.dat',
 
-    ! CMS 8 TeV jets
-    InputFileNames(7) = 'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1-thexp.dat',
+    ! CMS 8 TeV jets : DNE applgrid grid exception
+    ! InputFileNames(7) = 'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1-thexp.dat',
+
+  ! ATLAS Dec 2016 W,Z:
+   InputFileNames(7) =  'datafiles/lhc/atlas/wzProduction/1612.03016/wminus-thexp.dat',
 
 &End
 
