@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 54
+    NInputFiles = 53
 
    InputFileNames =
 
@@ -117,7 +117,7 @@
     'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3-thexp.dat',
     'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin4-thexp.dat',
     'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin5-thexp.dat',
-    'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin6-thexp.dat',
+    'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin6-thexp.dat'
 
   ! CMS double-differential ttbar Run 1 (include only one file, not all from directory datafiles/lhc/cms/topProduction/1703.01630):
 
