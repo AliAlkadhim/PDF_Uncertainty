@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 79
+    NInputFiles = 76
 
    InputFileNames =
 
@@ -44,10 +44,7 @@
     'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.200gev-thexp.dat',
     'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.280gev-thexp.dat',
 
-  ! NuSea DY
-    'datafiles/tevatron/e866/dy/0103030/x2-low-mass-thexp.dat',
-    'datafiles/tevatron/e866/dy/0103030/x2-mid-mass-thexp.dat',
-    'datafiles/tevatron/e866/dy/0103030/x2-hi-mass-thexp.dat',
+  ! NuSea DY cant read
 
   !************!
   !  Tevatron  !
