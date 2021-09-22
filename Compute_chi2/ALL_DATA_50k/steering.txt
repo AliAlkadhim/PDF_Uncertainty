@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 52
+    NInputFiles = 49
 
    InputFileNames =
 
@@ -72,9 +72,7 @@
   ! ATLAS W, Z production: cant read
   
   ! ATLAS Drell-Yann:
-    'datafiles/lhc/atlas/drellYan/1305.4192/dy_highmass-thexp.dat', 
-    'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass-thexp.dat',
-    'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass_extended-thexp.dat',
+
   
   ! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!):
     'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
