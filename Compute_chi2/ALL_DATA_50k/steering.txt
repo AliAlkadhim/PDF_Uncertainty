@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 53
+    NInputFiles = 52
 
    InputFileNames =
 
@@ -59,7 +59,6 @@
 
   
   ! Do and CDF combined ttbar production (NOTE: need Hathor package):
-    'datafiles/tevatron/d0cdfCombined/topProduction/1309.7570/D0CDF-COMBINED-TOP-TOT-thexp.dat',
 
   !*******!
   !  LHC  !
