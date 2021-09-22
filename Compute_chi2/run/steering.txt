@@ -27,19 +27,29 @@
   ! CDF Jets, W, Z production: DOES NOT WORK
   ! InputFileNames(7) =  'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
 
-    ! CMS Jets: DOES NOT WORK
+    ! CMS Jets: DOES NOT WORK unknown reaction 
   ! InputFileNames(7) = 'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
     ! ATLAS Drell-Yann:
 
   
   ! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!):
-    InputFileNames(7) ='datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
+    !DNW appl::grid::exception grid::grid() cannot find file 
+
+!    InputFileNames(7) ='datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_03_08-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_08_12-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_12_21-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_21_28-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_28_36-thexp.dat',
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_36_44-thexp.dat',
+
+   ! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm)
+    InputFileNames(7) = 'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
+  !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dch_pty_Normy-thexp.dat',
+  !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dstar_pty_Normy-thexp.dat',
+  !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Ds_pty_Normy-thexp.dat',
+  !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Lambdac_y_Normy-thexp.dat',
+
 
 &End
 
