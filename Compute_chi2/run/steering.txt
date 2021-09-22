@@ -44,12 +44,15 @@
 !    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_36_44-thexp.dat',
 
    ! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm)
-    InputFileNames(7) = 'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
+   ! DNW  For 'HVQMNR pp QQbar' reaction please configure with --enable-hvqmnr
+  !  InputFileNames(7) = 'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dch_pty_Normy-thexp.dat',
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dstar_pty_Normy-thexp.dat',
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Ds_pty_Normy-thexp.dat',
   !  'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Lambdac_y_Normy-thexp.dat',
 
+    ! CMS 8 TeV jets
+    InputFileNames(7) = 'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1-thexp.dat',
 
 &End
 
