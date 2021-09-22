@@ -3,7 +3,7 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 6
+    NInputFiles = 7
  
   ! Input files:
 
@@ -15,11 +15,17 @@
 !    InputFileNames(6) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat'
 !    InputFileNames(7) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat'
 
-  ! BCDMS F2 proton:
+  ! BCDMS F2 proton: WORKS
     InputFileNames(3) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.100gev-thexp.dat',
     InputFileNames(4) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.120gev-thexp.dat',
     InputFileNames(5) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.200gev-thexp.dat',
     InputFileNames(6) ='datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.280gev-thexp.dat',
+  !************!
+  !  Tevatron  !
+  !************!
+
+  ! CDF Jets, W, Z production:
+    'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
 
 &End
 
