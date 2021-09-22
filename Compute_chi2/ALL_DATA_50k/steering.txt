@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 76
+    NInputFiles = 73
 
    InputFileNames =
 
@@ -78,10 +78,7 @@
   ! CMS Jets:
     'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
 
-  ! ATLAS W, Z production:
-    'datafiles/lhc/atlas/wzProduction/1203.4051/WP_applgrid_nnlo-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1203.4051/WM_applgrid_nnlo-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1203.4051/Z0_applgrid_nnlo-thexp.dat',
+  ! ATLAS W, Z production: cant read
   
   ! ATLAS Drell-Yann:
     'datafiles/lhc/atlas/drellYan/1305.4192/dy_highmass-thexp.dat', 
