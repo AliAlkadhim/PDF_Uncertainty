@@ -247,7 +247,7 @@
                                 !uPDF4 fit calculating kernel on fly, grid of sigma_hat
 
 
-  Order  = 'NLO'       ! 'LO', 'NLO' or 'NNLO', used for DGLAP evolution.
+  Order  = 'NNLO'       ! 'LO', 'NLO' or 'NNLO', used for DGLAP evolution.
 
   Q02     = 1.9 ! Evolution starting scale
 
