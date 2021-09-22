@@ -168,13 +168,13 @@
   ! Correlation files:
     CorrFileNames = 
 
-      'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004___QCD_11_004.corr'
-      'datafiles/lhc/cms/topProduction/1703.01630/CMS_8TeV_ttbar_DoubleDiff_mtt_ytt__CMS_8TeV_ttbar_DoubleDiff_mtt_ytt.dat'
-      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1___CMS_8TeV_jets_Ybin1.dat'
-      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin2___CMS_8TeV_jets_Ybin2.dat'
-      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3___CMS_8TeV_jets_Ybin3.dat'
-      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin4___CMS_8TeV_jets_Ybin4.dat'
-      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin5___CMS_8TeV_jets_Ybin5.dat'
+      'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004___QCD_11_004.corr',
+      'datafiles/lhc/cms/topProduction/1703.01630/CMS_8TeV_ttbar_DoubleDiff_mtt_ytt__CMS_8TeV_ttbar_DoubleDiff_mtt_ytt.dat',
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1___CMS_8TeV_jets_Ybin1.dat',
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin2___CMS_8TeV_jets_Ybin2.dat',
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3___CMS_8TeV_jets_Ybin3.dat',
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin4___CMS_8TeV_jets_Ybin4.dat',
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin5___CMS_8TeV_jets_Ybin5.dat',
       'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin6___CMS_8TeV_jets_Ybin6.dat'
 
   ! for superseeded or not supported anymore data
