@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 55
+    NInputFiles = 54
 
    InputFileNames =
 
@@ -120,7 +120,6 @@
     'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin6-thexp.dat',
 
   ! CMS double-differential ttbar Run 1 (include only one file, not all from directory datafiles/lhc/cms/topProduction/1703.01630):
-    'datafiles/lhc/cms/topProduction/1703.01630/CMS_8TeV_ttbar_DoubleDiff_mtt_ytt-thexp.dat',
 
   ! CMS and ATLAS ttbar and single top production (NOTE: need Hathor package):
 
