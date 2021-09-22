@@ -3,46 +3,19 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 8
+    NInputFiles = 2
  
-  ! Input files:
-
-    InputFileNames(1) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920.dat'
-    InputFileNames(2) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820.dat'
-    InputFileNames(3) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575.dat'
-    InputFileNames(4) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460.dat'
-!    InputFileNames(5) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem.dat'
-!    InputFileNames(6) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat'
-!    InputFileNames(7) = 'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat'
-
-
-  !************!
-  !  Tevatron  ! WORKS
-  !************!
-
-  ! CDF Jets, W, Z production:
-
-
- InputFileNames(5)='datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
-   InputFileNames(6)=  'datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
-   InputFileNames(7)= 'datafiles/tevatron/cdf/wzProduction/0908.3914/CDF_Z_Boson_Rapidity-thexp.dat',
-
-
-  !****************!
-  !  Fixed Target  !
-  !****************!
-
-  ! BCDMS F2 proton:
-   InputFileNames(8)= 'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.100gev-thexp.dat',
-
+! Tevatron W asymmetry:
+    InputFileNames(1) = 'datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry.dat'
+    InputFileNames(2) = 'datafiles/tevatron/d0/wzProduction/1312.2895/D0_W_asymmetry.dat'
 &End
 
 &InCorr
   ! Number of correlation (statistical, systematical or full) files
-    NCorrFiles = 0
- 
+    NCorrFiles = 1
+
   ! Correlation files:
-  !  CorrFileNames(1) = 'datafiles/hera/h1/jets/0904.3870/H1_NormInclJets_HighQ2_99-07___H1_NormInclJets_HighQ2_99-07.corr'
+    CorrFileNames(1) = 'datafiles/tevatron/d0/wzProduction/1312.2895/D0_W_asymmetry.corr'
 &End
 
 &CovarToNuisance
@@ -113,7 +86,7 @@
                                 !uPDF4 fit calculating kernel on fly, grid of sigma_hat
 
 
-  Order  = 'NNLO'       ! 'LO', 'NLO' or 'NNLO', used for DGLAP evolution.
+  Order  = 'NLO'       ! 'LO', 'NLO' or 'NNLO', used for DGLAP evolution.
 
   Q02     = 1.9 ! Evolution starting scale
 
@@ -183,6 +156,8 @@
    CHI2SettingsName = 'StatScale', 'UncorSysScale', 'CorSysScale', 'UncorChi2Type', 'CorChi2Type'
    Chi2Settings     = 'Poisson'  , 'Linear',        'Linear'     , 'Diagonal'     , 'Hessian'
    Chi2ExtraParam = 'PoissonCorr'
+
+  AsymErrorsIterations = 20
 
  ! Flag to define if native APPLgrid CKM values should be kept.
  LUseAPPLgridCKM = True
@@ -376,8 +351,8 @@
 * (Optional) LHAPDF sttering card
 *
 !&lhapdf
-!  LHAPDFSET  = 'CT10nlo'       ! LHAPDF grid file
+!  LHAPDFSET  = 'CT14nlo'       ! LHAPDF grid file
 !  ILHAPDFSET = 0               ! Set number within PdfSet
- !LHAPDFErrors = True         ! Take into account PDF uncertaintes 
+  !LHAPDFErrors = True         ! Take into account PDF uncertaintes 
   ! DataToTheo = True          ! reset data to predictions corresponding to member 0, for sensitivity studies
 !&End
