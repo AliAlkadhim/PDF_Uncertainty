@@ -3,7 +3,7 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 7
+    NInputFiles = 6
  
   ! Input files:
 
@@ -24,8 +24,8 @@
   !  Tevatron  !
   !************!
 
-  ! CDF Jets, W, Z production:
-    'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
+  ! CDF Jets, W, Z production: DOES NOT WORK
+  !  'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
 
 &End
 
