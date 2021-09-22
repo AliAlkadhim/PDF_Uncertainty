@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 73
+    NInputFiles = 71
 
    InputFileNames =
 
@@ -52,8 +52,7 @@
 
   ! CDF Jets, W, Z production:
     'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
-    'datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
-    'datafiles/tevatron/cdf/wzProduction/0908.3914/CDF_Z_Boson_Rapidity-thexp.dat',
+
 
   ! D0 Jets, W, Z production:
     'datafiles/tevatron/d0/jets/0802.2400/D0_JETS-thexp.dat',
