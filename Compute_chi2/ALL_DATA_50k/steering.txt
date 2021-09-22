@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 85
+    NInputFiles = 83
 
    InputFileNames =
 
@@ -147,8 +147,7 @@
   ! CMS and ATLAS ttbar and single top production (NOTE: need Hathor package):
     'datafiles/lhc/cms/topProduction/1208.2671/Diff_ttbar_7TeV_TOT-Hathor-thexp.dat',
     'datafiles/lhc/atlas/topProduction/1406.5375/Diff_ttbar_ATL_7TeV_TOT-Hathor-thexp.dat',
-    'datafiles/lhc/atlas/singleTopProduction/1406.7844/atlas_singletop_quark-thexp.dat',
-    'datafiles/lhc/atlas/singleTopProduction/1406.7844/atlas_singletop_antiquark-thexp.dat',
+
     'datafiles/lhc/cms/singleTopProduction/1403.7366/cms_singletop_quark-thexp.dat',
     'datafiles/lhc/cms/singleTopProduction/1403.7366/cms_singletop_antiquark-thexp.dat',
 
