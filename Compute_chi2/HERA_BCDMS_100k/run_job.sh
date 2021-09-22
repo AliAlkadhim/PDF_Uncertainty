@@ -5,11 +5,11 @@
 #$ -S /bin/sh
 
 ### -o pathname: The path used for the standard  output  stream  of  the job. the -j y specifies that the standard error (logs) should be merged with the standard out of the job.
-#$ -o /storage/5/home/aalkadhim/xfitter/CMSSW_10_2_27/src/RUNS/logs -j y
+#$ -o /storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/RUNS/NNPDF_Uncertainty/Compute_chi2/HERA_BCDMS_100k -j y
 
 p=$(pwd)
-source /storage/5/home/aalkadhim/xfitter/CMSSW_10_2_27/src/setup_xfitter.sh
-cd /storage/5/home/aalkadhim/xfitter/CMSSW_10_2_27/src/RUNS/ALL_DATA_50k
+source /storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/setup_xfitter.sh
+cd /storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/RUNS/NNPDF_Uncertainty/Compute_chi2/HERA_BCDMS_100k
 ###export PATH=$PATH:/storage/5/home/aalkadhim/xfitter/CMSSW_10_2_25/src/xfitter-2.0.1/src
 cd $p
 
