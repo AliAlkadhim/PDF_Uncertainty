@@ -4,7 +4,7 @@
 &InFiles
   ! Number of intput files
     !NInputFiles = 78 ! no LHCb data
-    NInputFiles = 71
+    NInputFiles = 55
 
    InputFileNames =
 
@@ -43,7 +43,7 @@
     'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.120gev-thexp.dat',
     'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.200gev-thexp.dat',
     'datafiles/fixedTarget/bcdms/inclusiveDis/cern-ep-89-06/BCDMS_F2p.280gev-thexp.dat',
-
+ ! 18
   ! NuSea DY cant read
 
   !************!
@@ -56,11 +56,7 @@
 
   ! D0 Jets, W, Z production:
     'datafiles/tevatron/d0/jets/0802.2400/D0_JETS-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/0702025/D0_Z_Boson_Rapidity-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/1309.2591/D0_Wmu_pt25_asymmetry-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/1309.2591/D0_Wmu_pt35_asymmetry-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/1312.2895/D0_W_asymmetry-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/1412.2862/D0_Wel_pt25_asymmetry-thexp.dat',
+
   
   ! Do and CDF combined ttbar production (NOTE: need Hathor package):
     'datafiles/tevatron/d0cdfCombined/topProduction/1309.7570/D0CDF-COMBINED-TOP-TOT-thexp.dat',
@@ -70,10 +66,7 @@
   !*******!
 
   ! CMS W, Z production:
-    'datafiles/lhc/cms/wzProduction/1110.4973/CMS_Z_boson_Rapidity-thexp.dat',
-    'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001-thexp.dat',
-    'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021-thexp.dat',
-  
+
   ! CMS Jets:
     'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
 
@@ -101,13 +94,7 @@
     'datafiles/lhc/atlas/jets/1304.4739/inclusivejets_2p76_R06_36_44-thexp.dat',
 
   ! ATLAS Dec 2016 W,Z:
-    'datafiles/lhc/atlas/wzProduction/1612.03016/wminus-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/wplus-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cc-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cf-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zylow_cc-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zypeak_cc-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zypeak_cf-thexp.dat',
+
 
   ! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm)
     'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
@@ -121,10 +108,8 @@
     'datafiles/lhc/lhcb/beautyProduction/1306.3663/LHCb_7TeV_Beauty_Bs_pty_Normy-thexp.dat',
     
   ! CMS W+c
-    'datafiles/lhc/cms/wzProduction/1310.1138/CMS_W_plus_c_SPM_12_002-thexp.dat',
   
   ! CMS W asymmetry 8 TeV (with NNLO Kfactors enabled)
-    'datafiles/lhc/cms/wzProduction/1603.01803/CMS_mAsymmetry_SMP_14_022_Kfactors-thexp.dat',
   
   ! CMS 8 TeV jets
     'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1-thexp.dat',
@@ -179,18 +164,13 @@
 
 &InCorr
   ! Number of correlation (statistical, systematical or full) files
-    NCorrFiles = 14
+    NCorrFiles = 8
  
   ! Correlation files:
     CorrFileNames = 
-      'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001___CMS_eAsymmetry_SPM_12_001.corr'
-      'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021___CMS_mAsymmetry_SMP_12_021.corr'
-      'datafiles/lhc/cms/wzProduction/1110.4973/CMS_Z_boson_Rapidity___CMS_Z_boson_Rapidity.corr'
+
       'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004___QCD_11_004.corr'
-      'datafiles/tevatron/d0/wzProduction/1312.2895/D0_W_asymmetry.corr'
       'datafiles/lhc/cms/topProduction/1703.01630/CMS_8TeV_ttbar_DoubleDiff_mtt_ytt__CMS_8TeV_ttbar_DoubleDiff_mtt_ytt.dat'
-      'datafiles/lhc/cms/wzProduction/1310.1138/CMS_W_plus_c_SPM_12_002___CMS_W_plus_c_SPM_12_002.cov'
-      'datafiles/lhc/cms/wzProduction/1603.01803/CMS_mAsymmetry_SMP_14_022___CMS_mAsymmetry_SMP_14_022.corr'
       'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1___CMS_8TeV_jets_Ybin1.dat'
       'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin2___CMS_8TeV_jets_Ybin2.dat'
       'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3___CMS_8TeV_jets_Ybin3.dat'
