@@ -25,10 +25,10 @@
   !************!
 
   ! CDF Jets, W, Z production: DOES NOT WORK
-  InputFileNames(7) =  'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
+  ! InputFileNames(7) =  'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
 
     ! CMS Jets:
-   ! 'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
+   InputFileNames(7) = 'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
 
 &End
 
