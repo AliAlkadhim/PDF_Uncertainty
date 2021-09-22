@@ -14,22 +14,22 @@ with open(minuit_in_path, 'w') as second:
     second.write('new  14p HERAPDF\n')
     second.write('parameters\n')
     #lets put 0 for the fourth column, meaning that this parameter is fixed
-    second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN_100k[:,0][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN_100k[:,1][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN_100k[:,2][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN_100k[:,3][sample_ind])+ '    '+'0.\n')
+    second.write('    '+ '2'+ '    ' + "'Bg'"+'    '+str(MVN_100k[:,0][1])+ '    '+'0.\n')
+    second.write('    '+ '3'+ '    ' + "'Cg'"+'    '+str(MVN_100k[:,1][1])+ '    '+'0.\n')
+    second.write('    '+ '7'+ '    ' + "'Aprig'"+'    '+str(MVN_100k[:,2][1])+ '    '+'0.\n')
+    second.write('    '+ '8'+ '    ' + "'Bprig'"+'    '+str(MVN_100k[:,3][1])+ '    '+'0.\n')
     second.write('    '+ '9'+ '    ' + "'Cprig'"+'    '+str(25.000)+ '    '+'0.\n')
     #note that Cprig is a constant, not a parameter value!
-    second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN_100k[:,4][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN_100k[:,5][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN_100k[:,6][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN_100k[:,7][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN_100k[:,8][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN_100k[:,9][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN_100k[:,10][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN_100k[:,11][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN_100k[:,12][sample_ind])+ '    '+'0.\n')
-    second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN_100k[:,13][sample_ind])+ '    '+'0.\n')
+    second.write('    '+ '12'+ '    ' + "'Buv'"+'    '+str(MVN_100k[:,4][1])+ '    '+'0.\n')
+    second.write('    '+ '13'+ '    ' + "'Cuv'"+'    '+str(MVN_100k[:,5][1])+ '    '+'0.\n')
+    second.write('    '+ '15'+ '    ' + "'Euv'"+'    '+str(MVN_100k[:,6][1])+ '    '+'0.\n')
+    second.write('    '+ '22'+ '    ' + "'Bdv'"+'    '+str(MVN_100k[:,7][1])+ '    '+'0.\n')
+    second.write('    '+ '23'+ '    ' + "'Cdv'"+'    '+str(MVN_100k[:,8][1])+ '    '+'0.\n')
+    second.write('    '+ '33'+ '    ' + "'CUbar'"+'    '+str(MVN_100k[:,9][1])+ '    '+'0.\n')
+    second.write('    '+ '34'+ '    ' + "'DUbar'"+'    '+str(MVN_100k[:,10][1])+ '    '+'0.\n')
+    second.write('    '+ '41'+ '    ' + "'ADbar'"+'    '+str(MVN_100k[:,11][1])+ '    '+'0.\n')
+    second.write('    '+ '42'+ '    ' + "'BDbar'"+'    '+str(MVN_100k[:,12][1])+ '    '+'0.\n')
+    second.write('    '+ '43'+ '    ' + "'CDbar'"+'    '+str(MVN_100k[:,13][1])+ '    '+'0.\n')
     second.write('\n\n\n')
     #for complete fit, do
 #         second.write('migrad 200000\n')
@@ -64,8 +64,8 @@ for match in matches:
     chi2_val = match.split()[1]
     chi2_vals.append(float(chi2_val))
 #ith open('MVN_100k_chi2s.txt', 'w') as MVN_chi2:
-#    for item in chi2_vals_sample_ind:
-#    MVN_chi2.write(chi2_vals_sample_ind)
+#    for item in chi2_vals_1:
+#    MVN_chi2.write(chi2_vals_1)
 chi2_array_100k = np.array(chi2_vals)
 np.save('chi2_array_100k.npy', chi2_array_100k)
 #print(chi2_vals)

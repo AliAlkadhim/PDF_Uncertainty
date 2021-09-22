@@ -12,7 +12,7 @@ cd /storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/RUNS/NNPDF_Uncertainty/Comp
 ### say we want to run qsub for each 10 parameter set samples, this means we have to create a diirectory for each sample
 
 
-for ((i = 0 ; i < 4 ; i++)); do
+for ((i = 0 ; i < 100000 ; i++)); do
  ###  dir_name = job_$i
 ### run directory index is the same as the "sample_ind" in the python file (a directory for each sample)
 	mkdir -p job_$i
