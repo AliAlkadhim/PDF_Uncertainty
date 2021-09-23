@@ -62,12 +62,16 @@ matches = re.findall(regex, s, re.MULTILINE)
 
 for match in matches:
     chi2_val = match.split()[1]
-    chi2_vals.append(float(chi2_val))
+    with open('/storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/RUNS/NNPDF_Uncertainty/Compute_chi2/HERA_BCDMS_100k/collected_chi2.txt', 'a') as f:
+        f.write(chi2_val)
+	f.write('\n')
+
+#    chi2_vals.append(float(chi2_val))
 #ith open('MVN_100k_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals_0:
 #    MVN_chi2.write(chi2_vals_0)
-chi2_array_100k = np.array(chi2_vals)
-np.save('chi2_array_100k.npy', chi2_array_100k)
+#chi2_array_100k = np.array(chi2_vals)
+#np.save('chi2_array_100k.npy', chi2_array_100k)
 #print(chi2_vals)
 #print(s)
 #print(matches)
