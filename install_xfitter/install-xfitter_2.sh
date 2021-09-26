@@ -28,11 +28,11 @@ skip_apfelgrid=0
 
 ## Option 2: Setup environment from CERN cvmfs
 ## These settings include compiler, cernlib and root
-#MODE=cern
-#gccv=4.6
-#os=slc6
-#arch=x86_64
-#rootversion=5.34.18
+MODE=cern
+gccv=4.6
+os=slc6
+arch=x86_64
+rootversion=5.34.18
 
 ## End of Configuration ####################################################
 #####################################################################
@@ -326,7 +326,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 install >> $CURRENTDIR/install.log  2>&1
+    make -j 9  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -335,25 +335,25 @@ else
     cd - >& /dev/null
 
 #Hathor:
-    echo "Installing Hathor $hathorver..."
-    hathor="Hathor"
-    if [[ $http == "curl" ]]
-    then
-        # alternative link https://www-zeuthen.desy.de/~moch/hathor/Hathor-2.0.tar.gz
-        curl https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz 2>> $CURRENTDIR/install.log
-    else
-        wget https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz >> $CURRENTDIR/install.log 2>&1
-    fi
-    tar xfz Hathor-${hathorver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
-    cd Hathor-${hathorver}/lib
-    # need to provide LHAPDF directory and add -fPIC flag to CFLAGS and FFLAGS
-    make LHAPDF=$CURRENTDIR/deps/lhapdf V=1 CFLAGS='-O2 -Wall -fPIC' FFLAGS='-ffixed-line-length-132 -fPIC' -j9 >> $CURRENTDIR/install.log  2>&1
-    if [[ $? != 0 ]]
-    then
-        echo "Error, check install.log for details"
-        exit
-    fi
-    cd - >& /dev/null
+    # echo "Installing Hathor $hathorver..."
+    # hathor="Hathor"
+    # if [[ $http == "curl" ]]
+    # then
+    #     # alternative link https://www-zeuthen.desy.de/~moch/hathor/Hathor-2.0.tar.gz
+    #     curl https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz 2>> $CURRENTDIR/install.log
+    # else
+    #     wget https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+    # fi
+    # tar xfz Hathor-${hathorver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
+    # cd Hathor-${hathorver}/lib
+    # # need to provide LHAPDF directory and add -fPIC flag to CFLAGS and FFLAGS
+    # make LHAPDF=$CURRENTDIR/deps/lhapdf V=1 CFLAGS='-O2 -Wall -fPIC' FFLAGS='-ffixed-line-length-132 -fPIC' -j9 >> $CURRENTDIR/install.log  2>&1
+    # if [[ $? != 0 ]]
+    # then
+    #     echo "Error, check install.log for details"
+    #     exit
+    # fi
+    # cd - >& /dev/null
 
  #hoppet:
     echo "Installing HOPPET $hoppetver..."
@@ -371,7 +371,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+    make -j 9  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -382,7 +382,7 @@ else
  # setup paths for applgrid:
     export PATH=$CURRENTDIR/deps/hoppet/bin/:$PATH
     export PATH=$CURRENTDIR/deps/lhapdf/bin/:$PATH
-    export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}
+    # export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}
     export LD_LIBRARY_PATH=$CURRENTDIR/deps/lhapdf/lib/:$LD_LIBRARY_PATH
     echo `lhapdf-config --prefix`/lib*/python*/site-packages > /tmp/xf_py1234_a
     export PYTHONPATH=$PYTHONPATH:`cat /tmp/xf_py1234_a`
@@ -413,7 +413,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+    make -j 9  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -441,7 +441,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+    make -j 9  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -521,7 +521,7 @@ else
           echo "Error, check install.log for details"
           exit
       fi
-      make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+      make -j 9  >> $CURRENTDIR/install.log  2>&1
       if [[ $? != 0 ]]
       then
           echo "Error, check install.log for details"
@@ -570,7 +570,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+    make -j 9  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -601,7 +601,7 @@ else
           echo "Error, check install.log for details"
           exit
       fi
-      make -j 9 install  >> $CURRENTDIR/install.log  2>&1
+      make -j 9  >> $CURRENTDIR/install.log  2>&1
       if [[ $? != 0 ]]
       then
           echo "Error, check install.log for details"
@@ -642,7 +642,7 @@ rm /tmp/xf_py1234_a
 
 echo export LD_LIBRARY_PATH=\$CURRENTDIR/deps/hoppet/lib/:\$LD_LIBRARY_PATH   >> setup.sh
 echo export LD_LIBRARY_PATH=\$CURRENTDIR/deps/lhapdf/lib/:\$LD_LIBRARY_PATH   >> setup.sh
-echo export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}       >> setup.sh
+# echo export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}       >> setup.sh
 echo export LD_LIBRARY_PATH=\$CURRENTDIR/deps/applgrid/lib/:\$LD_LIBRARY_PATH >> setup.sh
 echo export LD_LIBRARY_PATH=\$CURRENTDIR/deps/apfel/lib/:\$LD_LIBRARY_PATH >> setup.sh
 echo export LD_LIBRARY_PATH=\$CURRENTDIR/deps/mela/lib/:\$LD_LIBRARY_PATH >> setup.sh
@@ -666,7 +666,7 @@ fi
 echo source ./setup.sh > compile
 echo export PATH=\$CURRENTDIR/deps/hoppet/bin/:\$PATH       >> compile
 echo export PATH=\$CURRENTDIR/deps/lhapdf/bin/:\$PATH       >> compile
-echo export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}       >> compile
+# echo export HATHOR_DIR=$CURRENTDIR/deps/Hathor-${hathorver}       >> compile
 echo export PATH=\$CURRENTDIR/deps/applgrid/bin/:\$PATH     >> compile
 echo export PATH=\$CURRENTDIR/deps/apfel/bin/:\$PATH     >> compile
 echo export PATH=\$CURRENTDIR/deps/mela/bin/:\$PATH     >> compile
@@ -678,30 +678,30 @@ then
 fi
 
 # configure
-if [[ $mode != "deps" ]]
-then
-  if [[ $version == "2.0.0" ]] || [[ $version == "2.0.1" ]]; then
-    echo autoreconf --install                                 >> compile
-    echo ./configure --enable-applgrid --enable-lhapdf --enable-apfel --enable-apfelxx --enable-mela  --enable-apfelgrid --enable-process    >> compile
-    echo make -j 9 install                                    >> compile
-  elif [[ $version == "master_before_PionCeres_merge" ]] || [[ $version == "test_ceres_v0.01" ]]; then
-    # SZ 10.07.2019 apfelgrid produces linking error in PionCeres
-    echo ./configure --enable-applgrid --enable-lhapdf --enable-hathor --enable-apfel --enable-apfelxx --enable-mela --enable-process    >> compile
-    echo make -j 9 install                                    >> compile
-    echo autoreconf --install                                 >> compile
-  else
-    # cmake compilation
-    echo ./make.sh install >> compile
-  fi
-  echo "Compiling xFitter $version..."
-fi
+# if [[ $mode != "deps" ]]
+# then
+#   if [[ $version == "2.0.0" ]] || [[ $version == "2.0.1" ]]; then
+#     echo autoreconf --install                                 >> compile
+#     echo ./configure --enable-applgrid --enable-lhapdf --enable-apfel --enable-apfelxx --enable-mela  --enable-apfelgrid --enable-process    >> compile
+#     echo make -j 9                                    >> compile
+#   elif [[ $version == "master_before_PionCeres_merge" ]] || [[ $version == "test_ceres_v0.01" ]]; then
+#     # SZ 10.07.2019 apfelgrid produces linking error in PionCeres
+#     echo ./configure --enable-applgrid --enable-lhapdf --enable-hathor --enable-apfel --enable-apfelxx --enable-mela --enable-process    >> compile
+#     echo make -j 9                                    >> compile
+#     echo autoreconf --install                                 >> compile
+#   else
+#     # cmake compilation
+#     echo ./make.sh install >> compile
+#   fi
+#   echo "Compiling xFitter $version..."
+# fi
 
-./compile >> $CURRENTDIR/install.log  2>&1
-if [[ $? != 0 ]]
-then
-    echo "Error, check install.log for details"
-    exit
-fi
+# ./compile >> $CURRENTDIR/install.log  2>&1
+# if [[ $? != 0 ]]
+# then
+#     echo "Error, check install.log for details"
+#     exit
+# fi
 
 source ./setup.sh
 
