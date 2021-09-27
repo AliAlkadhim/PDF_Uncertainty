@@ -3,7 +3,7 @@ import numpy as np
 import re
 MVN_4000 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
 
-num_samples=4000
+num_samples=2
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -12,6 +12,7 @@ for sample_ind in range(num_samples):
         second.write('Minimizer: MINUIT # CERES \n')
         second.write('MINUIT:\n')
         second.write('  Commands: | \n')
+        second.write('    call fcn 1\n')
         second.write('    set str 2\n')
         second.write('    call fcn 3\n')
         second.write('\n')
@@ -41,8 +42,8 @@ for sample_ind in range(num_samples):
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
-        second.write('  fs : [ 0.4, 0.0 ]\n')
-        second.write('\n')
+        second.write('  fs   :   0.4\n')
+        second.write('  DbarToS: \"=fs/(1-fs)\"\n')
 
         second.write('Parameterisations:\n')
         second.write('  par_uv:\n')
@@ -58,8 +59,12 @@ for sample_ind in range(num_samples):
         second.write('    class: HERAPDF\n')        
         second.write('    parameters: [Adbar,Bdbar,Cdbar]\n')
         second.write('  par_s:\n')
-        second.write('    class: Expression\n')
-        second.write('    expression: \"Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)\" \n')
+        second.write('    class: Factor\n')
+        second.write('    factor: DbarToS #name of parameter\n')
+        second.write('    input: par_dbar\n')
+        second.write('\n')
+
+
         second.write('  par_g:\n')
         second.write('    class: NegativeGluon\n')
         second.write('    parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]\n')
@@ -82,10 +87,18 @@ for sample_ind in range(num_samples):
         second.write('Evolutions:\n')
         second.write('  proton-QCDNUM:\n')
         second.write('    ? !include evolutions/QCDNUM.yaml\n')
+        second.write('    decomposition: proton\n')
+        second.write('  proton-LHAPDF:\n')
+        second.write('    class: LHAPDF\n')
+        second.write('    set: \"NNPDF30_nlo_as_0118\"\n')
+        second.write('    member: 0\n')
         second.write('\n')
+
         second.write('Q0 : 1.378404875209\n')
         second.write('? !include constants.yaml\n')
+
         second.write('alphas : 0.118\n')
+        
         second.write('byReaction:\n')
         second.write('  RT_DISNC:\n')
         second.write('    ? !include reactions/RT_DISNC.yaml\n')
@@ -131,14 +144,14 @@ for sample_ind in range(num_samples):
 # @chi2out__   503.08321706305105     
 
 #pattern = re.compile('[@chi2out].[0-9]+[.][0-9]+')
-    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+'); regex=r'After.minimisation....\d+\.\d+'
+    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+'); regex=r'@chi2out__...\d+\.\d+'
     #matches = pattern.finditer(s)
     matches = re.findall(regex, s, re.MULTILINE)
     #print(matches)
     
     for match in matches:
-        chi2_val = match.split()[2]
-        chi2_vals.append(chi2_val)
+        chi2_val = match.split()[1]
+        chi2_vals.append(float(chi2_val))
 #ith open('MVN_10_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)

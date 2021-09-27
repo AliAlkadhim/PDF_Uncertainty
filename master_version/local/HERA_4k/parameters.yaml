@@ -1,35 +1,36 @@
 Minimizer: MINUIT # CERES 
 MINUIT:
   Commands: | 
+    call fcn 1
     set str 2
     call fcn 3
 
 Parameters:
   Ag   :  DEPENDENT
-  Bg   : [ -0.06378296878601784, 0. ]
-  Cg   : [ 5.513146151675255, 0. ]
-  Agp   : [ 0.16190517444163305, 0. ]
-  Bgp   : [ -0.38929013881408153, 0. ]
+  Bg   : [ -0.05222898931833495, 0. ]
+  Cg   : [ 5.509993104200746, 0. ]
+  Agp   : [ 0.1434048669528864, 0. ]
+  Bgp   : [ -0.3892624339934952, 0. ]
   Cgp   : [ 25.0, 0. ]
   Auv  :  DEPENDENT
-  Buv   : [ 0.8075541888080091, 0. ]
-  Cuv   : [ 4.80045420160895, 0. ]
+  Buv   : [ 0.8084724070543557, 0. ]
+  Cuv   : [ 4.865997070303998, 0. ]
   Duv  : [    0     ]
-  Euv   : [ 10.303987403046513, 0. ]
+  Euv   : [ 10.348981975797098, 0. ]
   Adv  :  DEPENDENT
-  Bdv   : [ 1.0272474329808017, 0. ]
-  Cdv   : [ 4.877548452916254, 0. ]
+  Bdv   : [ 1.0342711962569844, 0. ]
+  Cdv   : [ 4.88133258688528, 0. ]
   Aubar: [ 0.0, 0.0 ]
   Bubar: [ 0.0, 0.0  ]
-  Cubar   : [ 7.2454379936869096, 0. ]
-  Dubar   : [ 1.6602549729030147, 0. ]
-  Adbar   : [ 0.27491311449444417, 0. ]
-  Bdbar   : [ -0.12563509414512022, 0. ]
-  Cdbar   : [ 10.068758936839322, 0. ]
+  Cubar   : [ 7.043669564572993, 0. ]
+  Dubar   : [ 1.8248072597332123, 0. ]
+  Adbar   : [ 0.26409180813611216, 0. ]
+  Bdbar   : [ -0.13033220242976254, 0. ]
+  Cdbar   : [ 9.629767928736742, 0. ]
 
   ZERO : [ 0. ]
-  fs : [ 0.4, 0.0 ]
-
+  fs   :   0.4
+  DbarToS: "=fs/(1-fs)"
 Parameterisations:
   par_uv:
     class: HERAPDF
@@ -44,8 +45,10 @@ Parameterisations:
     class: HERAPDF
     parameters: [Adbar,Bdbar,Cdbar]
   par_s:
-    class: Expression
-    expression: "Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)" 
+    class: Factor
+    factor: DbarToS #name of parameter
+    input: par_dbar
+
   par_g:
     class: NegativeGluon
     parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]
@@ -68,6 +71,11 @@ DefaultEvolution: proton-QCDNUM
 Evolutions:
   proton-QCDNUM:
     ? !include evolutions/QCDNUM.yaml
+    decomposition: proton
+  proton-LHAPDF:
+    class: LHAPDF
+    set: "NNPDF30_nlo_as_0118"
+    member: 0
 
 Q0 : 1.378404875209
 ? !include constants.yaml

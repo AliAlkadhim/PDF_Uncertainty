@@ -42,5 +42,5 @@ mbt : 4.50
 mtp : 173.0
 
 # QCD parameters
-Order: NLO
+Order: NNLO
 NFlavour: 5
