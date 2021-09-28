@@ -3,7 +3,7 @@ import numpy as np
 import re
 MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
 
-num_samples=4
+num_samples=500
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -92,6 +92,11 @@ for sample_ind in range(num_samples):
         second.write('  proton-QCDNUM:\n')
         second.write('    ? !include evolutions/QCDNUM.yaml\n')
         second.write('    decomposition: proton\n')
+
+        # second.write('  antiproton:\n')
+        # second.write('    class: FlipCharge\n')
+        # second.write('  neutron:\n')
+        # second.write('    class: FlipUD\n')                
         # second.write('  proton-LHAPDF:\n')
         # second.write('    class: LHAPDF\n')
         # second.write('    set: \"NNPDF30_nlo_as_0118\"\n')
@@ -162,7 +167,7 @@ for sample_ind in range(num_samples):
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)
 chi2_array_4000 = np.array(chi2_vals)
-np.save('chi2_array_400.npy', chi2_array_4000)
+np.save('chi2_array_500_MASTER.npy', chi2_array_4000)
 print(chi2_vals)
 #print(s)
 #print(matches)
