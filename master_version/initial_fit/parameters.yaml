@@ -5,7 +5,7 @@ MINUIT:
     hesse
     call fcn 3
     
-#  doErrors :  Hesse # None
+  doErrors :  Hesse # None
 
 Parameters:
   Ag   :  DEPENDENT

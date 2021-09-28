@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 MVN_4000 = np.load('MVN_samples/MVN_4000.npy'); MVN_4000
 
 
+MVN_4000[:,2].mean()
+
+
 MVN_25k = np.load('MVN_samples/MVN_25k.npy'); MVN_25k
 
 
