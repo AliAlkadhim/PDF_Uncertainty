@@ -1,9 +1,9 @@
 import os
 import numpy as np
 import re
-MVN_4000 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
 
-num_samples=4000
+num_samples=4
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -12,37 +12,38 @@ for sample_ind in range(num_samples):
         second.write('Minimizer: MINUIT # CERES \n')
         second.write('MINUIT:\n')
         second.write('  Commands: | \n')
+        second.write('    call fcn 1\n')
         second.write('    set str 2\n')
         second.write('    call fcn 3\n')
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
-        second.write('  Bg   : [ ' + str(MVN_4000[:,0][sample_ind]) + ', 0. ]\n')
-        second.write('  Cg   : [ ' + str(MVN_4000[:,1][sample_ind]) + ', 0. ]\n')
-        second.write('  Agp   : [ ' + str(MVN_4000[:,2][sample_ind]) + ', 0. ]\n')
-        second.write('  Bgp   : [ ' + str(MVN_4000[:,3][sample_ind]) + ', 0. ]\n')
+        second.write('  Adbar   : [ ' + str(format(MVN_4000_MASTER[:,0][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Agp   : [ ' + str(format(MVN_4000_MASTER[:,1][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdbar   : [ ' + str(format(MVN_4000_MASTER[:,2][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdv   : [ ' + str(format(MVN_4000_MASTER[:,3][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Cgp   : [ ' + str(25.000) + ', 0. ]\n')
         #note that Cprig is a constant, not a parameter value!
         second.write('  Auv  :  DEPENDENT\n')
-        second.write('  Buv   : [ ' + str(MVN_4000[:,4][sample_ind]) + ', 0. ]\n')
-        second.write('  Cuv   : [ ' + str(MVN_4000[:,5][sample_ind]) + ', 0. ]\n')
+        second.write('  Bg   : [ ' + str(format(MVN_4000_MASTER[:,4][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bgp   : [ ' + str(format(MVN_4000_MASTER[:,5][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Duv  : [    0     ]\n')
-        second.write('  Euv   : [ ' + str(MVN_4000[:,6][sample_ind]) + ', 0. ]\n')
+        second.write('  Buv   : [ ' + str(format(MVN_4000_MASTER[:,6][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Adv  :  DEPENDENT\n')
-        second.write('  Bdv   : [ ' + str(MVN_4000[:,7][sample_ind]) + ', 0. ]\n')
-        second.write('  Cdv   : [ ' + str(MVN_4000[:,8][sample_ind]) + ', 0. ]\n')
+        second.write('  Cdbar   : [ ' + str(format(MVN_4000_MASTER[:,7][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cdv   : [ ' + str(format(MVN_4000_MASTER[:,8][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Aubar: [ 0.0, 0.0 ]\n')
         second.write('  Bubar: [ 0.0, 0.0  ]\n')
-        second.write('  Cubar   : [ ' + str(MVN_4000[:,9][sample_ind]) + ', 0. ]\n')
-        second.write('  Dubar   : [ ' + str(MVN_4000[:,10][sample_ind]) + ', 0. ]\n')
-        second.write('  Adbar   : [ ' + str(MVN_4000[:,11][sample_ind]) + ', 0. ]\n')
-        second.write('  Bdbar   : [ ' + str(MVN_4000[:,12][sample_ind]) + ', 0. ]\n')
-        second.write('  Cdbar   : [ ' + str(MVN_4000[:,13][sample_ind]) + ', 0. ]\n')
+        second.write('  Cg   : [ ' + str(format(MVN_4000_MASTER[:,9][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cubar   : [ ' + str(format(MVN_4000_MASTER[:,10][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cuv   : [ ' + str(format(MVN_4000_MASTER[:,11][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Dubar   : [ ' + str(format(MVN_4000_MASTER[:,12][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Euv   : [ ' + str(format(MVN_4000_MASTER[:,13][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
-        second.write('  fs : [ 0.4, 0.0 ]\n')
-        second.write('\n')
+        second.write('  fs   :   [ 0.4, 0.0 ]\n')
+        #second.write('  DbarToS: \"=fs/(1-fs)\"\n')
 
         second.write('Parameterisations:\n')
         second.write('  par_uv:\n')
@@ -59,7 +60,11 @@ for sample_ind in range(num_samples):
         second.write('    parameters: [Adbar,Bdbar,Cdbar]\n')
         second.write('  par_s:\n')
         second.write('    class: Expression\n')
-        second.write('    expression: \"Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)\" \n')
+        second.write('    expression: \"Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)\"\n')
+        # second.write('    input: par_dbar\n')
+        second.write('\n')
+
+
         second.write('  par_g:\n')
         second.write('    class: NegativeGluon\n')
         second.write('    parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]\n')
@@ -80,13 +85,27 @@ for sample_ind in range(num_samples):
         second.write('DefaultEvolution: proton-QCDNUM\n')
         second.write('\n\n')
         second.write('Evolutions:\n')
+        second.write('  proton-APFELff:\n')
+        second.write('    ? !include evolutions/APFEL.yaml\n')
+        second.write('    decomposition: proton\n')
+
         second.write('  proton-QCDNUM:\n')
         second.write('    ? !include evolutions/QCDNUM.yaml\n')
+        second.write('    decomposition: proton\n')
+        # second.write('  proton-LHAPDF:\n')
+        # second.write('    class: LHAPDF\n')
+        # second.write('    set: \"NNPDF30_nlo_as_0118\"\n')
+        # second.write('    member: 0\n')
         second.write('\n')
+
         second.write('Q0 : 1.378404875209\n')
+        second.write('\n')
         second.write('? !include constants.yaml\n')
+        second.write('\n')
         second.write('alphas : 0.118\n')
+        second.write('\n')
         second.write('byReaction:\n')
+        second.write('\n')        
         second.write('  RT_DISNC:\n')
         second.write('    ? !include reactions/RT_DISNC.yaml\n')
         second.write('  FONLL_DISNC:\n')
@@ -106,7 +125,7 @@ for sample_ind in range(num_samples):
         second.write('\n\n')
         second.write('hf_scheme_DISNC :\n')
         second.write('  defaultValue : \'RT_DISNC\' \n')
-
+        second.write('\n')
         second.write('hf_scheme_DISCC :\n')
         second.write('  defaultValue : \'BaseDISCC\' \n')
         second.write('\n')
@@ -131,19 +150,19 @@ for sample_ind in range(num_samples):
 # @chi2out__   503.08321706305105     
 
 #pattern = re.compile('[@chi2out].[0-9]+[.][0-9]+')
-    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+'); regex=r'After.minimisation....\d+\.\d+'
+    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+'); regex=r'@chi2out__...\d+\.\d+'
     #matches = pattern.finditer(s)
     matches = re.findall(regex, s, re.MULTILINE)
     #print(matches)
     
     for match in matches:
-        chi2_val = match.split()[2]
-        chi2_vals.append(chi2_val)
+        chi2_val = match.split()[1]
+        chi2_vals.append(float(chi2_val))
 #ith open('MVN_10_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)
-chi2_array_4000 = np.array(chi2_vals)
-np.save('chi2_array_4000.npy', chi2_array_4000)
+chi2_array_ALL_DATA_4000 = np.array(chi2_vals)
+np.save('chi2_array_ALL_DATA_4000.npy', chi2_array_ALL_DATA_4000)
 print(chi2_vals)
 #print(s)
 #print(matches)

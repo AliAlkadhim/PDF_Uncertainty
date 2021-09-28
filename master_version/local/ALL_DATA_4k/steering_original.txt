@@ -3,82 +3,37 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 18
+    NInputFiles = 7
  
   ! Input files:
 
      InputFileNames = 
      'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep-thexp.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep-thexp.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem-thexp.dat',
 
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat',
-!     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep.dat',
+     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCem.dat',
     ! 'Z0_applgrid_nnlo_reaction.dat', 'D0_Wel_pt25_asymmetry.dat'
     ! 'datafiles/lhc/atlas/wzProduction/1203.4051/Z0_applgrid_nnlo.dat',
-
-    ! CDF Jets, W, Z production: NEEDS LHAPDF-proton evolution
-   ! 'datafiles/tevatron/cdf/jets/0807.2204/CDF_JETS2008-thexp.dat',
-   ! 'datafiles/tevatron/cdf/wzProduction/0901.2169/CDF_W_asymmetry-thexp.dat',
-   ! 'datafiles/tevatron/cdf/wzProduction/0908.3914/CDF_Z_Boson_Rapidity-thexp.dat',
-
- ! D0 Jets, W, Z production: WORKS
-    'datafiles/tevatron/d0/jets/0802.2400/D0_JETS-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/0702025/D0_Z_Boson_Rapidity-thexp.dat',
-    'datafiles/tevatron/d0/wzProduction/1309.2591/D0_Wmu_pt25_asymmetry-thexp.dat',
-
- !*******!
-  !  LHC  !
-  !*******!
-
-  ! CMS W, Z production: WORKS, MAKE SURE TO INCLUDE CORR FILES
-    'datafiles/lhc/cms/wzProduction/1110.4973/CMS_Z_boson_Rapidity-thexp.dat',
-    'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001-thexp.dat',
-    'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021-thexp.dat',
-
- ! CMS Jets: WORKS
-    'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
-  ! ATLAS W, Z production: WORKS
-    'datafiles/lhc/atlas/wzProduction/1203.4051/WP_applgrid_nnlo-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1203.4051/WM_applgrid_nnlo-thexp.dat',
-
- ! ATLAS Drell-Yann:
-    'datafiles/lhc/atlas/drellYan/1305.4192/dy_highmass-thexp.dat', 
-    'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass-thexp.dat',
-
-! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!):
-    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
-    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_03_08-thexp.dat',
-    'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_08_12-thexp.dat',
- ! ATLAS Dec 2016 W,Z:
-    'datafiles/lhc/atlas/wzProduction/1612.03016/wminus-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/wplus-thexp.dat',
-    'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cc-thexp.dat',
-
-
 
 &End
 
 &InCorr
   ! Number of correlation (statistical, systematical or full) files
-    NCorrFiles = 4
+    NCorrFiles = 0
  
-   !Correlation files:
-   CorrFileNames = 
-        'datafiles/lhc/cms/wzProduction/1110.4973/CMS_Z_boson_Rapidity___CMS_Z_boson_Rapidity.corr'
-        'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001___CMS_eAsymmetry_SPM_12_001.corr'
-        'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021___CMS_mAsymmetry_SMP_12_021.corr'
-              'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004___QCD_11_004.corr'
-
+  ! Correlation files:
+  !  CorrFileNames(1) = 'datafiles/hera/h1/jets/0904.3870/H1_NormInclJets_HighQ2_99-07___H1_NormInclJets_HighQ2_99-07.corr'
 &End
 
 &ReduceSyst
