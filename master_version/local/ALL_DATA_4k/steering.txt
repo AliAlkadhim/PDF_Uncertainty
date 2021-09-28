@@ -3,7 +3,7 @@
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 18
+    NInputFiles = 27
  
   ! Input files:
 
@@ -51,26 +51,41 @@
     'datafiles/lhc/atlas/wzProduction/1203.4051/WP_applgrid_nnlo-thexp.dat',
     'datafiles/lhc/atlas/wzProduction/1203.4051/WM_applgrid_nnlo-thexp.dat',
 
- ! ATLAS Drell-Yann:
+ ! ATLAS Drell-Yann: WORKS
     'datafiles/lhc/atlas/drellYan/1305.4192/dy_highmass-thexp.dat', 
     'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass-thexp.dat',
 
-! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!):
+! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!): WORKS
     'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
     'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_03_08-thexp.dat',
     'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_08_12-thexp.dat',
- ! ATLAS Dec 2016 W,Z:
+ ! ATLAS Dec 2016 W,Z: WORKS
     'datafiles/lhc/atlas/wzProduction/1612.03016/wminus-thexp.dat',
     'datafiles/lhc/atlas/wzProduction/1612.03016/wplus-thexp.dat',
     'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cc-thexp.dat',
 
+! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm) WORKS
+    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
+    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dch_pty_Normy-thexp.dat',
+    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dstar_pty_Normy-thexp.dat',
+'datafiles/lhc/lhcb/beautyProduction/1306.3663/LHCb_7TeV_Beauty_Bch_pty_Normy-thexp.dat',
+    'datafiles/lhc/lhcb/beautyProduction/1306.3663/LHCb_7TeV_Beauty_Bzero_pty_Normy-thexp.dat',
+
+! CMS W+c WORKS
+    'datafiles/lhc/cms/wzProduction/1310.1138/CMS_W_plus_c_SPM_12_002-thexp.dat',
+ ! CMS 8 TeV jets WORKS
+    'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1-thexp.dat',
+    'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin2-thexp.dat',
+    'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3-thexp.dat',
+
+! CMS and ATLAS ttbar and single top production (NOTE: need Hathor package):
 
 
 &End
 
 &InCorr
   ! Number of correlation (statistical, systematical or full) files
-    NCorrFiles = 4
+    NCorrFiles = 8
  
    !Correlation files:
    CorrFileNames = 
@@ -78,6 +93,10 @@
         'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001___CMS_eAsymmetry_SPM_12_001.corr'
         'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021___CMS_mAsymmetry_SMP_12_021.corr'
               'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004___QCD_11_004.corr'
+                'datafiles/lhc/cms/wzProduction/1310.1138/CMS_W_plus_c_SPM_12_002___CMS_W_plus_c_SPM_12_002.cov'
+                'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin1___CMS_8TeV_jets_Ybin1.dat'
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin2___CMS_8TeV_jets_Ybin2.dat'
+      'datafiles/lhc/cms/jets/1609.05331/CMS_8TeV_jets_Ybin3___CMS_8TeV_jets_Ybin3.dat'
 
 &End
 
