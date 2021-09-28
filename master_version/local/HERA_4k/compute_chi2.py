@@ -1,9 +1,9 @@
 import os
 import numpy as np
 import re
-MVN_4000 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
 
-num_samples=400
+num_samples=4
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -18,27 +18,27 @@ for sample_ind in range(num_samples):
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
-        second.write('  Bg   : [ ' + str(format(MVN_4000[:,0][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cg   : [ ' + str(format(MVN_4000[:,1][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Agp   : [ ' + str(format(MVN_4000[:,2][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Bgp   : [ ' + str(format(MVN_4000[:,3][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Adbar   : [ ' + str(format(MVN_4000_MASTER[:,0][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Agp   : [ ' + str(format(MVN_4000_MASTER[:,1][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdbar   : [ ' + str(format(MVN_4000_MASTER[:,2][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdv   : [ ' + str(format(MVN_4000_MASTER[:,3][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Cgp   : [ ' + str(25.000) + ', 0. ]\n')
         #note that Cprig is a constant, not a parameter value!
         second.write('  Auv  :  DEPENDENT\n')
-        second.write('  Buv   : [ ' + str(format(MVN_4000[:,4][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cuv   : [ ' + str(format(MVN_4000[:,5][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bg   : [ ' + str(format(MVN_4000_MASTER[:,4][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bgp   : [ ' + str(format(MVN_4000_MASTER[:,5][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Duv  : [    0     ]\n')
-        second.write('  Euv   : [ ' + str(format(MVN_4000[:,6][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Buv   : [ ' + str(format(MVN_4000_MASTER[:,6][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Adv  :  DEPENDENT\n')
-        second.write('  Bdv   : [ ' + str(format(MVN_4000[:,7][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cdv   : [ ' + str(format(MVN_4000[:,8][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cdbar   : [ ' + str(format(MVN_4000_MASTER[:,7][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cdv   : [ ' + str(format(MVN_4000_MASTER[:,8][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Aubar: [ 0.0, 0.0 ]\n')
         second.write('  Bubar: [ 0.0, 0.0  ]\n')
-        second.write('  Cubar   : [ ' + str(format(MVN_4000[:,9][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Dubar   : [ ' + str(format(MVN_4000[:,10][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Adbar   : [ ' + str(format(MVN_4000[:,11][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Bdbar   : [ ' + str(format(MVN_4000[:,12][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cdbar   : [ ' + str(format(MVN_4000[:,13][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cg   : [ ' + str(format(MVN_4000_MASTER[:,9][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cubar   : [ ' + str(format(MVN_4000_MASTER[:,10][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cuv   : [ ' + str(format(MVN_4000_MASTER[:,11][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Dubar   : [ ' + str(format(MVN_4000_MASTER[:,12][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Euv   : [ ' + str(format(MVN_4000_MASTER[:,13][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
