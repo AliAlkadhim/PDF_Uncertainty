@@ -71,26 +71,26 @@ plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hsp
 plt.show()
 
 
-MVN_4000_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/HERA_4k/chi2_array_4000.npy')
+MVN_400_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/HERA_4k/chi2_array_400.npy')
 dof = 377
 #MVN_4000_chi2_per_dof=MVN_4000_chi2/377
-#MVN_4000_chi2
-MVN_4000_chi2=MVN_4000_chi2.astype('float64')
+MVN_400_chi2
+#MVN_400_chi2=MVN_400_chi2.astype('float64')
 
 
-mean_chi2 = np.mean(MVN_4000_chi2); print(mean_chi2)
+mean_chi2 = np.mean(MVN_400_chi2); print(mean_chi2)
 
-chi2_diff = MVN_4000_chi2 - mean_chi2
+chi2_diff = MVN_400_chi2 - mean_chi2
 chi2_diff, chi2_diff.shape
 
 
-Bg = MVN_4000[:,0]
+Bg = MVN_4000[:400,6]
 weights=np.exp(-0.5*(chi2_diff))/Bg
-weights = 4000*weights/np.sum(weights)
+weights = 400*weights/np.sum(weights)
 weights
 
 
-plt.hist(weights.flatten(), bins=50, range=(0,2)); plt.title('weights w')
+plt.hist(weights.flatten(), bins=100, range=(0,2)); plt.title('weights w')
 
 
 -0.009 + 0.005
