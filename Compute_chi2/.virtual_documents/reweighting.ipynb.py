@@ -91,7 +91,7 @@ weights = 4000*weights/np.sum(weights)
 weights
 
 
-plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('weights w')
+plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('$w_{B_g}$', fontsize=13)
 
 
 -0.009 + 0.005
@@ -321,24 +321,141 @@ plt.savefig('all_data_Bg.png')
 # plt.show()
 
 
+filtered_weights=[]
+for i in range(14):
+    #mean weight for parameter i
+    mean_weight_i = np.mean(weights[:,i])
+    std_weight_i = np.std(weights[:,i])
+    final_list = [x for x in weights[:,i] if (x > mean_weight_i - 4 * std_weight_i)]
+    final_list = [x for x in final_list if (x < mean_weight_i + 4 * std_weight_i)]
+    filtered_weights.append(np.array(final_list))
+    
+filtered_weights_ = [np.array(x) for x in filtered_weights]
+print('UNFILTERED WEIGHTS\n')
+print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+print('\n \n\n FILTERED WEIGHTS\n')
+print(np.array(filtered_weights_).shape, '\n\n', filtered_weights_[0], '\n\n', filtered_weights_[0].mean(), '\n\n', filtered_weights_[0].std())
+fig, ax = plt.subplots(1, 2)
+ax[0].hist(filtered_weights_[0], bins=100, range=(0,10))
+ax[0].set_xlabel('Filtered Weights', fontsize=15)
+ax[1].hist(weights[:,0], bins=100, range=(0,10))
+ax[1].set_xlabel('Uniltered Weights', fontsize=15)
+print('shapes are', filtered_weights[0].shape, weights[:,0].shape)
+
+
+
+#for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights
+
+list_of_tuples = []
+
+        
+for i in range(14):
+    param_list_i=[]
+    weight_list_i = []
+    for k in range(3999):
+        param_value = MVN_4000[k, i] #at the kth point, for parameter i
+        weight_value = weights[k,i]
+        std_weight_value = np.std(weights[:,i])
+        mean_weight = np.mean(weights[:,i])
+        if (weight_value > (mean_weight - 4*std_weight_value)) and (weight_value < (mean_weight + 4*std_weight_value)):
+            #if weight_value < (mean_weight + 4*std_weight_value):
+
+            param_list_i.append(param_value)
+            weight_list_i.append(weight_value)
+    tuple_i = (param_list_i, weight_list_i)
+    list_of_tuples.append(tuple_i)
+len(list_of_tuples)                
+
+
+
+np.array(list_of_tuples[i][1])
+
+
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 plt.rcParams.update({'font.size': 17})
 
 params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
 
+# weights = np.empty((3999, 14))
+# for i in range(14):
+#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+#     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+# print(weights[:,0])
 weights = np.empty((3999, 14))
 for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000[:-1,i]
     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
 print(weights[:,0])
+
 #There could be one weights that happens to be very large at 0
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
 #['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
 #['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
 
 
-fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
+fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(40,60))
+#for i, ax in enumerate(axes.flatten()):
+
+#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
+for i in range(14):
+    axes[i,0].hist(list_of_tuples[i][0], bins=50)
+
+    #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_title(titles[i] + ' Unweighted', size=25)
+    axes[i,0].set_xlabel('value', size=20)
+    axes[i,0].set_ylim(0,320)
+
+#PLOT WEIGHTED DISTRIBUTIONS
+for i in range(14):
+    axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_title(titles[i] + ' Weighted Unfiltered',size=25)
+    axes[i,1].set_xlabel('value', size=20)
+    axes[i,1].set_ylim(0,320)
+    
+##FILTER WEIGHTS
+
+##PLOT WEIGHTED AND FILTERED    
+for i in range(14):
+    axes[i,2].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,2].set_title(titles[i] + ' Weighted Filtered',size=25)
+    axes[i,2].set_xlabel('value', size=20)
+    axes[i,2].set_ylim(0,320)
+    
+    #axes[i,0].legend()
+# # plt.minorticks_on()
+plt.tight_layout()
+#plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+#plt.savefig('all_data_4k_all_params.png')
+plt.show()
+
+
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 17})
+
+params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
+
+# weights = np.empty((3999, 14))
+# for i in range(14):
+#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+#     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+# print(weights[:,0])
+weights = np.empty((3999, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000[:-1,i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+print(weights[:,0])
+
+#There could be one weights that happens to be very large at 0
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
+
+
+fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(40,60))
 #for i, ax in enumerate(axes.flatten()):
 
 #PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
@@ -356,28 +473,33 @@ for i in range(14):
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[i,1].set_title(titles[i] + ' Weighted',size=25)
     axes[i,1].set_xlabel('value', size=20)
-    axes[i,1].set_ylim(0,320)
+    axes[i,1].set_ylim(0,520)
     
+##FILTER WEIGHTS
+
+#PLOT WEIGHTED AND FILTERED    
+# for i in range(14):
+#     axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=filtered_weights[i], bins=50, color = 'r')
+#     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+#     axes[i,1].set_title(titles[i] + ' Filtered Weighted',size=25)
+#     axes[i,1].set_xlabel('value', size=20)
+#     axes[i,1].set_ylim(0,520)
     
     #axes[i,0].legend()
 # # plt.minorticks_on()
 plt.tight_layout()
 #plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
-plt.savefig('all_data_4k_all_params.png')
+#plt.savefig('all_data_4k_all_params.png')
 plt.show()
-
-
-for arr in weights:
-    print(arr)
-    break
 
 
 filtered_weights=[]
 for i in range(14):
-    mean_i = np.mean(weights[:,i])
-    std_i = np.std(weights[:,i])
-    final_list = [x for x in weights[:,i] if (x > mean_i - 4 * std_i)]
-    final_list = [x for x in final_list if (x < mean_i + 4 * std_i)]
+    #mean weight for parameter i
+    mean_weight_i = np.mean(weights[:,i])
+    std_weight_i = np.std(weights[:,i])
+    final_list = [x for x in weights[:,i] if (x > mean_weight_i - 4 * std_weight_i)]
+    final_list = [x for x in final_list if (x < mean_weight_i + 4 * std_weight_i)]
     filtered_weights.append(np.array(final_list))
     
 filtered_weights_ = [np.array(x) for x in filtered_weights]
