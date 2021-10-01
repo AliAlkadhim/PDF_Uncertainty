@@ -428,7 +428,7 @@ for i in range(14):
 # # plt.minorticks_on()
 plt.tight_layout()
 #plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
-#plt.savefig('all_data_4k_all_params.png')
+plt.savefig('all_data_4k_all_params_FILTERED.png')
 plt.show()
 
 
@@ -661,7 +661,22 @@ plt.show()
 qqplot()
 
 
-5000*10/3600
+
+# QQ Plot
+from statsmodels.graphics.gofplots import qqplot
+from matplotlib import pyplot
+import statsmodels.api as sm
+
+fig = plt.figure()
+#add_subplot(nrows, ncols, index,
+for i in range(14):
+    
+    ax_i = fig.add_subplot(14,2,1)
+    sm.graphics.qqplot(MVN_4000[:-1,0], ax=ax_i)
+
+fig.tight_layout()
+
+
 
 
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
