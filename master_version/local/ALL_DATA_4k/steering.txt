@@ -106,7 +106,7 @@
     ! tolerance = 0.0 for exact calculation, > 0.0 for improved speed.
   tolerance = 0.0
     ! depending on blas library, toggling the following flag may improve chi2 computation speed:
-  useBlas = .false.
+  useBlas = .true.
 &End
 
 &CovarToNuisance

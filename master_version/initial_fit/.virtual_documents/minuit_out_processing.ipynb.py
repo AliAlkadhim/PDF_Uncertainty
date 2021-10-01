@@ -120,6 +120,13 @@ MVN_4000_MASTER = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)
 MVN_4000_MASTER
 
 
+MVN_50k_MASTER = get_mvn_samples(mu=means, cov=COV, n=50000, d=d)
+MVN_50k_MASTER
+
+
+np.save('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_50k_MASTER.npy', MVN_50k_MASTER) 
+
+
 np.save('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy', MVN_4000_MASTER) 
 
 
@@ -149,6 +156,10 @@ np.save('MVN_4000.npy',MVN_4000)
 
 
 get_ipython().getoutput("pwd")
+
+
+Cg = MVN[:,1]
+     plt.hist(Cg.flatten(), bins=50)
 
 
 Cg = MVN[:,1]

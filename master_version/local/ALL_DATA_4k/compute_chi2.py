@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import re
-MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+MVN_50k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_50k_MASTER.npy')
 
 num_samples=4
 path = os.getcwd()
@@ -18,27 +18,27 @@ for sample_ind in range(num_samples):
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
-        second.write('  Adbar   : [ ' + str(format(MVN_4000_MASTER[:,0][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Agp   : [ ' + str(format(MVN_4000_MASTER[:,1][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Bdbar   : [ ' + str(format(MVN_4000_MASTER[:,2][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Bdv   : [ ' + str(format(MVN_4000_MASTER[:,3][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Adbar   : [ ' + str(format(MVN_50k_MASTER[:,0][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Agp   : [ ' + str(format(MVN_50k_MASTER[:,1][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdbar   : [ ' + str(format(MVN_50k_MASTER[:,2][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bdv   : [ ' + str(format(MVN_50k_MASTER[:,3][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Cgp   : [ ' + str(25.000) + ', 0. ]\n')
         #note that Cprig is a constant, not a parameter value!
         second.write('  Auv  :  DEPENDENT\n')
-        second.write('  Bg   : [ ' + str(format(MVN_4000_MASTER[:,4][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Bgp   : [ ' + str(format(MVN_4000_MASTER[:,5][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bg   : [ ' + str(format(MVN_50k_MASTER[:,4][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Bgp   : [ ' + str(format(MVN_50k_MASTER[:,5][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Duv  : [    0     ]\n')
-        second.write('  Buv   : [ ' + str(format(MVN_4000_MASTER[:,6][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Buv   : [ ' + str(format(MVN_50k_MASTER[:,6][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Adv  :  DEPENDENT\n')
-        second.write('  Cdbar   : [ ' + str(format(MVN_4000_MASTER[:,7][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cdv   : [ ' + str(format(MVN_4000_MASTER[:,8][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cdbar   : [ ' + str(format(MVN_50k_MASTER[:,7][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cdv   : [ ' + str(format(MVN_50k_MASTER[:,8][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('  Aubar: [ 0.0, 0.0 ]\n')
         second.write('  Bubar: [ 0.0, 0.0  ]\n')
-        second.write('  Cg   : [ ' + str(format(MVN_4000_MASTER[:,9][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cubar   : [ ' + str(format(MVN_4000_MASTER[:,10][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Cuv   : [ ' + str(format(MVN_4000_MASTER[:,11][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Dubar   : [ ' + str(format(MVN_4000_MASTER[:,12][sample_ind], '.6f')) + ', 0. ]\n')
-        second.write('  Euv   : [ ' + str(format(MVN_4000_MASTER[:,13][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cg   : [ ' + str(format(MVN_50k_MASTER[:,9][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cubar   : [ ' + str(format(MVN_50k_MASTER[:,10][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Cuv   : [ ' + str(format(MVN_50k_MASTER[:,11][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Dubar   : [ ' + str(format(MVN_50k_MASTER[:,12][sample_ind], '.6f')) + ', 0. ]\n')
+        second.write('  Euv   : [ ' + str(format(MVN_50k_MASTER[:,13][sample_ind], '.6f')) + ', 0. ]\n')
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
@@ -92,6 +92,12 @@ for sample_ind in range(num_samples):
         second.write('  proton-QCDNUM:\n')
         second.write('    ? !include evolutions/QCDNUM.yaml\n')
         second.write('    decomposition: proton\n')
+        
+        second.write('  antiproton:\n')
+        second.write('    class: FlipCharge\n')
+        second.write('  neutron:\n')
+        second.write('    class: FlipUD\n')   
+
         # second.write('  proton-LHAPDF:\n')
         # second.write('    class: LHAPDF\n')
         # second.write('    set: \"NNPDF30_nlo_as_0118\"\n')
@@ -161,8 +167,8 @@ for sample_ind in range(num_samples):
 #ith open('MVN_10_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)
-chi2_array_ALL_DATA_4000 = np.array(chi2_vals)
-np.save('chi2_array_ALL_DATA_4000.npy', chi2_array_ALL_DATA_4000)
+chi2_array_ALL_DATA_50k = np.array(chi2_vals)
+np.save('chi2_array_ALL_DATA_50k.npy', chi2_array_ALL_DATA_50k)
 print(chi2_vals)
 #print(s)
 #print(matches)
