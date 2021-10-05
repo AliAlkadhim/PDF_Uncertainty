@@ -64,7 +64,21 @@ plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('$w_{B_g}$', fonts
 -0.009 + 0.005
 
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt; import numpy as np
+MVN_4000= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
+MVN_4000_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/chi2_array_4000.npy')
+# dof = 377
+# MVN_4000_chi2_per_dof=MVN_4000_chi2/377
+# MVN_4000_chi2
+
+mean_chi2 = np.mean(MVN_4000_chi2)
+chi2_diff = abs(MVN_4000_chi2 - mean_chi2)
+chi2_diff, chi2_diff.shape
+weights = np.empty((3999, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000[:-1,i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+
 Bg = MVN_4000[:-1,0]
 weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
 weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
@@ -77,18 +91,17 @@ weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
 # axs[1].set_ylim(0,280)
 # axs[0].set_ylim(0,280)
 plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Bg.flatten(), range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
+plt.hist(Bg.flatten(), range=(-0.2,-0.03),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
+n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.03),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
 plt.legend(fontsize=13, loc='best')
 print(weights_Bg)
 #plt.savefig('1_data_Bg.png')
-n
 
 
 import matplotlib.pyplot as plt
-Bg = MVN_4000[:-1,0]
-weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
+Ag = MVN_4000[:-1,10]
+weights_Ag=np.exp(-0.5*(chi2_diff))/Ag
+weights_Ag = 3999*weights_Ag/np.sum(weights_Ag)
 
 # plt, axs = plt.subplots(1,2,figsize=(14,7))
 # axs[0].hist(Bg.flatten(), range=(-0.2,-0.003),bins=50)
@@ -98,17 +111,9 @@ weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
 # axs[1].set_ylim(0,280)
 # axs[0].set_ylim(0,280)
 plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Bg.flatten(), range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-plt.hist(Bg.flatten()*weights_Bg, color='r',range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
-plt.legend(fontsize=13, loc='best')
-print(weights_Bg)
-#plt.savefig('1_data_Bg.png')
-n
-
-
-# a = np.histogram(Bg.flatten(), weights=weights_Bg); plt.hist(a[2], bins=50)
-
-
+plt.hist(Ag.flatten(),bins=50, alpha=0.35, label=r'$A_g$ Unweighted Distribution')
+plt.hist(Ag.flatten(), weights=weights_Ag, color='r',bins=50, alpha=0.35, label=r'$A_g$ Weighted Distribution')
+plt.legend(fontsize=13, loc='lower left')
 
 
 
@@ -178,6 +183,9 @@ plt.tight_layout()
 
 np.array(list_of_tuples[i][1])
 np.einsum()
+
+
+get_ipython().getoutput("pwd")
 
 
 import numpy as np;
