@@ -1,9 +1,10 @@
 import os
 import numpy as np
 import re
+import subprocess as sp
 MVN_50k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_50k_MASTER.npy')
 
-num_samples=50000
+num_samples=3
 path = os.getcwd()
 chi2_vals =[]
 for sample_ind in range(num_samples):
@@ -164,6 +165,9 @@ for sample_ind in range(num_samples):
     for match in matches:
         chi2_val = match.split()[1]
         chi2_vals.append(float(chi2_val))
+    if matches != None:
+        sp.call('pid=pidof xfitter', shell=True)
+        sp.call('kill -9 $pid', shell=True)
 #ith open('MVN_10_chi2s.txt', 'w') as MVN_chi2:
 #    for item in chi2_vals:
 #    MVN_chi2.write(chi2_vals)

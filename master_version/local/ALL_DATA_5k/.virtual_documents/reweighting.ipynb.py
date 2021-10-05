@@ -2,32 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy'); MVN_4000_MASTER
-
-
-MVN_25k = np.load('MVN_samples/MVN_25k.npy'); MVN_25k
-
-
-chi2_25k=np.load('chi2_array_25k.npy'); chi2_25k
-
-
-chi2_25k.shape
-
-
-MVN_4000.shape
-
-
-Bg = MVN_4000[:,0]
-print('The sample size=', len(Bg))
-plt.hist(Bg.flatten(), bins=100); plt.title(r'$Bg$ unweighted distribtution')
-
-
 from IPython.display import Image
 Image(filename='Best_fit_PDF_values.png')
-
-
-Cg = MVN_4000[:,1]
-plt.hist(Cg.flatten(), bins=50)
 
 
 for i in range(13):
@@ -35,29 +11,28 @@ for i in range(13):
 plt.title('All HERAPDF Parameter Distributions')
 
 
-# import seaborn as sns
-# colors=sns.color_palette("rocket",3)
+import seaborn as sns
+colors=sns.color_palette("rocket",3)
 # sns.set_style("white")
 plt.style.use('seaborn-paper')
 #plt.rc('text', usetex=True)
-#DIFFERENT NAMES
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
-axes[0,0].hist(MVN_4000_MASTER[:,0],bins=100, label='Bg')
-axes[0,1].hist(MVN_4000_MASTER[:,1],bins=100, label='Cg')
-axes[0,2].hist(MVN_4000_MASTER[:,2],bins=100,label='Aprig')
-axes[0,3].hist(MVN_4000_MASTER[:,3],bins=100, label='Buv')
-axes[1,0].hist(MVN_4000_MASTER[:,4],bins=100, label='Cuv')
-axes[1,1].hist(MVN_4000_MASTER[:,5],bins=100,label='Euv')
-axes[1,2].hist(MVN_4000_MASTER[:,6],bins=100, label='Bdv')
-axes[1,3].hist(MVN_4000_MASTER[:,7],bins=100, label='Cdv')
-axes[2,0].hist(MVN_4000_MASTER[:,8],bins=100, label='CUbar')
-axes[2,1].hist(MVN_4000_MASTER[:,9],bins=100,label='DUbar')
-axes[2,2].hist(MVN_4000_MASTER[:,10],bins=100,label='ADbar')
-axes[2,3].hist(MVN_4000_MASTER[:,11],bins=100,label='BDbar')
-axes[3,0].hist(MVN_4000_MASTER[:,12],bins=100,label='CDbar')
-axes[3,1].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
-axes[3,2].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
-axes[3,3].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
+axes[0,0].hist(MVN_4000[:,0],bins=100, label='Bg')
+axes[0,1].hist(MVN_4000[:,1],bins=100, label='Cg')
+axes[0,2].hist(MVN_4000[:,2],bins=100,label='Aprig')
+axes[0,3].hist(MVN_4000[:,3],bins=100, label='Buv')
+axes[1,0].hist(MVN_4000[:,4],bins=100, label='Cuv')
+axes[1,1].hist(MVN_4000[:,5],bins=100,label='Euv')
+axes[1,2].hist(MVN_4000[:,6],bins=100, label='Bdv')
+axes[1,3].hist(MVN_4000[:,7],bins=100, label='Cdv')
+axes[2,0].hist(MVN_4000[:,8],bins=100, label='CUbar')
+axes[2,1].hist(MVN_4000[:,9],bins=100,label='DUbar')
+axes[2,2].hist(MVN_4000[:,10],bins=100,label='ADbar')
+axes[2,3].hist(MVN_4000[:,11],bins=100,label='BDbar')
+axes[3,0].hist(MVN_4000[:,12],bins=100,label='CDbar')
+axes[3,1].hist(MVN_4000[:,13],bins=100,label='CDbar')
+axes[3,2].hist(MVN_4000[:,13],bins=100,label='CDbar')
+axes[3,3].hist(MVN_4000[:,13],bins=100,label='CDbar')
 plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
@@ -72,35 +47,27 @@ plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hsp
 plt.show()
 
 
-MVN_400_chi2_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/HERA_4k/chi2_array_500_MASTER.npy')
-dof = 377
-#MVN_4000_chi2_per_dof=MVN_4000_chi2/377
-MVN_400_chi2_MASTER
-#MVN_400_chi2=MVN_400_chi2.astype('float64')
-
-
-mean_chi2 = np.mean(MVN_400_chi2_MASTER); print(mean_chi2)
-
-chi2_diff = MVN_400_chi2_MASTER - mean_chi2
+mean_chi2 = np.mean(MVN_4000_chi2)
+chi2_diff = MVN_4000_chi2 - mean_chi2
 chi2_diff, chi2_diff.shape
 
 
-Bg = MVN_4000_MASTER[:500,0]
+Bg = MVN_4000[:-1,0]
 weights=np.exp(-0.5*(chi2_diff))/Bg
-weights = 500*weights/np.sum(weights)
+weights = 4000*weights/np.sum(weights)
 weights
 
 
-plt.hist(weights.flatten(), bins=50, range=(0,2)); plt.title('weights w')
+plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('$w_{B_g}$', fontsize=13)
 
 
 -0.009 + 0.005
 
 
 import matplotlib.pyplot as plt
-Bg = MVN_4000_MASTER[:500,0]
+Bg = MVN_4000[:-1,0]
 weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 500*weights_Bg/np.sum(weights_Bg)
+weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
 
 # plt, axs = plt.subplots(1,2,figsize=(14,7))
 # axs[0].hist(Bg.flatten(), range=(-0.2,-0.003),bins=50)
@@ -110,8 +77,8 @@ weights_Bg = 500*weights_Bg/np.sum(weights_Bg)
 # axs[1].set_ylim(0,280)
 # axs[0].set_ylim(0,280)
 plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Bg.flatten(),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
+plt.hist(Bg.flatten(), range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
+n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
 plt.legend(fontsize=13, loc='best')
 print(weights_Bg)
 #plt.savefig('1_data_Bg.png')
@@ -161,223 +128,37 @@ B_g_U = bg_bar+(z_68*sigma_Bg/(np.sqrt(4000)))
 print('the lower and upper bounds of $\hat{B_g}^{Gauss}$ are', B_g_L, 'and ', B_g_U, 'respectively')
 
 
-
-
-
 import scipy.stats as st
 z_95=st.norm.ppf((1-.95)/2)
 z_95
 
 
-import matplotlib.pyplot as plt
-Ag = MVN_4000[:-1,2]
-weights_Ag=np.exp(-0.5*(chi2_diff))/Ag
-weights_Ag = 3999*weights_Ag/np.sum(weights_Ag)
+MVN_4000= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
+MVN_4000_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/chi2_array_4000.npy')
+# dof = 377
+# MVN_4000_chi2_per_dof=MVN_4000_chi2/377
+# MVN_4000_chi2
 
-# plt, axs = plt.subplots(1,2,figsize=(14,7))
-# axs[0].hist(Ag.flatten(), range=(-0.2,-0.003),bins=50)
-# axs[0].set_title(r'$B_g$ Unweighted Distribution', size=18)
-# axs[1].hist(Ag.flatten(), weights=weights_Ag, color='r',range=(-0.2,-0.003),bins=50)
-# axs[1].set_title(r'$B_g$ Weighted Distribution', size=18)
-# axs[1].set_ylim(0,280)
-# axs[0].set_ylim(0,280)
-plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Ag.flatten(),bins=50, alpha=0.35, label=r'$A^{\prime}_g$ Unweighted Distribution')
-plt.hist(Ag.flatten(), weights=weights_Ag, color='r',bins=50, alpha=0.35, label=r'$A^{\prime}_g$ Weighted Distribution')
-plt.legend(fontsize=13, loc='best')
-print(weights_Ag)
-plt.savefig('1_data_Ag.png')
-
-
-import matplotlib.pyplot as plt
-Bg = MVN_4000[:-1,0]
-weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
-
-# plt, axs = plt.subplots(1,2,figsize=(14,7))
-# axs[0].hist(Bg.flatten(), range=(-0.2,-0.003),bins=50)
-# axs[0].set_title(r'$B_g$ Unweighted Distribution', size=18)
-# axs[1].hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50)
-# axs[1].set_title(r'$B_g$ Weighted Distribution', size=18)
-# axs[1].set_ylim(0,280)
-# axs[0].set_ylim(0,280)
-plt.rcParams["figure.figsize"] = [7, 7]
-
-
-plt.hist(Bg.flatten(), range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
-plt.legend(fontsize=13, loc='best')
-print(weights_Bg)
-plt.savefig('1_data_Bg.png')
-
-
-Bg = MVN_4000[:-1,0]; weights_Bg
-
-
-params=[]
-for i in range(14):
-    params.append(np.array(MVN_4000[:-1,i]))
-params[0]
-
-
-# weights = np.empty((3999, 2))
-# weights[:,0] = np.exp(-0.5 * (chi2_diff))
-# weights[:,0] = 4000* weights[:,0]/ np.sum(weights[:,0])
-# weights[:,0]
-
-
-weights = np.empty((3999, 2))
-weights.shape
-
-
+mean_chi2 = np.mean(MVN_4000_chi2)
+chi2_diff = abs(MVN_4000_chi2 - mean_chi2)
+chi2_diff, chi2_diff.shape
 weights = np.empty((3999, 14))
 for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
-    weights[:,i] = 24998 * weights[:,i]/np.sum(weights[:,i])
-weights[:,0]
-
-
-
-
-
-for i in range(3):
-    print(weights[:,i][i])
-
-
-weights[:,0]
-
-
-weights = np.empty((3999, 14))
-for i in range(13):
     weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000[:-1,i]
     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
-print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+    #weights[:,i] = sp.special.expit(weights[:,i])
+print(weights[:10,0])
 
 
-import matplotlib.pyplot as plt
-Bg = MVN_4000[:-1,0]
-weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 3999*weights_Bg/np.sum(weights_Bg)
-
-# plt, axs = plt.subplots(1,2,figsize=(14,7))
-# axs[0].hist(Bg.flatten(), range=(-0.2,-0.003),bins=50)
-# axs[0].set_title(r'$B_g$ Unweighted Distribution', size=18)
-# axs[1].hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50)
-# axs[1].set_title(r'$B_g$ Weighted Distribution', size=18)
-# axs[1].set_ylim(0,280)
-# axs[0].set_ylim(0,280)
-plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Bg.flatten(),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-plt.hist(Bg.flatten(), weights=weights_Bg**1.3, color='r',bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
-plt.legend(fontsize=13, loc='best')
-print(weights_Bg)
-plt.savefig('all_data_Bg.png')
-
-
-# MVN1=MVN_4000[:-1,i].flatten()-0.05
-# MVN2=MVN_4000[:-1,i].flatten()+0.02
-# import matplotlib.pyplot as plt
-# import matplotlib.pyplot as plt
-# plt.rcParams.update({'font.size': 17})
-
-# weights = np.empty((3999, 14))
-# for i in range(14):
-#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
-#     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
-# print(weights[:,0])
-# #There could be one weights that happens to be very large at 0
-# titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
-# #['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
-# #['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
-
-
-# fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
-# #for i, ax in enumerate(axes.flatten()):
-
-# #PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
-# for i in range(14):
-#     axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=100)
-
-#     #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
-#     axes[i,0].set_title(titles[i] + ' Unweighted', size=25)
-#     axes[i,0].set_xlabel('value', size=20)
-#     axes[i,0].set_ylim(0,180)
-
-# #PLOT WEIGHTED DISTRIBUTIONS
-# for i in range(14):
-#     axes[i,1].hist(MVN1, weights=weights[:,i], bins=100, color = 'r')
-#     axes[i,1].hist(MVN2, weights=weights[:,i], bins=100, color = 'r')
-#     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
-#     axes[i,1].set_title(titles[i] + ' Weighted',size=25)
-#     axes[i,1].set_xlabel('value', size=20)
-#     axes[i,1].set_ylim(0,180)
-    
-    
-#     #axes[i,0].legend()
-# # # plt.minorticks_on()
-# plt.tight_layout()
-# #plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
-# plt.savefig('4k_HERA_LHC.png')
-# plt.show()
-
-
-import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
-plt.rcParams.update({'font.size': 17})
-
-params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
-
-weights = np.empty((3999, 14))
-for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
-    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
-print(weights[:,0])
-#There could be one weights that happens to be very large at 0
-titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
-#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
-#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
-
-
-fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
-#for i, ax in enumerate(axes.flatten()):
-
-#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
-for i in range(14):
-    axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=50)
-
-    #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
-    axes[i,0].set_title(titles[i] + ' Unweighted', size=25)
-    axes[i,0].set_xlabel('value', size=20)
-    axes[i,0].set_ylim(0,320)
-
-#PLOT WEIGHTED DISTRIBUTIONS
-for i in range(14):
-    axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
-    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
-    axes[i,1].set_title(titles[i] + ' Weighted',size=25)
-    axes[i,1].set_xlabel('value', size=20)
-    axes[i,1].set_ylim(0,320)
-    
-    
-    #axes[i,0].legend()
-# # plt.minorticks_on()
-plt.tight_layout()
-#plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
-plt.savefig('all_data_4k_all_params.png')
-plt.show()
-
-
-for arr in weights:
-    print(arr)
-    break
-
-
+#FILTER WEIGHTS
 filtered_weights=[]
+
 for i in range(14):
-    mean_i = np.mean(weights[:,i])
-    std_i = np.std(weights[:,i])
-    final_list = [x for x in weights[:,i] if (x > mean_i - 4 * std_i)]
-    final_list = [x for x in final_list if (x < mean_i + 4 * std_i)]
+    #mean weight for parameter i
+    mean_weight_i = np.mean(weights[:,i])
+    std_weight_i = np.std(weights[:,i])
+    final_list = [x for x in weights[:,i] if (x > mean_weight_i - 4 * std_weight_i)]
+    final_list = [x for x in final_list if (x < mean_weight_i + 4 * std_weight_i)]
     filtered_weights.append(np.array(final_list))
     
 filtered_weights_ = [np.array(x) for x in filtered_weights]
@@ -385,144 +166,377 @@ print('UNFILTERED WEIGHTS\n')
 print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
 print('\n \n\n FILTERED WEIGHTS\n')
 print(np.array(filtered_weights_).shape, '\n\n', filtered_weights_[0], '\n\n', filtered_weights_[0].mean(), '\n\n', filtered_weights_[0].std())
-fig, ax = plt.subplots(1, 2)
-ax[0].hist(filtered_weights_[0], bins=100, range=(0,10))
-ax[0].set_xlabel('Filtered Weights', fontsize=15)
-ax[1].hist(weights[:,0], bins=100, range=(0,10))
-ax[1].set_xlabel('Uniltered Weights', fontsize=15)
+fig, ax = plt.subplots(1, 2, figsize=(10,10))
+ax[0].hist(filtered_weights_[0], bins=100, range=(0,10), label=r'$w_k^i = \frac{N_{samples} exp^{-\frac{1}{2} (\chi_k ^2 - E[\chi^2])}}{\mathcal{N}(\theta_i;\mu_i, \sigma_i) \ \sum_{k=1}^{N_{samples}} w_k}$')
+ax[0].set_xlabel('Filtered Weights HERA ONLY', fontsize=15)
+ax[1].hist(weights[:,0], bins=100, range=(0,10), label=r'$w_k^i = \frac{N_{samples} exp^{-\frac{1}{2} (\chi_k ^2 - E[\chi^2])}}{\mathcal{N}(\theta_i;\mu_i, \sigma_i) \ \sum_{k=1}^{N_{samples}} w_k}$')
+ax[1].set_xlabel('Uniltered Weights HERA ONLY', fontsize=15)
+ax[0].legend(fontsize=13); ax[0].legend(fontsize=13)
+print('shapes are', filtered_weights[0].shape, weights[:,0].shape)
+plt.tight_layout()
 
 
-filtered_weights
-#this is a list of arrays: each array in this list is the array of filtered weightes 
+np.array(list_of_tuples[i][1])
+np.einsum()
 
 
-weights = np.empty((3999, 14))
-for i in range(13):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000[:-1,i]
-    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
-print(weights.shape, '\n\n', weights[:,0], '\n\n', weights[:,0].mean(), '\n\n', weights[:,0].std())
+import numpy as np;
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
+
+#to avoid overflow take data type as float 128 to handle exponentiation
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+#np.seterr(divide='ignore', invalid='ignore', over='ignore')
+
+#take log
+chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
+
+mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
+chi2_diff = abs(chi2_array_ALL_DATA_4k - mean_chi2)
+chi2_diff, chi2_diff.shape
+weights = np.empty((4000, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
+    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+    #weights[:,i] = sp.special.expit(weights[:,i])
+print(weights[:10,0])
 
 
-# filter_mask = np.empty(np.shape(weights), dtype=bool)
-# # filtered_weights_list =[]
 
+#for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights
+
+list_of_tuples = []
+
+        
+for i in range(14):
+    param_list_i=[]
+    weight_list_i = []
+    for k in range(4000):
+        param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
+        weight_value = weights[k,i]
+        std_weight_value = np.std(weights[:,i])
+        mean_weight = np.mean(weights[:,i])
+        if (weight_value > (mean_weight - 6*std_weight_value)) and (weight_value < (mean_weight + 6*std_weight_value)):
+            #if weight_value < (mean_weight + 4*std_weight_value):
+
+            param_list_i.append(param_value)
+            weight_list_i.append(weight_value)
+    tuple_i = (param_list_i, weight_list_i)
+    list_of_tuples.append(tuple_i)
+#len(list_of_tuples)                
+#list_of_tuples[1]
+
+
+# import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+# plt.rcParams.update({'font.size': 17})
+
+# params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
+
+# # weights = np.empty((3999, 14))
+# # for i in range(14):
+# #     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+# #     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+# # print(weights[:,0])
+
+
+# #There could be one weights that happens to be very large at 0
+# titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+# #['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+# #['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
+
+
+# fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(40,60))
+# #for i, ax in enumerate(axes.flatten()):
+
+# #PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
 # for i in range(14):
-#     mean_i = np.mean(weights[:,i])
-#     print(mean_i)
-#     std_i = np.std(weights[:,i])
-#     filter_mask[:,i] = weights[:,i] > (mean_i - 4 * std_i)
-#     filter_mask[:,i] = filter_mask[:,i]  < (mean_i + 4 * std_i)
-#     filtered_weights[:,i] = weights[:,i][filter_mask[:,i]]
-#     filtered_weights_list.append(filtered_weights[:,i])
+#     axes[i,0].hist(list_of_tuples[i][0], bins=50)
 
-#filter_mask, filter_mask.shape
-#weights[filter_mask]
-#filtered_weights
-#for i in range(14):
+#     #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+#     axes[i,0].set_title(titles[i] + ' Unweighted', size=25)
+#     axes[i,0].set_xlabel('value', size=20)
+#     axes[i,0].set_ylim(0,320)
 
-# filtered_weights = filtered_weights[filter_mask]
-# filtered_weights
+# #PLOT WEIGHTED DISTRIBUTIONS
+# for i in range(14):
+#     axes[i,1].hist(MVN_4000_MASTER[:,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
+#     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+#     axes[i,1].set_title(titles[i] + ' Weighted Unfiltered',size=25)
+#     axes[i,1].set_xlabel('value', size=20)
+#     axes[i,1].set_ylim(0,320)
+    
+# ##FILTER WEIGHTS
 
-#print(filter_mask.shape, filter_mask, '\n\n')
-# print(filtered_weights.shape, filtered_weights[:,0])
-#filter_mask
-
-
-filter_mask = np.empty(np.shape(weights), dtype=bool)
-mean_weights = np.mean(weights, axis=0)
-std_weights = np.std(weights, axis=0)
-filter_mask = (weights > (mean_weights - 4 * std_weights))
-
-filter_mask.reshape(np.shape(weights))
-# w = weights[filter_mask]
-# w.reshape(np.shape(weights))
-weights[:,0][filter_mask[:,0]]
+# ##PLOT WEIGHTED AND FILTERED    
+                  
+    
+#     #axes[i,0].legend()
+# # # plt.minorticks_on()
+# plt.tight_layout()
+# #plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+# #plt.savefig('all_data_4k_all_params_FILTERED.png')
+# plt.show()
 
 
-filtered_weights=weights[filter_mask]
-filtered_weights
+import numpy as np
+import matplotlib.pyplot as plt
+#import scipy as sp
+
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
+
+#to avoid overflow take data type as float 128 to handle exponentiation
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+
+#ignore overflow and division errors
+np.seterr(divide='ignore', invalid='ignore', over='ignore')
+
+#take log
+#chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
 
-# uw_hist =  np.histogram(MVN_4000[:-1,0], bins=50)
-# plt.hist(uw_hist[1].flatten(), bins=50)
+mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
+chi2_diff = sigmoid(abs(chi2_array_ALL_DATA_4k - mean_chi2))
 
+#chi2_diff, chi2_diff.shape
+weights = np.empty((4000, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
+    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+#    weights[:,i] = sp.special.expit(weights[:,i])
+print(weights[:10,0])
 
-unweighted_hists = []
-for i in range(13):
-    uw_hist, uwbins =  np.histogram(MVN[:-1,i])
-    unweighted_hists.append()
+#for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights
 
+list_of_tuples = []
+
+        
+for i in range(14):
+    param_list_i=[]
+    weight_list_i = []
+    for k in range(4000):
+        param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
+        weight_value = weights[k,i]
+        std_weight_value = np.std(weights[:,i])
+        mean_weight = np.mean(weights[:,i])
+        if (weight_value > (mean_weight - 5*std_weight_value)) and (weight_value < (mean_weight + 5*std_weight_value)):
+            #if weight_value < (mean_weight + 4*std_weight_value):
+
+            param_list_i.append(param_value)
+            weight_list_i.append(weight_value)
+    tuple_i = (param_list_i, weight_list_i)
+    list_of_tuples.append(tuple_i)
+#len(list_of_tuples)                
+#list_of_tuples[1]
 
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+#plt.rcParams.update({'font.size': 17})
 
-filter_mask = np.empty(np.shape(weights), dtype=bool)
+params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
 
+# weights = np.empty((3999, 14))
+# for i in range(14):
+#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+#     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+# print(weights[:,0])
 #There could be one weights that happens to be very large at 0
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
 #['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
 #['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
 
 
-fig, axes = plt.subplots(nrows=14, ncols=2, figsize=(40,60))
+fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(20,30))
 #for i, ax in enumerate(axes.flatten()):
-# for i in range(14):
-#     mean_i = np.mean(weights[:,i])
-#     print(mean_i)
-#     std_i = np.std(weights[:,i])
-#     filter_mask[:,i] = weights[:,i] > (mean_i - 4 * std_i)
-#     filter_mask[:,i] = filter_mask[:,i]  < (mean_i + 4 * std_i)
-#     filtered_weights[:,i] = weights[:,i][filter_mask[:,i]]
-
-#list of tuples (weight, index), then sort them in ascending weight, then cut off the list of thuples
 
 #PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
 for i in range(14):
-    axes[i,0].hist(MVN_4000[:-1,i], bins=50)
+    #axes[i,0].hist(list_of_tuples[i][0], bins=50)
+    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color='g')
 
-    axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
-    axes[i,0].set_ylim(0,280)
+    #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_title(titles[i] + ' Unweighted')
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,320)
 
 #PLOT WEIGHTED DISTRIBUTIONS
 for i in range(14):
-    #FILTER WEIGHTS
-    mean_i = np.mean(weights[:,i])
-    std_i = np.std(weights[:,i])
-    filter_mask[:,i] = weights[:,i] > (mean_i - 2 * std_i)
-    filter_mask[:,i] = filter_mask[:,i]  < (mean_i + 2 * std_i)
-    #print(filter_mask[:,i].shape, weights[:,i].shape)
-    axes[i,1].hist(MVN_4000[1:,i][filter_mask[:,i]], weights=weights[:,i][filter_mask[:,i]], bins=50, color = 'r')
-    #axes[i,1].set(title=titles[i] + ' Weighted and Filtered', xlabel='value')
-    axes[i,1].set_ylim(0,280)
+    axes[i,1].hist(MVN_4000_MASTER[:,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_title(titles[i] + ' Weighted Unfiltered')
+    axes[i,1].set_xlabel('value')
+    axes[i,1].set_ylim(0,320)
     
+##FILTER WEIGHTS
+
+##PLOT WEIGHTED AND FILTERED    
+for i in range(14):
+    axes[i,2].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,2].set_title(titles[i] + ' Weighted Filtered')
+    axes[i,2].set_xlabel('value')
+    axes[i,2].set_ylim(0,320)
     
     #axes[i,0].legend()
 # # plt.minorticks_on()
-plt.tight_layout()
-#plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+#plt.tight_layout()
+plt.subplots_adjust(left=0.125, bottom=0, right=0.9 , top=0.9, wspace=0.2, hspace=0.9)
+#plt.savefig('all_data_4k_all_params_FILTERED.png')
 plt.show()
 
 
-param_names =['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
-Bg = MVN_4000[:-1,0]
-Cg = MVN_4000[:-1,1]
-params = [Bg, Cg]
-weights = np.exp(-0.5 * (chi2_diff))/params
-weights = 4000 * weights/ np.sum(weights)
-weights
+import numpy as np
+import matplotlib.pyplot as plt
+#import scipy as sp
+
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
+
+#to avoid overflow take data type as float 128 to handle exponentiation
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+
+#ignore overflow and division errors
+np.seterr(divide='ignore', invalid='ignore', over='ignore')
+
+#take log
+#chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
 
 
+mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
+chi2_diff = sigmoid(abs(chi2_array_ALL_DATA_4k - mean_chi2))
+
+#chi2_diff, chi2_diff.shape
+weights = np.empty((4000, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
+    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+#    weights[:,i] = sp.special.expit(weights[:,i])
+print(weights[:10,0])
+
+#for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights to be within 4 std of the weights mean. (only take parameter values corresponding to those weights)
+
+list_of_tuples = []
+        
+for i in range(14):
+    param_list_i=[]
+    weight_list_i = []
+    for k in range(4000):
+        param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
+        weight_value = weights[k,i]
+        std_weight_value = np.std(weights[:,i])
+        mean_weight = np.mean(weights[:,i])
+        if (weight_value > (mean_weight - 4*std_weight_value)) and (weight_value < (mean_weight + 4*std_weight_value)):
+            #if weight_value < (mean_weight + 4*std_weight_value):
+
+            param_list_i.append(param_value)
+            weight_list_i.append(weight_value)
+    tuple_i = (param_list_i, weight_list_i)
+    list_of_tuples.append(tuple_i)
+#len(list_of_tuples)                
+#list_of_tuples[1]
+
+import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+#plt.rcParams.update({'font.size': 17})
+
+params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
+
+# weights = np.empty((3999, 14))
+# for i in range(14):
+#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+#     weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+# print(weights[:,0])
+#There could be one weights that happens to be very large at 0
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
 
 
-weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 4000*weights_Bg/np.sum(weights_Bg)
+fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(20,30))
+#for i, ax in enumerate(axes.flatten()):
 
-plt, axs = plt.subplots(1,2,figsize=(14,7))
-axs[0].hist(Bg.flatten(), bins=100)
-axs[0].set_title('Bg Unweighted Distribution')
-axs[1].hist(Bg.flatten(), bins=100, weights=weights_Bg, color='r')
-axs[1].set_title('Bg Weighted Distribution')
-axs[1].set_ylim(0,150)
-axs[0].set_ylim(0,150)
+#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
+for i in range(14):
+    #axes[i,0].hist(list_of_tuples[i][0], bins=50)
+    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color='g')
+
+    #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_title(titles[i] + ' Unweighted')
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,320)
+
+#PLOT WEIGHTED DISTRIBUTIONS
+for i in range(14):
+    axes[i,1].hist(MVN_4000_MASTER[:,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_title(titles[i] + ' Weighted Unfiltered')
+    axes[i,1].set_xlabel('value')
+    axes[i,1].set_ylim(0,320)
+    
+##FILTER WEIGHTS
+
+##PLOT WEIGHTED AND FILTERED    
+for i in range(14):
+    axes[i,2].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,2].set_title(titles[i] + ' Weighted Filtered')
+    axes[i,2].set_xlabel('value')
+    axes[i,2].set_ylim(0,320)
+    
+    #axes[i,0].legend()
+# # plt.minorticks_on()
+#plt.tight_layout()
+plt.subplots_adjust(left=0.125, bottom=0, right=0.9 , top=0.9, wspace=0.2, hspace=0.9)
+#plt.savefig('all_data_4k_all_params_FILTERED.png')
+plt.show()
+
+
+fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
+
+for i in range(7):
+    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
+    axes[i,0].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,0].set_title('All Data '+ titles[i] )
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,320)
+    axes[i,0].legend()
+for j in range(0,7):
+    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
+    axes[j,1].hist(np.array(list_of_tuples[j+7][0]), weights=np.array(list_of_tuples[j+7][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[j,1].set_title('All Data ' +titles[j+7] )
+    axes[j,1].set_xlabel('value')
+    axes[j,1].set_ylim(0,320)
+    axes[j,1].legend()
+    
+plt.tight_layout()
+plt.show()
+
+
+hists_unweighted=[]; hists_weighted = []
+bins_unweighted=[]; bins_weighted=[]
+for i in range(14):
+    hist, bins, pathces = plt.hist(MVN_4000_MASTER[:,i].flatten(), bins=50)
+    hists_unweighted.append(hist)
+    bins_unweighted.append(bins)
+#     axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
+#     axes[i,0].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+#     axes[i,0].set_title(titles[i] )
+#     axes[i,0].set_xlabel('value')
+#     axes[i,0].set_ylim(0,320)
+#     axes[i,0].legend(
 
 
 
@@ -539,7 +553,22 @@ plt.show()
 qqplot()
 
 
-5000*10/3600
+
+# QQ Plot
+from statsmodels.graphics.gofplots import qqplot
+from matplotlib import pyplot
+import statsmodels.api as sm
+
+fig = plt.figure()
+#add_subplot(nrows, ncols, index,
+for i in range(14):
+    
+    ax_i = fig.add_subplot(14,2,1)
+    sm.graphics.qqplot(MVN_4000[:-1,0], ax=ax_i)
+
+fig.tight_layout()
+
+
 
 
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))

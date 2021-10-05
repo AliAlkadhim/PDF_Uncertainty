@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy'); MVN_4000_MASTER
+MVN_4000 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy'); MVN_4000
 
 
 MVN_25k = np.load('MVN_samples/MVN_25k.npy'); MVN_25k
@@ -35,29 +35,28 @@ for i in range(13):
 plt.title('All HERAPDF Parameter Distributions')
 
 
-# import seaborn as sns
-# colors=sns.color_palette("rocket",3)
+import seaborn as sns
+colors=sns.color_palette("rocket",3)
 # sns.set_style("white")
 plt.style.use('seaborn-paper')
 #plt.rc('text', usetex=True)
-#DIFFERENT NAMES
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
-axes[0,0].hist(MVN_4000_MASTER[:,0],bins=100, label='Bg')
-axes[0,1].hist(MVN_4000_MASTER[:,1],bins=100, label='Cg')
-axes[0,2].hist(MVN_4000_MASTER[:,2],bins=100,label='Aprig')
-axes[0,3].hist(MVN_4000_MASTER[:,3],bins=100, label='Buv')
-axes[1,0].hist(MVN_4000_MASTER[:,4],bins=100, label='Cuv')
-axes[1,1].hist(MVN_4000_MASTER[:,5],bins=100,label='Euv')
-axes[1,2].hist(MVN_4000_MASTER[:,6],bins=100, label='Bdv')
-axes[1,3].hist(MVN_4000_MASTER[:,7],bins=100, label='Cdv')
-axes[2,0].hist(MVN_4000_MASTER[:,8],bins=100, label='CUbar')
-axes[2,1].hist(MVN_4000_MASTER[:,9],bins=100,label='DUbar')
-axes[2,2].hist(MVN_4000_MASTER[:,10],bins=100,label='ADbar')
-axes[2,3].hist(MVN_4000_MASTER[:,11],bins=100,label='BDbar')
-axes[3,0].hist(MVN_4000_MASTER[:,12],bins=100,label='CDbar')
-axes[3,1].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
-axes[3,2].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
-axes[3,3].hist(MVN_4000_MASTER[:,13],bins=100,label='CDbar')
+axes[0,0].hist(MVN_4000[:,0],bins=100, label='Bg')
+axes[0,1].hist(MVN_4000[:,1],bins=100, label='Cg')
+axes[0,2].hist(MVN_4000[:,2],bins=100,label='Aprig')
+axes[0,3].hist(MVN_4000[:,3],bins=100, label='Buv')
+axes[1,0].hist(MVN_4000[:,4],bins=100, label='Cuv')
+axes[1,1].hist(MVN_4000[:,5],bins=100,label='Euv')
+axes[1,2].hist(MVN_4000[:,6],bins=100, label='Bdv')
+axes[1,3].hist(MVN_4000[:,7],bins=100, label='Cdv')
+axes[2,0].hist(MVN_4000[:,8],bins=100, label='CUbar')
+axes[2,1].hist(MVN_4000[:,9],bins=100,label='DUbar')
+axes[2,2].hist(MVN_4000[:,10],bins=100,label='ADbar')
+axes[2,3].hist(MVN_4000[:,11],bins=100,label='BDbar')
+axes[3,0].hist(MVN_4000[:,12],bins=100,label='CDbar')
+axes[3,1].hist(MVN_4000[:,13],bins=100,label='CDbar')
+axes[3,2].hist(MVN_4000[:,13],bins=100,label='CDbar')
+axes[3,3].hist(MVN_4000[:,13],bins=100,label='CDbar')
 plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
@@ -72,35 +71,35 @@ plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hsp
 plt.show()
 
 
-MVN_400_chi2_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/HERA_4k/chi2_array_500_MASTER.npy')
+MVN_400_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/HERA_4k/chi2_array_400.npy')
 dof = 377
 #MVN_4000_chi2_per_dof=MVN_4000_chi2/377
-MVN_400_chi2_MASTER
+MVN_400_chi2
 #MVN_400_chi2=MVN_400_chi2.astype('float64')
 
 
-mean_chi2 = np.mean(MVN_400_chi2_MASTER); print(mean_chi2)
+mean_chi2 = np.mean(MVN_400_chi2); print(mean_chi2)
 
-chi2_diff = MVN_400_chi2_MASTER - mean_chi2
+chi2_diff = MVN_400_chi2 - mean_chi2
 chi2_diff, chi2_diff.shape
 
 
-Bg = MVN_4000_MASTER[:500,0]
+Bg = MVN_4000[:400,6]
 weights=np.exp(-0.5*(chi2_diff))/Bg
-weights = 500*weights/np.sum(weights)
+weights = 400*weights/np.sum(weights)
 weights
 
 
-plt.hist(weights.flatten(), bins=50, range=(0,2)); plt.title('weights w')
+plt.hist(weights.flatten(), bins=100, range=(0,2)); plt.title('weights w')
 
 
 -0.009 + 0.005
 
 
 import matplotlib.pyplot as plt
-Bg = MVN_4000_MASTER[:500,0]
+Bg = MVN_4000[:,0]
 weights_Bg=np.exp(-0.5*(chi2_diff))/Bg
-weights_Bg = 500*weights_Bg/np.sum(weights_Bg)
+weights_Bg = 4000*weights_Bg/np.sum(weights_Bg)
 
 # plt, axs = plt.subplots(1,2,figsize=(14,7))
 # axs[0].hist(Bg.flatten(), range=(-0.2,-0.003),bins=50)
@@ -110,8 +109,8 @@ weights_Bg = 500*weights_Bg/np.sum(weights_Bg)
 # axs[1].set_ylim(0,280)
 # axs[0].set_ylim(0,280)
 plt.rcParams["figure.figsize"] = [7, 7]
-plt.hist(Bg.flatten(),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
-n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
+plt.hist(Bg.flatten(), range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Unweighted Distribution')
+n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.2,-0.003),bins=50, alpha=0.35, label=r'$B_g$ Weighted Distribution')
 plt.legend(fontsize=13, loc='best')
 print(weights_Bg)
 #plt.savefig('1_data_Bg.png')
