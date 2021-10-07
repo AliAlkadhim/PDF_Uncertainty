@@ -225,7 +225,7 @@ MVN_4000_MASTER[:,2]
 log_den = np.empty((4000,14))
 for i in range(14):
     log_den[:,i] = np.log(MVN_4000_MASTER[:,i])
-log_den[:,2]
+log_den[:,0], log_den[:,2]
 
 
 log_RHS = np.empty((4000,14))
@@ -362,25 +362,14 @@ chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
 
 #ignore overflow and division errors
-np.seterr(divide='ignore', invalid='ignore', over='ignore')
+#np.seterr(divide='ignore', invalid='ignore', over='ignore')
 
 #take log
-#chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
 
 
 mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
-chi2_diff = sigmoid(abs(chi2_array_ALL_DATA_4k - mean_chi2))
+chi2_diff =abs(chi2_array_ALL_DATA_4k - mean_chi2)
 
-#chi2_diff, chi2_diff.shape
-weights = np.empty((4000, 14))
-for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
-    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
-#    weights[:,i] = sp.special.expit(weights[:,i])
-print(weights[:10,0])
 
 #for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights
 
@@ -405,7 +394,6 @@ for i in range(14):
 #len(list_of_tuples)                
 #list_of_tuples[1]
 
-import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 #plt.rcParams.update({'font.size': 17})
 
@@ -459,6 +447,9 @@ for i in range(14):
 plt.subplots_adjust(left=0.125, bottom=0, right=0.9 , top=0.9, wspace=0.2, hspace=0.9)
 #plt.savefig('all_data_4k_all_params_FILTERED.png')
 plt.show()
+
+
+weights[:,0].shape, len(list_of_tuples[0][1])
 
 
 import numpy as np
@@ -551,19 +542,26 @@ plt.subplots_adjust(left=0.125, bottom=0, right=0.9 , top=0.9, wspace=0.2, hspac
 plt.show()
 
 
+weight_2 = np.exp(-0.5 * chi2_diff)/MVN_4000_MASTER[:,2]
+
+
+weight_2 = 4000 * weight_2/(np.sum(weight_2))
+plt.hist(weight_2, bins=50)
+
+
 fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
 
 for i in range(7):
-    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
-    axes[i,0].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
+    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[i,0].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=100, color = 'g',alpha=0.3, label='Reweighted')
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[i,0].set_title('All Data '+ titles[i] )
     axes[i,0].set_xlabel('value')
     axes[i,0].set_ylim(0,320)
     axes[i,0].legend()
 for j in range(0,7):
-    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
-    axes[j,1].hist(np.array(list_of_tuples[j+7][0]), weights=np.array(list_of_tuples[j+7][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
+    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[j,1].hist(np.array(list_of_tuples[j+7][0]), weights=np.array(list_of_tuples[j+7][1]), bins=100, color = 'g',alpha=0.3, label='Reweighted')
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[j,1].set_title('All Data ' +titles[j+7] )
     axes[j,1].set_xlabel('value')
