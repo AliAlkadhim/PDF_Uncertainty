@@ -96,6 +96,7 @@ n, bins, patches=plt.hist(Bg.flatten(), weights=weights_Bg, color='r',range=(-0.
 plt.legend(fontsize=13, loc='best')
 print(weights_Bg)
 #plt.savefig('1_data_Bg.png')
+n
 
 
 import matplotlib.pyplot as plt
@@ -195,20 +196,81 @@ chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/N
 #to avoid overflow take data type as float 128 to handle exponentiation
 chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
-#np.seterr(divide='ignore', invalid='ignore', over='ignore')
-
-#take log
-chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
 
 mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
 chi2_diff = abs(chi2_array_ALL_DATA_4k - mean_chi2)
 chi2_diff, chi2_diff.shape
-weights = np.empty((4000, 14))
+
+
+weights_OLD = np.empty((4000, 14))
 for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
-    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+    weights_OLD[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
+    weights_OLD[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
     #weights[:,i] = sp.special.expit(weights[:,i])
-print(weights[:10,0])
+print(weights_OLD[:10,0])
+
+
+np.log(4000)
+
+
+log_numerator = np.empty((4000,14))
+for i in range(14):
+    log_numerator[:,i] =  - 0.5 * (chi2_diff)
+log_numerator #no normalization factor
+
+
+MVN_4000_MASTER[:,2]
+
+
+log_den = np.empty((4000,14))
+for i in range(14):
+    log_den[:,i] = np.log(MVN_4000_MASTER[:,i])
+log_den[:,2]
+
+
+log_RHS = np.empty((4000,14))
+for i in range(14):
+    log_RHS[:,i] = abs(log_numerator[:,i] - log_den[:,i])
+print('log(RHS) = ', log_RHS[:,0], '\n')
+print('therefore, log(w) = log(RHS)')
+
+
+mean_log_RHS = np.empty((4000,14))
+for i in range(14):
+    mean_log_RHS[:,i] = np.mean(log_RHS[:,i])
+
+weights = np.empty((4000,14))
+for i in range(14):
+    weights[:,i] = abs(log_RHS[:,i] - mean_log_RHS[:,i])
+weights[:,0]
+
+
+for i in range(14):
+    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+weights[:,i]
+
+
+weights[:,2]
+
+
+# import numpy as np;
+# MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+# chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
+
+# #to avoid overflow take data type as float 128 to handle exponentiation
+# chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+# MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+#np.seterr(divide='ignore', invalid='ignore', over='ignore')
+
+# mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
+# chi2_diff = abs(chi2_array_ALL_DATA_4k - mean_chi2)
+# chi2_diff, chi2_diff.shape
+# weights = np.empty((4000, 14))
+# for i in range(14):
+#     weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
+#     weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
+#     #weights[:,i] = sp.special.expit(weights[:,i])
+# print(weights[:10,0])
 
 
 
@@ -411,25 +473,7 @@ chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
 
 #ignore overflow and division errors
-np.seterr(divide='ignore', invalid='ignore', over='ignore')
-
-#take log
-#chi2_array_ALL_DATA_4k=np.log(chi2_array_ALL_DATA_4k)
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
-
-
-mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
-chi2_diff = sigmoid(abs(chi2_array_ALL_DATA_4k - mean_chi2))
-
-#chi2_diff, chi2_diff.shape
-weights = np.empty((4000, 14))
-for i in range(14):
-    weights[:,i] = np.exp(-0.5 * (chi2_diff))/MVN_4000_MASTER[:,i]
-    weights[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
-#    weights[:,i] = sp.special.expit(weights[:,i])
-print(weights[:10,0])
+#np.seterr(divide='ignore', invalid='ignore', over='ignore')
 
 #for parameter i: pairs_i = (param_val, weight_i, std_i), then select weights to be within 4 std of the weights mean. (only take parameter values corresponding to those weights)
 
@@ -443,7 +487,7 @@ for i in range(14):
         weight_value = weights[k,i]
         std_weight_value = np.std(weights[:,i])
         mean_weight = np.mean(weights[:,i])
-        if (weight_value > (mean_weight - 4*std_weight_value)) and (weight_value < (mean_weight + 4*std_weight_value)):
+        if (weight_value > (mean_weight - 5*std_weight_value)) and (weight_value < (mean_weight + 5*std_weight_value)):
             #if weight_value < (mean_weight + 4*std_weight_value):
 
             param_list_i.append(param_value)
@@ -453,8 +497,6 @@ for i in range(14):
 #len(list_of_tuples)                
 #list_of_tuples[1]
 
-import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
 #plt.rcParams.update({'font.size': 17})
 
 params = np.array([-0.61856E-01 ,5.5593, 0.16618,-0.38300,0.81056,4.8239,9.9226,1.0301,4.8456,7.0603,1.5439 , 0.26877,-0.12732 , 9.5810])
