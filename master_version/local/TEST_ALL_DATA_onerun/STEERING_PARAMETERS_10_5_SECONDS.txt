@@ -1,3 +1,4 @@
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!STEERING
 *  Namelist to control input data
 *
 
@@ -403,3 +404,127 @@
   ! NREMOVEPRIORS = 0                  ! Remove prior from the last n PDF nuisance parameters
   ! DataToTheo = True                  ! reset data to predictions corresponding to member 0, for sensitivity studies
 &End
+
+
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!111PARAMETERS
+Minimizer: MINUIT # CERES 
+MINUIT:
+  Commands: | 
+    call fcn 1
+    set str 2
+    call fcn 1
+
+Parameters:
+  Ag   :  DEPENDENT
+  Adbar   : [ 0.159350, 0. ]
+  Agp   : [ 0.060893, 0. ]
+  Bdbar   : [ -0.126636, 0. ]
+  Bdv   : [ 0.959411, 0. ]
+  Cgp   : [ 25.0, 0. ]
+  Auv  :  DEPENDENT
+  Bg   : [ -0.049530, 0. ]
+  Bgp   : [ -0.385656, 0. ]
+  Duv  : [    0     ]
+  Buv   : [ 0.812279, 0. ]
+  Adv  :  DEPENDENT
+  Cdbar   : [ 9.289867, 0. ]
+  Cdv   : [ 4.790092, 0. ]
+  Aubar: [ 0.0, 0.0 ]
+  Bubar: [ 0.0, 0.0  ]
+  Cg   : [ 5.449079, 0. ]
+  Cubar   : [ 7.086377, 0. ]
+  Cuv   : [ 4.787046, 0. ]
+  Dubar   : [ 1.387829, 0. ]
+  Euv   : [ 9.704781, 0. ]
+
+  ZERO : [ 0. ]
+  fs   :   [ 0.4, 0.0 ]
+Parameterisations:
+  par_uv:
+    class: HERAPDF
+    parameters: [Auv,Buv,Cuv,Duv,Euv]
+  par_dv:
+    class: HERAPDF
+    parameters: [Adv,Bdv,Cdv]
+  par_ubar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cubar,Dubar]
+  par_dbar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cdbar]
+  par_s:
+    class: Expression
+    expression: "Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)"
+
+  par_g:
+    class: NegativeGluon
+    parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]
+
+
+DefaultDecomposition: proton
+Decompositions:
+  proton:
+    class: UvDvUbarDbarS
+    xuv: par_uv
+    xdv: par_dv
+    xubar: par_ubar
+    xdbar: par_dbar
+    xs: par_s
+    xg: par_g
+
+DefaultEvolution: proton-QCDNUM
+
+
+Evolutions:
+#  proton-APFELff:
+#    ? !include evolutions/APFEL.yaml
+#    decomposition: proton
+  proton-QCDNUM:
+    ? !include evolutions/QCDNUM.yaml
+    decomposition: proton
+#  antiproton:
+#    class: FlipCharge
+#  neutron:
+#    class: FlipUD
+
+Q0 : 1.378404875209
+
+? !include constants.yaml
+
+alphas : 0.118
+
+byReaction:
+
+  RT_DISNC:
+    ? !include reactions/RT_DISNC.yaml
+  FONLL_DISNC:
+    ? !include reactions/FONLL_DISNC.yaml
+  FONLL_DISCC:
+    ? !include reactions/FONLL_DISCC.yaml
+  FFABM_DISNC:
+    ? !include reactions/FFABM_DISNC.yaml
+  FFABM_DISCC:
+    ? !include reactions/FFABM_DISCC.yaml
+  # AFB:
+  #   ? !include reactions/AFB.yaml 
+  APPLgrid:
+    ? !include reactions/APPLgrid.yaml
+  Fractal_DISNC:
+    ? !include reactions/Fractal_DISNC.yaml
+
+
+hf_scheme_DISNC :
+  defaultValue : 'RT_DISNC' 
+
+hf_scheme_DISCC :
+  defaultValue : 'BaseDISCC' 
+
+#WriteLHAPDF6:
+#  name: "proton" 
+#  description: "..." 
+#  authors: "..." 
+#  reference: "..." 
+#  preferInternalGrid:

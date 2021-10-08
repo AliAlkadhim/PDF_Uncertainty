@@ -117,7 +117,10 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
-MVN_12k_MASTER = get_mvn_samples(mu=means, cov=COV, n=12000, d=d) ; MVN_12k_MASTER
+MVN_25k_MASTER = get_mvn_samples(mu=means, cov=COV, n=25000, d=d) ; MVN_25k_MASTER
+
+
+np.save('../samples/MVN_25k_MASTER.npy', MVN_25k_MASTER)
 
 
 np.save('../samples/MVN_12k_MASTER.npy', MVN_12k_MASTER)

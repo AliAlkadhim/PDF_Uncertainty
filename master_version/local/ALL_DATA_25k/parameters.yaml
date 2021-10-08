@@ -3,30 +3,30 @@ MINUIT:
   Commands: | 
     call fcn 1
     set str 2
-    call fcn 1
+    call fcn 3
 
 Parameters:
   Ag   :  DEPENDENT
-  Adbar   : [ 0.159350, 0. ]
-  Agp   : [ 0.060893, 0. ]
-  Bdbar   : [ -0.126636, 0. ]
-  Bdv   : [ 0.959411, 0. ]
+  Adbar   : [ 0.162805, 0. ]
+  Agp   : [ 0.091613, 0. ]
+  Bdbar   : [ -0.125261, 0. ]
+  Bdv   : [ 1.036033, 0. ]
   Cgp   : [ 25.0, 0. ]
   Auv  :  DEPENDENT
-  Bg   : [ -0.049530, 0. ]
-  Bgp   : [ -0.385656, 0. ]
+  Bg   : [ -0.084947, 0. ]
+  Bgp   : [ -0.375786, 0. ]
   Duv  : [    0     ]
-  Buv   : [ 0.812279, 0. ]
+  Buv   : [ 0.809263, 0. ]
   Adv  :  DEPENDENT
-  Cdbar   : [ 9.289867, 0. ]
-  Cdv   : [ 4.790092, 0. ]
+  Cdbar   : [ 8.554738, 0. ]
+  Cdv   : [ 4.996028, 0. ]
   Aubar: [ 0.0, 0.0 ]
   Bubar: [ 0.0, 0.0  ]
-  Cg   : [ 5.449079, 0. ]
-  Cubar   : [ 7.086377, 0. ]
-  Cuv   : [ 4.787046, 0. ]
-  Dubar   : [ 1.387829, 0. ]
-  Euv   : [ 9.704781, 0. ]
+  Cg   : [ 5.665845, 0. ]
+  Cubar   : [ 6.942344, 0. ]
+  Cuv   : [ 4.832018, 0. ]
+  Dubar   : [ 1.236024, 0. ]
+  Euv   : [ 10.079840, 0. ]
 
   ZERO : [ 0. ]
   fs   :   [ 0.4, 0.0 ]
@@ -67,16 +67,9 @@ DefaultEvolution: proton-QCDNUM
 
 
 Evolutions:
-#  proton-APFELff:
-#    ? !include evolutions/APFEL.yaml
-#    decomposition: proton
   proton-QCDNUM:
     ? !include evolutions/QCDNUM.yaml
     decomposition: proton
-#  antiproton:
-#    class: FlipCharge
-#  neutron:
-#    class: FlipUD
 
 Q0 : 1.378404875209
 
@@ -96,8 +89,6 @@ byReaction:
     ? !include reactions/FFABM_DISNC.yaml
   FFABM_DISCC:
     ? !include reactions/FFABM_DISCC.yaml
-  # AFB:
-  #   ? !include reactions/AFB.yaml 
   APPLgrid:
     ? !include reactions/APPLgrid.yaml
   Fractal_DISNC:
@@ -110,9 +101,3 @@ hf_scheme_DISNC :
 hf_scheme_DISCC :
   defaultValue : 'BaseDISCC' 
 
-#WriteLHAPDF6:
-#  name: "proton" 
-#  description: "..." 
-#  authors: "..." 
-#  reference: "..." 
-#  preferInternalGrid:

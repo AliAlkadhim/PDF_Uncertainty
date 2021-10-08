@@ -1,9 +1,10 @@
+!!!!!!!!!!!!!!!!!STEERING!!!!!!!!!!!!!!!!!1
 *  Namelist to control input data
 *
 
 &InFiles
   ! Number of intput files
-    NInputFiles = 12
+    NInputFiles = 21
  
   ! Input files:
 
@@ -16,7 +17,7 @@
   ! HERA I+II combined inclusive DIS:
     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_920-thexp.dat',
     'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_820-thexp.dat',
-  !  'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575-thexp.dat',
+    'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_575-thexp.dat',
   !  'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCep_460-thexp.dat',
   !  'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_NCem-thexp.dat',
   !  'datafiles/hera/h1zeusCombined/inclusiveDis/1506.06042/HERA1+2_CCep-thexp.dat',
@@ -39,7 +40,7 @@
   !  LHC  !
   !*******!
 
-  ! CMS W, Z production: WORKS, MAKE SURE TO INCLUDE CORR FILES ....... DOESNT AFFECT TIME MUCH
+  ! CMS W, Z production: WORKS, MAKE SURE TO INCLUDE CORR FILES
     'datafiles/lhc/cms/wzProduction/1110.4973/CMS_Z_boson_Rapidity-thexp.dat',
     'datafiles/lhc/cms/wzProduction/1206.2598/CMS_eAsymmetry_SPM_12_001-thexp.dat',
   !  'datafiles/lhc/cms/wzProduction/1312.6283/CMS_mAsymmetry_SMP_12_021-thexp.dat',
@@ -47,12 +48,12 @@
  ! CMS Jets: WORKS
     'datafiles/lhc/cms/jets/1212.6660/CMS_IncJets2011_QCD_11_004-thexp.dat',
   ! ATLAS W, Z production: WORKS
-  !  'datafiles/lhc/atlas/wzProduction/1203.4051/WP_applgrid_nnlo-thexp.dat',
-  !  'datafiles/lhc/atlas/wzProduction/1203.4051/WM_applgrid_nnlo-thexp.dat',
+    'datafiles/lhc/atlas/wzProduction/1203.4051/WP_applgrid_nnlo-thexp.dat',
+    'datafiles/lhc/atlas/wzProduction/1203.4051/WM_applgrid_nnlo-thexp.dat',
 
  ! ATLAS Drell-Yann: WORKS
     'datafiles/lhc/atlas/drellYan/1305.4192/dy_highmass-thexp.dat', 
-!    'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass-thexp.dat',
+    'datafiles/lhc/atlas/drellYan/1404.1212/dy_lowmass-thexp.dat',
 
 ! ATLAS Jets (NOTE: use R06 or R04 data, but never both at the same time!): WORKS
     'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_00_03-thexp.dat',
@@ -60,13 +61,13 @@
  !   'datafiles/lhc/atlas/jets/1112.6297/inclusivejets_R06_08_12-thexp.dat',
  ! ATLAS Dec 2016 W,Z: WORKS
     'datafiles/lhc/atlas/wzProduction/1612.03016/wminus-thexp.dat',
-!    'datafiles/lhc/atlas/wzProduction/1612.03016/wplus-thexp.dat',
-!    'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cc-thexp.dat',
+    'datafiles/lhc/atlas/wzProduction/1612.03016/wplus-thexp.dat',
+    'datafiles/lhc/atlas/wzProduction/1612.03016/zyhigh_cc-thexp.dat',
 
-! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm) WORKS. DOESNT AFFECT TIME MUCH
+! LHCb charm and beauty (in principle need fixed flavour scheme with nf=3, see also steering.txt.hvqmnr.abs and .norm) WORKS
     'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dzero_pty_Normy-thexp.dat',  
-!    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dch_pty_Normy-thexp.dat',
-!    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dstar_pty_Normy-thexp.dat',
+    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dch_pty_Normy-thexp.dat',
+    'datafiles/lhc/lhcb/charmProduction/1302.2864/LHCb_7TeV_Charm_Dstar_pty_Normy-thexp.dat',
 !'datafiles/lhc/lhcb/beautyProduction/1306.3663/LHCb_7TeV_Beauty_Bch_pty_Normy-thexp.dat',
 !    'datafiles/lhc/lhcb/beautyProduction/1306.3663/LHCb_7TeV_Beauty_Bzero_pty_Normy-thexp.dat',
 
@@ -403,3 +404,124 @@
   ! NREMOVEPRIORS = 0                  ! Remove prior from the last n PDF nuisance parameters
   ! DataToTheo = True                  ! reset data to predictions corresponding to member 0, for sensitivity studies
 &End
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!PARAMETERS!!!!!!!!!!!!!!!!!!!!!!!!!1
+Minimizer: MINUIT # CERES 
+MINUIT:
+  Commands: | 
+    call fcn 1
+    set str 2
+    call fcn 3
+
+Parameters:
+  Ag   :  DEPENDENT
+  Adbar   : [ 0.159350, 0. ]
+  Agp   : [ 0.060893, 0. ]
+  Bdbar   : [ -0.126636, 0. ]
+  Bdv   : [ 0.959411, 0. ]
+  Cgp   : [ 25.0, 0. ]
+  Auv  :  DEPENDENT
+  Bg   : [ -0.049530, 0. ]
+  Bgp   : [ -0.385656, 0. ]
+  Duv  : [    0     ]
+  Buv   : [ 0.812279, 0. ]
+  Adv  :  DEPENDENT
+  Cdbar   : [ 9.289867, 0. ]
+  Cdv   : [ 4.790092, 0. ]
+  Aubar: [ 0.0, 0.0 ]
+  Bubar: [ 0.0, 0.0  ]
+  Cg   : [ 5.449079, 0. ]
+  Cubar   : [ 7.086377, 0. ]
+  Cuv   : [ 4.787046, 0. ]
+  Dubar   : [ 1.387829, 0. ]
+  Euv   : [ 9.704781, 0. ]
+
+  ZERO : [ 0. ]
+  fs   :   [ 0.4, 0.0 ]
+Parameterisations:
+  par_uv:
+    class: HERAPDF
+    parameters: [Auv,Buv,Cuv,Duv,Euv]
+  par_dv:
+    class: HERAPDF
+    parameters: [Adv,Bdv,Cdv]
+  par_ubar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cubar,Dubar]
+  par_dbar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cdbar]
+  par_s:
+    class: Expression
+    expression: "Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)"
+
+  par_g:
+    class: NegativeGluon
+    parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]
+
+
+DefaultDecomposition: proton
+Decompositions:
+  proton:
+    class: UvDvUbarDbarS
+    xuv: par_uv
+    xdv: par_dv
+    xubar: par_ubar
+    xdbar: par_dbar
+    xs: par_s
+    xg: par_g
+
+DefaultEvolution: proton-QCDNUM
+
+
+Evolutions:
+#  proton-APFELff:
+#    ? !include evolutions/APFEL.yaml
+#    decomposition: proton
+  proton-QCDNUM:
+    ? !include evolutions/QCDNUM.yaml
+    decomposition: proton
+#  antiproton:
+#    class: FlipCharge
+#  neutron:
+#    class: FlipUD
+
+Q0 : 1.378404875209
+
+? !include constants.yaml
+
+alphas : 0.118
+
+byReaction:
+
+  RT_DISNC:
+    ? !include reactions/RT_DISNC.yaml
+  FONLL_DISNC:
+    ? !include reactions/FONLL_DISNC.yaml
+  FONLL_DISCC:
+    ? !include reactions/FONLL_DISCC.yaml
+  FFABM_DISNC:
+    ? !include reactions/FFABM_DISNC.yaml
+  FFABM_DISCC:
+    ? !include reactions/FFABM_DISCC.yaml
+  AFB:
+    ? !include reactions/AFB.yaml 
+  APPLgrid:
+    ? !include reactions/APPLgrid.yaml
+  Fractal_DISNC:
+    ? !include reactions/Fractal_DISNC.yaml
+
+
+hf_scheme_DISNC :
+  defaultValue : 'RT_DISNC' 
+
+hf_scheme_DISCC :
+  defaultValue : 'BaseDISCC' 
+
+#WriteLHAPDF6:
+#  name: "proton" 
+#  description: "..." 
+#  authors: "..." 
+#  reference: "..." 
+#  preferInternalGrid:
