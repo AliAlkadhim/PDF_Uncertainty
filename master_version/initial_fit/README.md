@@ -1,0 +1,1 @@
+Here is where the initial full fit is done, and the best-fit values of the parameters and the covariance matrix is extracted. Then minuit_out_processing.ipynb produces multivariate normal samples from the best-fit values and their covariance matrix, and saves it in ../samples
