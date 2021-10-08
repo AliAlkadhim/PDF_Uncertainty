@@ -1,0 +1,18 @@
+36 FILES: MAX, all data that works, all HERA and all LHC: 49 s per run.
+
+29 files: everything BUT HERA data: 30.3 secs
+
+24 files: everything but HERA and lhcb: 23.7 s
+
+21 files: everything but HERA and lhcb and CMS 8TeV jets: 23.9 s
+
+21 files: everything but HERA and lhcb and cms W and Z: 22 s
+
+12 files: ONE FROM EVERY EXPERIMENT/PROCESS: 21 S
+
+11 files: same as above, no cdf jets: 20.6
+
+same as above, no proton-antiproton evolution: 21 s
+
+(11 files) same as above, only proton-QCDNUM evolution: 10.633-16
+

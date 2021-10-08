@@ -230,7 +230,7 @@ log_den[:,0], log_den[:,2]
 
 log_RHS = np.empty((4000,14))
 for i in range(14):
-    log_RHS[:,i] = abs(log_numerator[:,i] - log_den[:,i])
+    log_RHS[:,i] = log_numerator[:,i] - log_den[:,i]
 print('log(RHS) = ', log_RHS[:,0], '\n')
 print('therefore, log(w) = log(RHS)')
 
@@ -572,19 +572,9 @@ plt.tight_layout()
 plt.show()
 
 
-hists_unweighted=[]; hists_weighted = []
-bins_unweighted=[]; bins_weighted=[]
-for i in range(14):
-    hist, bins, pathces = plt.hist(MVN_4000_MASTER[:,i].flatten(), bins=50)
-    hists_unweighted.append(hist)
-    bins_unweighted.append(bins)
-#     axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian')
-#     axes[i,0].hist(np.array(list_of_tuples[i][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted')
-    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
-#     axes[i,0].set_title(titles[i] )
-#     axes[i,0].set_xlabel('value')
-#     axes[i,0].set_ylim(0,320)
-#     axes[i,0].legend(
+plt.hist(MVN_4000_MASTER[:,0].flatten(), bins=50, color = 'r', alpha=0.4,label='Gaussian', range=(0.165, 0.19))
+plt.hist(np.array(list_of_tuples[0][0]), weights=np.array(list_of_tuples[i][1]), bins=50, color = 'g',alpha=0.3, label='Reweighted', range=(0.165, 0.19))
+plt.legend()
 
 
 

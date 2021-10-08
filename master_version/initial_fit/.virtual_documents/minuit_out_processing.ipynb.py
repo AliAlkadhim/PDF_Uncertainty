@@ -58,8 +58,9 @@ for i in range(len(params)):
 print( params, generated_uniform_params, '\n\n', len(params), len(generated_uniform_params))
 
 
+import numpy as np
 param_labels = [1,4, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 21]
-param_names= ['Adbar', 'Agp', 'Bdbar', 'Bdv', 'Bg', 'Bgp', 'Buv', 'Cdbar', 'Cdv',  'Cg', 'Cubar', 'Cuv', 'Dubar', 'Euv' ]
+param_names= ['Adbar', 'Agp', 'Bdbar', 'Bdv', 'Bg', 'Bgp', 'Buv', 'Cdbar', 'Cdv',  'Cg', 'Cubar', 'Cuv', 'Dubar', 'Euv' ] #notice the different parameters than version 2.0.1
 param_values = np.array([0.16126, 0.73153E-01, -0.12732, 1.0301, -0.61872E-01, -0.38304, 0.81058, 9.5821, 4.8458, 5.5585, 7.0602, 4.8240, 1.5433, 9.9230 ])
 print(r'$\vec{\theta}= $', param_values)
 means=param_values
@@ -116,6 +117,12 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
+MVN_12k_MASTER = get_mvn_samples(mu=means, cov=COV, n=12000, d=d) ; MVN_12k_MASTER
+
+
+np.save('../samples/MVN_12k_MASTER.npy', MVN_12k_MASTER)
+
+
 MVN_4000_MASTER = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)
 MVN_4000_MASTER
 
@@ -156,10 +163,6 @@ np.save('MVN_4000.npy',MVN_4000)
 
 
 get_ipython().getoutput("pwd")
-
-
-Cg = MVN[:,1]
-     plt.hist(Cg.flatten(), bins=50)
 
 
 Cg = MVN[:,1]
