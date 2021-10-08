@@ -2,59 +2,59 @@
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     1 'Adbar     '   0.16418      constant
+     1 'Adbar     '   0.15877      constant
      2 'Adv       '    1.0000      constant
      3 'Ag        '    1.0000      constant
-     4 'Agp       '   0.70836E-01  constant
+     4 'Agp       '   0.44360E-01  constant
      5 'Aubar     '    0.0000      constant
      6 'Auv       '    1.0000      constant
-     7 'Bdbar     '  -0.12694      constant
-     8 'Bdv       '    1.0345      constant
-     9 'Bg        '  -0.55785E-01  constant
-    10 'Bgp       '  -0.38015      constant
+     7 'Bdbar     '  -0.12843      constant
+     8 'Bdv       '    1.0548      constant
+     9 'Bg        '  -0.19070E-01  constant
+    10 'Bgp       '  -0.38623      constant
     11 'Bubar     '    0.0000      constant
-    12 'Buv       '   0.80591      constant
-    13 'Cdbar     '    9.7149      constant
-    14 'Cdv       '    4.6940      constant
-    15 'Cg        '    5.6580      constant
+    12 'Buv       '   0.82125      constant
+    13 'Cdbar     '    9.2832      constant
+    14 'Cdv       '    5.0351      constant
+    15 'Cg        '    5.6374      constant
     16 'Cgp       '    25.000      constant
-    17 'Cubar     '    6.8405      constant
-    18 'Cuv       '    4.8318      constant
-    19 'Dubar     '    1.1432      constant
+    17 'Cubar     '    7.3991      constant
+    18 'Cuv       '    4.8835      constant
+    19 'Dubar     '    1.2200      constant
     20 'Duv       '    0.0000      constant
-    21 'Euv       '    9.8287      constant
+    21 'Euv       '    10.101      constant
     22 'ZERO      '    0.0000      constant
     23 'fs        '   0.40000      constant
  **********
  **    1 **CALL FCN    1.000    
  **********
 
- FCN=   3921.646     FROM CALl fcn  STATUS=RESET          1 CALLS        1 TOTAL
+ FCN=   2857.521     FROM CALl fcn  STATUS=RESET          1 CALLS        1 TOTAL
                      EDM= unknown      STRATEGY= 1      NO ERROR MATRIX       
 
   EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
   NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   1    Adbar      0.16418       constant   
+   1    Adbar      0.15877       constant   
    2    Adv         1.0000       constant   
    3    Ag          1.0000       constant   
-   4    Agp        0.70836E-01   constant   
+   4    Agp        0.44360E-01   constant   
    5    Aubar       0.0000       constant   
    6    Auv         1.0000       constant   
-   7    Bdbar     -0.12694       constant   
-   8    Bdv         1.0345       constant   
-   9    Bg        -0.55785E-01   constant   
-  10    Bgp       -0.38015       constant   
+   7    Bdbar     -0.12843       constant   
+   8    Bdv         1.0548       constant   
+   9    Bg        -0.19070E-01   constant   
+  10    Bgp       -0.38623       constant   
   11    Bubar       0.0000       constant   
-  12    Buv        0.80591       constant   
-  13    Cdbar       9.7149       constant   
-  14    Cdv         4.6940       constant   
-  15    Cg          5.6580       constant   
+  12    Buv        0.82125       constant   
+  13    Cdbar       9.2832       constant   
+  14    Cdv         5.0351       constant   
+  15    Cg          5.6374       constant   
   16    Cgp         25.000       constant   
-  17    Cubar       6.8405       constant   
-  18    Cuv         4.8318       constant   
-  19    Dubar       1.1432       constant   
+  17    Cubar       7.3991       constant   
+  18    Cuv         4.8835       constant   
+  19    Dubar       1.2200       constant   
   20    Duv         0.0000       constant   
-  21    Euv         9.8287       constant   
+  21    Euv         10.101       constant   
   22    ZERO        0.0000       constant   
   23    fs         0.40000       constant   
  **********
