@@ -2,19 +2,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+MVN_4000 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy'); MVN_4000
+
+
 from IPython.display import Image
 Image(filename='Best_fit_PDF_values.png')
 
 
 for i in range(13):
     plt.hist(MVN_4000[:,i], bins=100)
-plt.title('All HERAPDF Parameter Distributions')
+plt.title('All HERAPDF Parameter Distributions, using only HERA data')
 
 
-import seaborn as sns
-colors=sns.color_palette("rocket",3)
+# import seaborn as sns
+# colors=sns.color_palette("rocket",3)
 # sns.set_style("white")
-plt.style.use('seaborn-paper')
+#plt.style.use('seaborn-paper')
 #plt.rc('text', usetex=True)
 fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
 axes[0,0].hist(MVN_4000[:,0],bins=100, label='Bg')
@@ -33,7 +36,7 @@ axes[3,0].hist(MVN_4000[:,12],bins=100,label='CDbar')
 axes[3,1].hist(MVN_4000[:,13],bins=100,label='CDbar')
 axes[3,2].hist(MVN_4000[:,13],bins=100,label='CDbar')
 axes[3,3].hist(MVN_4000[:,13],bins=100,label='CDbar')
-plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
+plt.tight_layout(); plt.suptitle('HERAPDF Parameters using only HERA data')
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
     ax.set(title=titles[i], xlabel='value')
@@ -47,9 +50,12 @@ plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hsp
 plt.show()
 
 
+MVN_4000_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/chi2_array_4000.npy')
+
 mean_chi2 = np.mean(MVN_4000_chi2)
 chi2_diff = MVN_4000_chi2 - mean_chi2
-chi2_diff, chi2_diff.shape
+print(chi2_diff, chi2_diff.shape)
+plt.hist(MVN_4000_chi2, bins=100); plt.title(r'$\chi^2$ for HERA-only data')
 
 
 Bg = MVN_4000[:-1,0]
@@ -58,10 +64,50 @@ weights = 4000*weights/np.sum(weights)
 weights
 
 
-plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('$w_{B_g}$', fontsize=13)
+plt.hist(weights.flatten(), bins=50, range=(0,10)); plt.title('weights of a parameter $w_{B_g}$', fontsize=15)
 
 
--0.009 + 0.005
+import matplotlib.pyplot as plt
+Ag = MVN_4000[:-1,2]
+weights_Ag=np.exp(-0.5*(chi2_diff))/Ag
+weights_Ag = 3999*weights_Ag/np.sum(weights_Ag)
+
+# plt, axs = plt.subplots(1,2,figsize=(14,7))
+# axs[0].hist(Ag.flatten(), range=(-0.2,-0.003),bins=50)
+# axs[0].set_title(r'$B_g$ Unweighted Distribution', size=18)
+# axs[1].hist(Ag.flatten(), weights=weights_Ag, color='r',range=(-0.2,-0.003),bins=50)
+# axs[1].set_title(r'$B_g$ Weighted Distribution', size=18)
+# axs[1].set_ylim(0,280)
+# axs[0].set_ylim(0,280)
+plt.rcParams["figure.figsize"] = [7, 7]
+plt.hist(Ag.flatten(),bins=50, alpha=0.35, label=r'$A^{\prime}_g$ Unweighted Distribution')
+plt.hist(Ag.flatten(), weights=weights_Ag, color='r',bins=50, alpha=0.35, label=r'$A^{\prime}_g$ Weighted Distribution')
+plt.legend(fontsize=13, loc='best')
+plt.title('HERA ONLY data', fontsize=20)
+print(weights_Ag)
+#plt.savefig('1_data_Ag.png')
+
+
+mean_chi2 = np.mean(MVN_4000_chi2)
+chi2_diff = MVN_4000_chi2 - mean_chi2
+
+params=[]
+for i in range(14):
+    params.append(np.array(MVN_4000[:-1,i]))
+
+weights = np.empty((3999, 14))
+for i in range(14):
+    weights[:,i] = np.exp(-0.5 * (chi2_diff))/params[i]
+    weights[:,i] = 3999 * weights[:,i]/np.sum(weights[:,i])
+weights[:,0]
+
+
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+for i in range(14):
+    plt.hist(weights[:,i], label='weights for '+titles[i], bins=50, range=(0,10))
+
+plt.title('HERA ONLY data')
+plt.legend()
 
 
 import matplotlib.pyplot as plt; import numpy as np
@@ -139,6 +185,69 @@ z_95=st.norm.ppf((1-.95)/2)
 z_95
 
 
+list_of_tuples_HERA = []
+        
+for i in range(14):
+    param_list_i=[]
+    weight_list_i = []
+    for k in range(3999):
+        param_value = MVN_4000[k, i] #at the kth point, for parameter i
+        weight_value = weights[k,i]
+        std_weight_value = np.std(weights[:,i])
+        mean_weight = np.mean(weights[:,i])
+        if (weight_value > (mean_weight - 4*std_weight_value)) and (weight_value < (mean_weight + 4*std_weight_value)):
+            #if weight_value < (mean_weight + 4*std_weight_value):
+
+            param_list_i.append(param_value)
+            weight_list_i.append(weight_value)
+    tuple_i = (param_list_i, weight_list_i)
+    list_of_tuples_HERA.append(tuple_i)
+
+
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','$C_{Dbar}$']
+#['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar']
+#['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar']
+
+
+fig, axes = plt.subplots(nrows=14, ncols=3, figsize=(20,30))
+#for i, ax in enumerate(axes.flatten()):
+
+#PLOT UNWEIGHTED DISTRIBUTIONS (AT COL 0)
+for i in range(14):
+    #axes[i,0].hist(list_of_tuples[i][0], bins=50)
+    axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=50, color='g')
+
+    #axes[i,0].set(title=titles[i] + ' Unweighted', xlabel='value')
+    axes[i,0].set_title(titles[i] + ' Unweighted HERA only')
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,320)
+
+#PLOT WEIGHTED DISTRIBUTIONS
+for i in range(14):
+    axes[i,1].hist(MVN_4000[:-1,i].flatten(), weights=weights[:,i], bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,1].set_title(titles[i] + ' Weighted Unfiltered HERA only')
+    axes[i,1].set_xlabel('value')
+    axes[i,1].set_ylim(0,320)
+    
+##FILTER WEIGHTS
+
+##PLOT WEIGHTED AND FILTERED    
+for i in range(14):
+    axes[i,2].hist(np.array(list_of_tuples_HERA[i][0]), weights=np.array(list_of_tuples_HERA[i][1]), bins=50, color = 'r')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,2].set_title(titles[i] + ' Weighted Filtered HERA only')
+    axes[i,2].set_xlabel('value')
+    axes[i,2].set_ylim(0,320)
+    
+    #axes[i,0].legend()
+# # plt.minorticks_on()
+#plt.tight_layout()
+plt.subplots_adjust(left=0.125, bottom=0, right=0.9 , top=0.9, wspace=0.2, hspace=0.9)
+#plt.savefig('all_data_4k_all_params_FILTERED.png')
+plt.show()
+
+
 MVN_4000= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/MVN_samples/MVN_4000.npy')
 MVN_4000_chi2 = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/Compute_chi2/chi2_array_4000.npy')
 # dof = 377
@@ -182,6 +291,29 @@ print('shapes are', filtered_weights[0].shape, weights[:,0].shape)
 plt.tight_layout()
 
 
+fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
+
+for i in range(7):
+    axes[i,0].hist(MVN_4000[:-1,i].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[i,0].hist(np.array(list_of_tuples_HERA[i][0]), weights=np.array(list_of_tuples_HERA[i][1]), bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,0].set_title('HERA only '+ titles[i] )
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,320)
+    axes[i,0].legend()
+for j in range(0,7):
+    axes[j,1].hist(MVN_4000[:,j+7].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[j,1].hist(np.array(list_of_tuples_HERA[j+7][0]), weights=np.array(list_of_tuples_HERA[j+7][1]), bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[j,1].set_title('HERA only ' +titles[j+7] )
+    axes[j,1].set_xlabel('value')
+    axes[j,1].set_ylim(0,320)
+    axes[j,1].legend()
+    
+plt.tight_layout()
+plt.show()
+
+
 np.array(list_of_tuples[i][1])
 np.einsum()
 
@@ -208,9 +340,6 @@ for i in range(14):
     weights_OLD[:,i] = 4000 * weights[:,i]/np.sum(weights[:,i])
     #weights[:,i] = sp.special.expit(weights[:,i])
 print(weights_OLD[:10,0])
-
-
-np.log(4000)
 
 
 log_numerator = np.empty((4000,14))
