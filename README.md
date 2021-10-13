@@ -1,4 +1,6 @@
-Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. This uses xFitter 2.0.1 (https://www.xfitter.org/xFitter/), make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
+Statistical analysis of PDFs and NNPDFs, focusing on uncertainty estimation. Note: you don't need to install anything other than the repository to analyze the data that is relevant to reweighting.
+
+This uses xFitter 2.0.1 (https://www.xfitter.org/xFitter/), as well as xfitter master. If you want to run the fits associated with xFitter, make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
 
 cd [path to xFitter];   ./configure ./configure --prefix=<installation path> --enable-lhapdf --enable-apfel --enable-applgrid  
 
