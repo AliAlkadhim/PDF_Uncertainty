@@ -45,6 +45,9 @@ MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER); MVN_per_point_l
 MVN_per_point_l.shape
 
 
+plt.hist(MVN_per_point_l)
+
+
 chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
 chi2_array_ALL_DATA_4k, chi2_array_ALL_DATA_4k.shape
 
@@ -74,6 +77,7 @@ plt.hist(np.array(second_term_l))# second term dist is much narrower, which is w
 
 
 list_of_tuples = []; 
+MVG_within_1_sigma=[]
 chi2_within_1_sigma=[] #np.empty((4000,14))
 for i in range(14):
     param_list_i=[]
@@ -82,14 +86,20 @@ for i in range(14):
     for k in range(4000):
         param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
         
+        MVG_point_within_1s = MVN_per_point_l[k]
+        #std = np.std(MVN_per_point_l)
+        #mean_MVG = np.mean(MVN_per_point_l)
+        
         std_MVN_value = np.std(MVN_4000_MASTER[k,:])
         mean_MVN_value = np.mean(MVN_4000_MASTER[k,:])
         if (param_value > (mean_MVN_value - 1*std_MVN_value)) and (param_value < (mean_MVN_value + 1*std_MVN_value)):
             #if weight_value < (mean_weight + 4*std_weight_value):
 
-            param_list_i.append(param_value)
+            #param_list_i.append(param_value)
+            param_list_i.append(MVG_point_within_1s)
             chi2_list_param_i.append(chi2_array_ALL_DATA_4k[k])
-    chi2_within_1_sigma.append(chi2_list)
+    MVG_within_1_sigma.append(param_list_i)
+    chi2_within_1_sigma.append(chi2_list_param_i)
             #chi2_within_1_sigma[k,i] = chi2_array_ALL_DATA_4k[k]
     tuple_i = (param_list_i, chi2_list)
     list_of_tuples.append(tuple_i)
@@ -104,19 +114,11 @@ plt.hist(chi2_within_1_sigma[0], bins=100)
 plt.title('$\chi^2$ values within $1\ \sigma$ of the best-fit values of the parameters', fontsize=18)
 
 
-chi2_within_1_sigma=[]
-# for i in range(4000+1):
-#     chi2_within_1_sigma.append(list_of_tuples[i][1])
-    
-while i <= 4000:
-    chi2_within_1_sigma.append(list_of_tuples[i][1])
-    i+=1
+len(MVG_within_1_sigma), len(MVG_within_1_sigma[0])
 
 
-chi2_filtered = []
-for i in range(4000):
-    chi2_filtered.append(list_of_tuples[i][0])
-plt.hist(np.array(chi2_filtered))
+plt.hist(MVG_within_1_sigma[0], bins=100)
+plt.title('MVG parameter values within $1\ \sigma$ of the best-fit values of the parameters', fontsize=18)
 
 
 chi2_array_ALL_DATA_4k - np.mean(chi2_array_ALL_DATA_4k)
@@ -146,7 +148,24 @@ log_numerator = log_numerator - np.mean(log_numerator)
 log_numerator
 
 
-plt.hist(log_numerator, range=(-10**6,0)) #this is equivalent to plt.hist(log_numerator/(e7), range=(-0.01,0))
+np.log(MVN_per_point_l)
+
+
+#plt.hist(log_numerator, range=(-10**6,0)) #this is equivalent to plt.hist(log_numerator/(e7), range=(-0.01,0))
+# plt.title('log numerator')
+log_den = np.log(MVN_per_point_l)
+log_den.shape
+# plt.hist(log_den)
+# plt.title('log denomenator')
+
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
+axes[0,0].hist(log_numerator); axes[0,0].set_title('log numerator')
+axes[0,1].hist(log_den); axes[0,1].set_title('log denomenator')
+
+axes[1,0].hist(-0.5*np.array(chi2_within_1_sigma[0])); axes[1,0].set_title('log numerator within 1 sigma of best-fit values')
+axes[1,1].hist(np.log(MVG_within_1_sigma[0])); axes[1,1].set_title('log denomenator within 1 sigma of best-fit values')
+
+
 
 
 # def log_den(MVN_per_point_l):
@@ -154,12 +173,17 @@ plt.hist(log_numerator, range=(-10**6,0)) #this is equivalent to plt.hist(log_nu
 #     for i in range(MVN_per_point_l.shape[0]):
 #         log_den = np.log(MVN_per_point_l)
 
-log_den = np.log(MVN_per_point_l)
-log_den.shape
-plt.hist(log_den)
 
 
 
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k-np.mean(chi2_array_ALL_DATA_4k)
+MVN_per_point_l = MVN_per_point_l - np.mean(MVN_per_point_l)
+weights = np.exp(-0.5 * chi2_array_ALL_DATA_4k)/MVN_per_point_l
+weights
+
+
+weights = 4000 * weights/np.sum(weights)
+plt.hist(weights, range=(0,2))
 
 
 log_RHS = log_numerator - log_den
