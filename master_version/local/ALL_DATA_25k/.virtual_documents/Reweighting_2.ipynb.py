@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 plt.rcParams.update({"text.usetex":True})
 
 
-MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
 MVN_4000_MASTER, MVN_4000_MASTER.shape
 
 
@@ -50,7 +50,7 @@ plt.hist(MVN_per_point_l)
 plt.title('Multivariate Normal per point', fontsize=14)
 
 
-chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
 chi2_array_ALL_DATA_4k, chi2_array_ALL_DATA_4k.shape
 
 
@@ -89,6 +89,7 @@ MVG_within_1_sigma=[]
 chi2_within_1_sigma=[] #np.empty((4000,14))
 for i in range(14):
     param_list_i=[]
+    chi2_list=[]
 #     weight_list_i = []
     chi2_list_param_i=[]
     for k in range(4000):
@@ -98,8 +99,8 @@ for i in range(14):
         #std = np.std(MVN_per_point_l)
         #mean_MVG = np.mean(MVN_per_point_l)
         
-        std_MVN_value = np.std(MVN_4000_MASTER[k,:])
-        mean_MVN_value = np.mean(MVN_4000_MASTER[k,:])
+        std_MVN_value = np.std(MVN_4000_MASTER[:,i])
+        mean_MVN_value = np.mean(MVN_4000_MASTER[:,i])
         if (param_value > (mean_MVN_value - 1*std_MVN_value)) and (param_value < (mean_MVN_value + 1*std_MVN_value)):
             #if weight_value < (mean_weight + 4*std_weight_value):
 
@@ -116,6 +117,9 @@ for i in range(14):
 
 
 np.mean(chi2_within_1_sigma[0]), np.mean(chi2_within_1_sigma[2]), np.mean(chi2_within_1_sigma[3])
+
+
+np.mean(MVG_within_1_sigma[0]), np.mean(MVG_within_1_sigma[2]), np.mean(MVG_within_1_sigma[3])
 
 
 plt.hist(chi2_within_1_sigma[0], bins=100)
@@ -152,8 +156,8 @@ log_numerator.shape
 log_numerator, np.mean(log_numerator)
 
 
-log_numerator = log_numerator - np.mean(log_numerator)
-log_numerator
+# log_numerator = log_numerator - np.mean(log_numerator)
+# log_numerator
 
 
 np.log(MVN_per_point_l)
@@ -174,6 +178,24 @@ axes[1,0].hist(-0.5*np.array(chi2_within_1_sigma[0])); axes[1,0].set_title('log 
 axes[1,1].hist(np.log(MVG_within_1_sigma[0])); axes[1,1].set_title('log denomenator within 1 sigma of best-fit values')
 
 
+
+
+#plt.hist(log_numerator, range=(-10**6,0)) #this is equivalent to plt.hist(log_numerator/(e7), range=(-0.01,0))
+# plt.title('log numerator')
+log_den = np.log(MVN_per_point_l)
+log_den = log_den- np.mean(log_den)
+
+
+chi2_within_1_sigma[0] = np.array(chi2_within_1_sigma[0]) - np.mean(np.array(chi2_within_1_sigma[0]))
+
+fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
+axes[0,0].hist(log_numerator); axes[0,0].set_title('log numerator with mean subtracted')
+axes[0,1].hist(log_den); axes[0,1].set_title('log denomenator with mean subtracted')
+
+axes[1,0].hist(-0.5*chi2_within_1_sigma[0]); axes[1,0].set_title('log numerator within 1 sigma of best-fit values with mean subtracted')
+axes[1,1].hist(np.log(MVG_within_1_sigma[0])); axes[1,1].set_title('log denomenator within 1 sigma of best-fit values with mean subtracted')
+
+plt.tight_layout()
 
 
 # def log_den(MVN_per_point_l):
