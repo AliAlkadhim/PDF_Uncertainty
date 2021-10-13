@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+plt.rcParams.update({"text.usetex":True})
 
 
 MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
@@ -46,6 +47,7 @@ MVN_per_point_l.shape
 
 
 plt.hist(MVN_per_point_l)
+plt.title('Multivariate Normal per point', fontsize=14)
 
 
 chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_5k/chi2_array_ALL_DATA_4k.npy')
@@ -57,7 +59,12 @@ chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
 plt.hist(chi2_array_ALL_DATA_4k, bins=100)
 plt.title('$\chi^2$ for All data', fontsize=20)
-chi2_array_ALL_DATA_4k, np.mean(chi2_array_ALL_DATA_4k), np.std(chi2_array_ALL_DATA_4k)
+print(r'the mean and std of $\chi^2$ are respectively', np.mean(chi2_array_ALL_DATA_4k), np.std(chi2_array_ALL_DATA_4k))
+
+
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k-np.mean(chi2_array_ALL_DATA_4k)
+plt.hist(np.exp(-0.5*chi2_array_ALL_DATA_4k))
+plt.title('$e^{-0.5 \chi^2}$')
 
 
 chi2_array_ALL_DATA_4k.mean(), chi2_array_ALL_DATA_4k.std()
@@ -74,6 +81,7 @@ for i in range(MVN_4000_MASTER.shape[0]):
     second_term = (MVN_4000_MASTER[i,:] - mu).T @ np.linalg.inv(sigma) @ (MVN_4000_MASTER[i,:] - mu)
     second_term_l.append(second_term)
 plt.hist(np.array(second_term_l))# second term dist is much narrower, which is what we expect
+plt.title('Second Term', fontsize=15)
 
 
 list_of_tuples = []; 
@@ -117,7 +125,7 @@ plt.title('$\chi^2$ values within $1\ \sigma$ of the best-fit values of the para
 len(MVG_within_1_sigma), len(MVG_within_1_sigma[0])
 
 
-plt.hist(MVG_within_1_sigma[0], bins=100)
+plt.hist(MVG_within_1_sigma[0], bins=100, range=(0,3e16))
 plt.title('MVG parameter values within $1\ \sigma$ of the best-fit values of the parameters', fontsize=18)
 
 
