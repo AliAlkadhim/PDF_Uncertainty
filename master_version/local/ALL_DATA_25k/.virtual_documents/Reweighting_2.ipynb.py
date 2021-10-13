@@ -57,7 +57,10 @@ plt.title('$\chi^2$ for All data', fontsize=20)
 chi2_array_ALL_DATA_4k, np.mean(chi2_array_ALL_DATA_4k), np.std(chi2_array_ALL_DATA_4k)
 
 
-mu
+chi2_array_ALL_DATA_4k.mean(), chi2_array_ALL_DATA_4k.std()
+
+
+chi2_array_ALL_DATA_4k.min(), chi2_array_ALL_DATA_4k.max(), chi2_array_ALL_DATA_4k.max()/chi2_array_ALL_DATA_4k.min()
 
 
 # z = MVN_per_point_l
@@ -70,35 +73,44 @@ for i in range(MVN_4000_MASTER.shape[0]):
 plt.hist(np.array(second_term_l))# second term dist is much narrower, which is what we expect
 
 
-list_of_tuples = []
+list_of_tuples = []; 
+chi2_within_1_sigma=[] #np.empty((4000,14))
 for i in range(14):
     param_list_i=[]
 #     weight_list_i = []
-    chi2_list=[]
+    chi2_list_param_i=[]
     for k in range(4000):
         param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
         
         std_MVN_value = np.std(MVN_4000_MASTER[k,:])
         mean_MVN_value = np.mean(MVN_4000_MASTER[k,:])
-        if (param_value > (mean_MVN_value - 1*param_value)) and (param_value < (mean_MVN_value + 1*param_value)):
+        if (param_value > (mean_MVN_value - 1*std_MVN_value)) and (param_value < (mean_MVN_value + 1*std_MVN_value)):
             #if weight_value < (mean_weight + 4*std_weight_value):
 
             param_list_i.append(param_value)
-            chi2_list.append(chi2_array_ALL_DATA_4k[k])
+            chi2_list_param_i.append(chi2_array_ALL_DATA_4k[k])
+    chi2_within_1_sigma.append(chi2_list)
+            #chi2_within_1_sigma[k,i] = chi2_array_ALL_DATA_4k[k]
     tuple_i = (param_list_i, chi2_list)
     list_of_tuples.append(tuple_i)
 #len(list_of_tuples)                
 #list_of_tuples[1]
 
 
-chi2_array_ALL_DATA_4k.mean(), chi2_array_ALL_DATA_4k.std()
+np.mean(chi2_within_1_sigma[0]), np.mean(chi2_within_1_sigma[2]), np.mean(chi2_within_1_sigma[3])
 
 
-chi2_array_ALL_DATA_4k.min()
+plt.hist(chi2_within_1_sigma[0], bins=100)
+plt.title('$\chi^2$ values within $1\ \sigma$ of the best-fit values of the parameters', fontsize=18)
 
 
-for i in range(4000):
-    print(list_of_tuples[i][1])
+chi2_within_1_sigma=[]
+# for i in range(4000+1):
+#     chi2_within_1_sigma.append(list_of_tuples[i][1])
+    
+while i <= 4000:
+    chi2_within_1_sigma.append(list_of_tuples[i][1])
+    i+=1
 
 
 chi2_filtered = []
