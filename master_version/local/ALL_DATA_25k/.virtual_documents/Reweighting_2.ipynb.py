@@ -236,29 +236,39 @@ def filter_within_bestfit(chi2_arr, MVG_arr, MVN_sample):
 
     MVG_within_1_sigma=[]
     chi2_within_1_sigma=[]
+    
+    MVN_within_1_sigma = []
+    
     for i in range(14):
-        param_list=[]
+        MVG_list=[]
         chi2_list=[]
+        
+        MVN_param_i = []
         for k in range(MVN_sample.shape[0]):
-            param_value = MVN_sample[k, i]
+            param_value = MVN_sample[k, i]#sample parameter value of MVN 
             MVG_at_k = MVG_arr[k]
+            chi2_at_k = chi2_arr[k]
             
             std_MVN_value = np.std(MVN_sample[:,i])#for all the k's (number of points, at parameter label i
             mean_MVN_value = np.mean(MVN_sample[:,i])
             
-            if (param_value > (mean_MVN_value - 2*std_MVN_value)) and (param_value < (mean_MVN_value + 2*std_MVN_value)):
-                param_list.append(MVG_at_k)
-                chi2_list.append(MVG_at_k)
-        MVG_within_1_sigma.append(np.array(param_list))
+            if (param_value > (mean_MVN_value - 1*std_MVN_value)) and (param_value < (mean_MVN_value + 1*std_MVN_value)):
+                MVG_list.append(MVG_at_k)
+                chi2_list.append(chi2_at_k)
+                
+                MVN_param_i.append(param_value)
+                
+        MVN_within_1_sigma.append(np.array(MVN_param_i))
+                
+        MVG_within_1_sigma.append(np.array(MVG_list))
         chi2_within_1_sigma.append(np.array(chi2_list))
     
-    return chi2_within_1_sigma, MVG_within_1_sigma
+    return chi2_within_1_sigma, MVG_within_1_sigma, MVN_within_1_sigma
 
 
         
-chi2_within_1_sigma, MVG_within_1_sigma = filter_within_bestfit(chi2_array_ALL_DATA_4k, MVN_per_point_l, MVN_4000_MASTER)
+chi2_within_1_sigma, MVG_within_1_sigma, MVN_within_1_sigma = filter_within_bestfit(chi2_array_ALL_DATA_4k, MVN_per_point_l, MVN_4000_MASTER)
                                    
-plt.hist(chi2_within_1_sigma)    
 # chi2_within_1_sigma=[] #np.empty((4000,14))
 # for i in range(14):
 #     param_list_i=[]
@@ -287,6 +297,14 @@ plt.hist(chi2_within_1_sigma)
 #     list_of_tuples.append(tuple_i)
 #len(list_of_tuples)                
 #list_of_tuples[1]
+
+
+plt.hist(MVG_within_1_sigma[0], label='within 2 $\sigma$ for parameter 1', alpha=0.3)
+plt.hist(MVN_per_point_l, label = 'unfiltered',  alpha=0.3)
+plt.legend()
+
+
+plt.hist(chi2_within_1_sigma[2])
 
 
 
@@ -333,20 +351,36 @@ def pos_log_mask(chi2_arr, MVG_arr):
 def calc_weight_from_log(chi2_arr, MVG_arr):
     log_weight_unnormalized = (-0.5 * chi2_arr) - (np.log(MVG_arr))
     delta_log_weight_unnormalized = log_weight_unnormalized - np.mean(log_weight_unnormalized)
+    #delta_log_weight_unnormalized = log_weight_unnormalized 
     weight_unnormalized = np.exp(delta_log_weight_unnormalized)
     weight_normalized = weight_unnormalized.size * weight_unnormalized/np.sum(weight_unnormalized)
     return weight_normalized
 
-chi, MVG = delta_mean(chi2_array_ALL_DATA_4k, MVN_per_point_l)
+chi, MVG = delta_mean(chi2_within_1_sigma[2], MVG_within_1_sigma[2])
 
-chi_pos, MVG_pos, mask = pos_log_mask(chi, MVG)
+chi2, MVG2 = delta_best_fit(chi, MVG)
+
+chi3, MVG3 = delta_best_fit(chi2_within_1_sigma[0], MVG_within_1_sigma[0])
+
+
+#chi_pos, MVG_pos, mask = pos_log_mask(chi, MVG) #works
+
+chi_pos, MVG_pos, mask = pos_log_mask(chi2_within_1_sigma[2], MVG_within_1_sigma[2])
 
 w = calc_weight_from_log(chi_pos, MVG_pos)
-plt.hist(w)
+plt.hist(w, range=(0,1))
 print(w.mean())
 
 
+w, w.size
 
+
+mask.size, MVN_within_1_sigma[2].size, MVN_within_1_sigma[2][mask].size
+
+
+plt.hist(MVN_within_1_sigma[2][mask], label = 'G', alpha=0.3)
+plt.hist(MVN_within_1_sigma[2][mask], weights= w, label = 'R', alpha=0.3)
+plt.legend()
 
 
 fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
@@ -355,16 +389,16 @@ titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$
 
 
 for i in range(7):
-    axes[i,0].hist(MVN_4000_MASTER[:,i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
-    axes[i,0].hist(MVN_4000_MASTER[:,i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
+    axes[i,0].hist(MVN_within_1_sigma[i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
+    axes[i,0].hist(MVN_within_1_sigma[i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[i,0].set_title('All Data '+ titles[i] )
     axes[i,0].set_xlabel('value')
     axes[i,0].set_ylim(0,200)
     axes[i,0].legend()
 for j in range(0,7):
-    axes[j,1].hist(MVN_4000_MASTER[:,i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
-    axes[j,1].hist(MVN_4000_MASTER[:,i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
+    axes[j,1].hist(MVN_within_1_sigma[i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
+    axes[j,1].hist(MVN_within_1_sigma[i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[j,1].set_title('All Data ' +titles[j+7] )
     axes[j,1].set_xlabel('value')
