@@ -1,0 +1,1 @@
+this is done to find the \chi^2 at the best-fit values of the parameters. The best-fit values are found from the output of the initial fit, and here we do a full fit, using the same data (in steering) as the one which finds the chi^2 for each data point (sample)

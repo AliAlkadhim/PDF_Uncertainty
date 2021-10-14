@@ -119,7 +119,97 @@ for i in range(14):
 np.mean(chi2_within_1_sigma[0]), np.mean(chi2_within_1_sigma[2]), np.mean(chi2_within_1_sigma[3])
 
 
+plt.hist(MVN_per_point_l)
+
+
+best_fitchi2_25k =3369.427
+#subtract chi^2(best-fit)
+chi2_array_ALL_DATA_4k_diff = chi2_array_ALL_DATA_4k - np.mean(chi2_array_ALL_DATA_4k)
+#subtract chi^2 mean
+chi2_array_ALL_DATA_4k_diff_param_1 =chi2_array_ALL_DATA_4k_diff- best_fitchi2_25k
+chi2_array_ALL_DATA_4k_diff_param_1
+
+
+def MVG_BestFit(MVN, mu, sigma):
+    """
+    The density function of multivariate normal distribution.
+    N = size of the mean vector, or number of parameter points (14)
+    MVN = the 2D MV Gaussian function
+    sigma = the covariance matrix from our best-fit values
+    """
+
+#     MVN_per_point_l=[]
+
+    #z = np.atleast_2d(z)
+    z = MVN
+
+
+    N = z.size
+
+    temp1 = np.linalg.det(sigma) ** (-1/2)
+    temp2 = np.exp(-.5 * (z - mu).T @ np.linalg.inv(sigma) @ (z - mu))
+    MVN_per_point = (2 * np.pi) ** (-N/2) * temp1 * temp2
+
+    return MVN_per_point
+
+
+MVG_best_fit = MVG_BestFit(params_MASTER, params_MASTER, COV_MASTER)
+MVG_best_fit
+
+
+#subtract MVG(best-fit)
+MVN_per_point_l_diff = MVN_per_point_l - MVG_best_fit
+MVN_per_point_l_diff
+
+
+#subtract mean
+MVN_per_point_l_diff_min = MVN_per_point_l_diff - np.mean(MVN_per_point_l_diff)
+MVN_per_point_l_diff_min
+
+
+plt.hist(MVN_per_point_l_diff_min)
+
+
+#take only positive values so that we dont get error when computing log
+positive_MVN_per_point_l_diff_min = MVN_per_point_l_diff_min[MVN_per_point_l_diff_min >0]
+
+positive_chi2_array_ALL_DATA_4k_diff_param_1 = chi2_array_ALL_DATA_4k_diff_param_1[MVN_per_point_l_diff_min >0]
+
+
+
+log_weight_param_1 = (-0.5*positive_chi2_array_ALL_DATA_4k_diff_param_1)/np.log(positive_MVN_per_point_l_diff_min)
+log_weight_param_1
+
+
+weight_param_1 = np.exp(log_weight_param_1)
+
+weight_param_1_normalized = len(weight_param_1) * weight_param_1/np.sum(weight_param_1)
+weight_param_1_normalized
+
+
+# weight_param_1 = len(weight_param_1) * weight_param_1/np.sum(weight_param_1)
+# weight_param_1
+
+
+plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], weights=weight_param_1_normalized, bins=100, label='Reweighted', alpha=0.3, density=True, range=(0.07, 0.08))
+plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], bins=100, label='Gaussian',  alpha=0.3, density=True,range=(0.07, 0.08))
+plt.legend()
+
+
+plt.hist(MVN_4000_MASTER[:,2], weights=weight_param_1, bins=100, label='Reweighted', alpha=0.3, density=True, range=(-0.1302,-0.130))
+plt.hist(MVN_4000_MASTER[:,2], bins=100, label='Gaussian',  alpha=0.3, density=True, range=(-0.131,-0.130))
+plt.legend()
+
+
 np.mean(MVG_within_1_sigma[0]), np.mean(MVG_within_1_sigma[2]), np.mean(MVG_within_1_sigma[3])
+
+
+np.log(np.mean(MVG_within_1_sigma[0]))
+
+
+param_1 = MVN_4000_MASTER[:,0]
+weight_1 = 
+plt.hist(param_1)
 
 
 plt.hist(chi2_within_1_sigma[0], bins=100)
@@ -145,8 +235,12 @@ np.mean(chi2_diff)
 
 
 mean_chi2 = np.mean(chi2_array_ALL_DATA_4k)
+chi2_best_fit = 3369.427
 #remember to rename diff (no need to take diff at this point)
-chi2_diff = chi2_array_ALL_DATA_4k - mean_chi2
+# chi2_diff = chi2_array_ALL_DATA_4k - mean_chi2
+chi2_diff = chi2_array_ALL_DATA_4k - chi2_best_fit
+
+chi2_diff = chi2_diff - np.mean(chi2_diff)
 
 log_numerator = -0.5*chi2_diff
 log_numerator.shape
@@ -165,7 +259,8 @@ np.log(MVN_per_point_l)
 
 #plt.hist(log_numerator, range=(-10**6,0)) #this is equivalent to plt.hist(log_numerator/(e7), range=(-0.01,0))
 # plt.title('log numerator')
-log_den = np.log(MVN_per_point_l)
+MVN_per_point_l_diff = MVN_per_point_l - np.mean(MVN_per_point_l)
+log_den = np.log(MVN_per_point_l_diff)
 log_den.shape
 # plt.hist(log_den)
 # plt.title('log denomenator')
@@ -174,8 +269,8 @@ fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(10,10))
 axes[0,0].hist(log_numerator); axes[0,0].set_title('log numerator')
 axes[0,1].hist(log_den); axes[0,1].set_title('log denomenator')
 
-axes[1,0].hist(-0.5*np.array(chi2_within_1_sigma[0])); axes[1,0].set_title('log numerator within 1 sigma of best-fit values')
-axes[1,1].hist(np.log(MVG_within_1_sigma[0])); axes[1,1].set_title('log denomenator within 1 sigma of best-fit values')
+# axes[1,0].hist(-0.5*np.array(chi2_within_1_sigma[0])); axes[1,0].set_title('log numerator within 1 sigma of best-fit values')
+# axes[1,1].hist(np.log(MVG_within_1_sigma[0])); axes[1,1].set_title('log denomenator within 1 sigma of best-fit values')
 
 
 
