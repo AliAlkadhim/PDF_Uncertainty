@@ -171,9 +171,30 @@ plt.hist(MVN_per_point_l_diff_min)
 
 
 #take only positive values so that we dont get error when computing log
+MVN_per_point_l = MVN_per_point_l - np.mean(MVN_per_point_l)
+
+MVN_per_point_l_pos = MVN_per_point_l[MVN_per_point_l >0]
+
+
+plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], weights=weight_param_1_normalized, bins=100, label='Reweighted', alpha=0.3, density=True, range=(0.07, 0.08))
+plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], bins=100, label='Gaussian',  alpha=0.3, density=True,range=(0.07, 0.08))
+plt.legend()
+
+positive_MVN_per_point_l_diff = MVN_per_point_l_diff[MVN_per_point_l_diff >0]
+
+positive_chi2_array_ALL_DATA_4k_diff_param_1 = chi2_array_ALL_DATA_4k_diff_param_1[MVN_per_point_l_diff >0]; positive_chi2_array_ALL_DATA_4k_diff_param_1
+
+
+#take only positive values so that we dont get error when computing log
+
 positive_MVN_per_point_l_diff_min = MVN_per_point_l_diff_min[MVN_per_point_l_diff_min >0]
 
 positive_chi2_array_ALL_DATA_4k_diff_param_1 = chi2_array_ALL_DATA_4k_diff_param_1[MVN_per_point_l_diff_min >0]
+
+
+
+log_weight_param_1 = (-0.5*positive_chi2_array_ALL_DATA_4k_diff_param_1)/np.log(positive_MVN_per_point_l_diff)
+log_weight_param_1
 
 
 
@@ -194,6 +215,52 @@ weight_param_1_normalized
 plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], weights=weight_param_1_normalized, bins=100, label='Reweighted', alpha=0.3, density=True, range=(0.07, 0.08))
 plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], bins=100, label='Gaussian',  alpha=0.3, density=True,range=(0.07, 0.08))
 plt.legend()
+
+
+MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean <0]
+
+
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+
+best_fitchi2_25k =3369.427
+MVG_best_fit = MVG_BestFit(params_MASTER, params_MASTER, COV_MASTER)
+
+MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER)
+#first step is masking both to take only positive values of MVG
+# pos_MVN_per_point_l = MVN_per_point_l[MVN_per_point_l > 0]
+
+# pos_chi2 = chi2_array_ALL_DATA_4k[MVN_per_point_l > 0]
+
+#now subtract best-fit values of chi2 and MVG
+# MVN_per_point_l = MVN_per_point_l - MVG_best_fit
+# pos_chi2 = pos_chi2 - best_fitchi2_25k
+
+#now subtract the mean from both chi2 and MVG
+MVN_per_point_l_diff_mean = MVN_per_point_l - np.mean(MVN_per_point_l)
+
+pos_chi2_diff_mean =pos_chi2 - np.mean(pos_chi2)
+
+
+#HERE is where the positive masking should be done (right before taking the log)
+MVN_per_point_l_diff_mean_pos = MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean > 0]
+pos_chi2_diff_mean_pos = pos_chi2_diff_mean[MVN_per_point_l_diff_mean > 0]
+
+#now calculate the log weight
+log_weight_unnormalized = (-0.5 * pos_chi2_diff_mean_pos) - (np.log(MVN_per_point_l_diff_mean_pos))
+
+weight_unnormalized = np.exp(log_weight_unnormalized)
+
+weight_normalized = len(weight_unnormalized) * log_weight_unnormalized/np.sum(weight_unnormalized)
+
+MVN_param_1_pos = MVN_4000_MASTER[:,2][MVN_per_point_l_diff_mean > 0]
+
+plt.hist(MVN_param_1_pos, weights=weight_normalized, bins=100, label='Reweighted', alpha=0.3, density=True)
+plt.hist(MVN_param_1_pos, bins=100, label='Gaussian',  alpha=0.3, density=True)
+plt.legend()
+MVN_param_1_pos.shape, weight_normalized.shape
+
+
 
 
 plt.hist(MVN_4000_MASTER[:,2], weights=weight_param_1, bins=100, label='Reweighted', alpha=0.3, density=True, range=(-0.1302,-0.130))
