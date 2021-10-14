@@ -12,6 +12,7 @@ for i in range(MVN_4000_MASTER.shape[0]):
     break
 
 
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
 COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
 params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
 COV_MASTER[0], params_MASTER[0]
@@ -220,6 +221,165 @@ plt.legend()
 MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean <0]
 
 
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
+COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
+params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
+
+chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
+MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
+
+MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER)
+
+def filter_within_bestfit(chi2_arr, MVG_arr, MVN_sample):
+    
+
+    MVG_within_1_sigma=[]
+    chi2_within_1_sigma=[]
+    for i in range(14):
+        param_list=[]
+        chi2_list=[]
+        for k in range(MVN_sample.shape[0]):
+            param_value = MVN_sample[k, i]
+            MVG_at_k = MVG_arr[k]
+            
+            std_MVN_value = np.std(MVN_sample[:,i])#for all the k's (number of points, at parameter label i
+            mean_MVN_value = np.mean(MVN_sample[:,i])
+            
+            if (param_value > (mean_MVN_value - 2*std_MVN_value)) and (param_value < (mean_MVN_value + 2*std_MVN_value)):
+                param_list.append(MVG_at_k)
+                chi2_list.append(MVG_at_k)
+        MVG_within_1_sigma.append(np.array(param_list))
+        chi2_within_1_sigma.append(np.array(chi2_list))
+    
+    return chi2_within_1_sigma, MVG_within_1_sigma
+
+
+        
+chi2_within_1_sigma, MVG_within_1_sigma = filter_within_bestfit(chi2_array_ALL_DATA_4k, MVN_per_point_l, MVN_4000_MASTER)
+                                   
+plt.hist(chi2_within_1_sigma)    
+# chi2_within_1_sigma=[] #np.empty((4000,14))
+# for i in range(14):
+#     param_list_i=[]
+#     chi2_list=[]
+# #     weight_list_i = []
+#     chi2_list_param_i=[]
+#     for k in range(4000):
+#         param_value = MVN_4000_MASTER[k, i] #at the kth point, for parameter i
+        
+#         MVG_point_within_1s = MVN_per_point_l[k]
+#         #std = np.std(MVN_per_point_l)
+#         #mean_MVG = np.mean(MVN_per_point_l)
+        
+#         std_MVN_value = np.std(MVN_4000_MASTER[:,i])
+#         mean_MVN_value = np.mean(MVN_4000_MASTER[:,i])
+#         if (param_value > (mean_MVN_value - 1*std_MVN_value)) and (param_value < (mean_MVN_value + 1*std_MVN_value)):
+#             #if weight_value < (mean_weight + 4*std_weight_value):
+
+#             #param_list_i.append(param_value)
+#             param_list_i.append(MVG_point_within_1s)
+#             chi2_list_param_i.append(chi2_array_ALL_DATA_4k[k])
+#     MVG_within_1_sigma.append(param_list_i)
+#     chi2_within_1_sigma.append(chi2_list_param_i)
+#             #chi2_within_1_sigma[k,i] = chi2_array_ALL_DATA_4k[k]
+#     tuple_i = (param_list_i, chi2_list)
+#     list_of_tuples.append(tuple_i)
+#len(list_of_tuples)                
+#list_of_tuples[1]
+
+
+
+
+def MVG_BestFit(MVN, mu, sigma):
+    """
+    The density function of multivariate normal distribution.
+    N = size of the mean vector, or number of parameter points (14)
+    MVN = the 2D MV Gaussian function
+    sigma = the covariance matrix from our best-fit values
+    """
+
+    z = MVN
+    N = z.size
+
+    temp1 = np.linalg.det(sigma) ** (-1/2)
+    temp2 = np.exp(-.5 * (z - mu).T @ np.linalg.inv(sigma) @ (z - mu))
+    MVN_per_point = (2 * np.pi) ** (-N/2) * temp1 * temp2
+
+    return MVN_per_point
+
+best_fitchi2_25k =3369.427
+MVG_best_fit = MVG_BestFit(params_MASTER, params_MASTER, COV_MASTER)
+
+MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER)
+
+def delta_mean(chi2_arr, MVG_arr):
+    mean_chi2 = chi2_arr - np.mean(chi2_arr)
+    mean_MVG = MVG_arr - np.mean(MVG_arr)
+
+    return mean_chi2, mean_MVG
+
+def delta_best_fit(chi2_arr, MVG_arr):
+    delta_chi2 = chi2_arr - best_fitchi2_25k
+    delta_MVG = MVG_arr - MVG_best_fit
+    return delta_chi2, delta_MVG
+
+def pos_log_mask(chi2_arr, MVG_arr):
+    mask = MVG_arr > 0
+    pos_MVG = MVG_arr[MVG_arr > 0]
+    pos_chi2 = chi2_arr[MVG_arr >0]
+    return pos_chi2, pos_MVG, mask
+
+def calc_weight_from_log(chi2_arr, MVG_arr):
+    log_weight_unnormalized = (-0.5 * chi2_arr) - (np.log(MVG_arr))
+    delta_log_weight_unnormalized = log_weight_unnormalized - np.mean(log_weight_unnormalized)
+    weight_unnormalized = np.exp(delta_log_weight_unnormalized)
+    weight_normalized = weight_unnormalized.size * weight_unnormalized/np.sum(weight_unnormalized)
+    return weight_normalized
+
+chi, MVG = delta_mean(chi2_array_ALL_DATA_4k, MVN_per_point_l)
+
+chi_pos, MVG_pos, mask = pos_log_mask(chi, MVG)
+
+w = calc_weight_from_log(chi_pos, MVG_pos)
+plt.hist(w)
+print(w.mean())
+
+
+
+
+
+fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
+
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
+
+
+for i in range(7):
+    axes[i,0].hist(MVN_4000_MASTER[:,i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
+    axes[i,0].hist(MVN_4000_MASTER[:,i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,0].set_title('All Data '+ titles[i] )
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,200)
+    axes[i,0].legend()
+for j in range(0,7):
+    axes[j,1].hist(MVN_4000_MASTER[:,i][mask], bins=100, color = 'r', alpha=0.4,label='Gaussian', range=(0.160,0.162))
+    axes[j,1].hist(MVN_4000_MASTER[:,i][mask], weights=w, bins=100, color = 'g',alpha=0.3, label='Reweighted', range=(0.160,0.162))
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[j,1].set_title('All Data ' +titles[j+7] )
+    axes[j,1].set_xlabel('value')
+    axes[j,1].set_ylim(0,200)
+    axes[j,1].legend()
+    
+plt.tight_layout()
+plt.show()
+
+
+chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
+MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
+COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
+params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
+
 chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
 
@@ -227,20 +387,16 @@ best_fitchi2_25k =3369.427
 MVG_best_fit = MVG_BestFit(params_MASTER, params_MASTER, COV_MASTER)
 
 MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER)
-#first step is masking both to take only positive values of MVG
-# pos_MVN_per_point_l = MVN_per_point_l[MVN_per_point_l > 0]
 
-# pos_chi2 = chi2_array_ALL_DATA_4k[MVN_per_point_l > 0]
 
-#now subtract best-fit values of chi2 and MVG
-# MVN_per_point_l = MVN_per_point_l - MVG_best_fit
-# pos_chi2 = pos_chi2 - best_fitchi2_25k
+#first subtract the mean from both chi2 and MVG
+# MVN_per_point_l_diff_mean = MVN_per_point_l - np.mean(MVN_per_point_l)
 
-#now subtract the mean from both chi2 and MVG
-MVN_per_point_l_diff_mean = MVN_per_point_l - np.mean(MVN_per_point_l)
+# pos_chi2_diff_mean =pos_chi2 - np.mean(pos_chi2)
 
-pos_chi2_diff_mean =pos_chi2 - np.mean(pos_chi2)
-
+# #now subtract best-fit values of chi2 and MVG
+MVN_per_point_l_diff_mean = MVN_per_point_l - MVG_best_fit
+pos_chi2_diff_mean = chi2_array_ALL_DATA_4k - best_fitchi2_25k
 
 #HERE is where the positive masking should be done (right before taking the log)
 MVN_per_point_l_diff_mean_pos = MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean > 0]
@@ -249,16 +405,52 @@ pos_chi2_diff_mean_pos = pos_chi2_diff_mean[MVN_per_point_l_diff_mean > 0]
 #now calculate the log weight
 log_weight_unnormalized = (-0.5 * pos_chi2_diff_mean_pos) - (np.log(MVN_per_point_l_diff_mean_pos))
 
+log_weight_unnormalized = log_weight_unnormalized - np.mean(log_weight_unnormalized)
+#exponentiate to get the weight
 weight_unnormalized = np.exp(log_weight_unnormalized)
+#normalize
+weight_normalized = len(weight_unnormalized) * weight_unnormalized/np.sum(weight_unnormalized)
 
-weight_normalized = len(weight_unnormalized) * log_weight_unnormalized/np.sum(weight_unnormalized)
 
-MVN_param_1_pos = MVN_4000_MASTER[:,2][MVN_per_point_l_diff_mean > 0]
+MVN_param_1_pos = MVN_4000_MASTER[:,][MVN_per_point_l_diff_mean > 0]
 
-plt.hist(MVN_param_1_pos, weights=weight_normalized, bins=100, label='Reweighted', alpha=0.3, density=True)
-plt.hist(MVN_param_1_pos, bins=100, label='Gaussian',  alpha=0.3, density=True)
-plt.legend()
+# plt.hist(MVN_param_1_pos, weights=weight_normalized, bins=50, label='Reweighted', alpha=0.3)
+# plt.hist(MVN_param_1_pos, bins=50, label='Gaussian',  alpha=0.3)
+# plt.ylim(0,5)
+fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
+
+titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
+
+
+for i in range(7):
+    axes[i,0].hist(MVN_4000_MASTER[:,i][MVN_per_point_l_diff_mean > 0], bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[i,0].hist(MVN_4000_MASTER[:,i][MVN_per_point_l_diff_mean > 0], weights=weight_normalized, bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[i,0].set_title('All Data '+ titles[i] )
+    axes[i,0].set_xlabel('value')
+    axes[i,0].set_ylim(0,200)
+    axes[i,0].legend()
+for j in range(0,7):
+    axes[j,1].hist(MVN_4000_MASTER[:,i][MVN_per_point_l_diff_mean > 0], bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[j,1].hist(MVN_4000_MASTER[:,i][MVN_per_point_l_diff_mean > 0], weights=weight_normalized, bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
+    axes[j,1].set_title('All Data ' +titles[j+7] )
+    axes[j,1].set_xlabel('value')
+    axes[j,1].set_ylim(0,200)
+    axes[j,1].legend()
+    
+plt.tight_layout()
+plt.show()
+
+
 MVN_param_1_pos.shape, weight_normalized.shape
+
+
+weight_normalized
+
+
+plt.hist(weight_normalized, density=True)
+plt.title('weights', fontsize=14)
 
 
 
