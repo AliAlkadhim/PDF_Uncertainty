@@ -18,6 +18,10 @@ params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncer
 COV_MASTER[0], params_MASTER[0]
 
 
+MVN_4000_MASTER[:,0]
+
+
+from scipy.stats import multivariate_normal
 def f(MVN, mu, sigma):
     """
     The density function of multivariate normal distribution.
@@ -26,9 +30,9 @@ def f(MVN, mu, sigma):
     sigma = the covariance matrix from our best-fit values
     """
 
-    MVN_per_point_l=[]
+    MVN_per_point_l=[]; MVN_per_point_l_scipy=[]
     for i in range(MVN.shape[0]):
-        #z = np.atleast_2d(z)
+        # z is the vector of parameters
         z = MVN[i,:]
 
 
@@ -38,13 +42,23 @@ def f(MVN, mu, sigma):
         temp2 = np.exp(-.5 * (z - mu).T @ np.linalg.inv(sigma) @ (z - mu))
         MVN_per_point = (2 * np.pi) ** (-N/2) * temp1 * temp2
         MVN_per_point_l.append(MVN_per_point)
-    return np.array(MVN_per_point_l)
+        MVN_from_func = np.array(MVN_per_point_l)
+        MVN_from_scipy = multivariate_normal.pdf(z, mean=mu, cov=sigma)
+        MVN_per_point_l_scipy.append(MVN_from_scipy)
+    return MVN_from_func, np.array(MVN_per_point_l_scipy)
 
 
-MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER); MVN_per_point_l
+#multivariate_normal(np.linspace(0,10), params_MASTER, COV_MASTER)
+COV_MASTER
 
 
-MVN_per_point_l.shape
+MVN_per_point_from_func, MVN_per_point_from_scipy = f(MVN_4000_MASTER, params_MASTER, COV_MASTER); MVN_per_point_l
+
+
+plt.hist(MVN_per_point_from_scipy)
+
+
+MVN_per_point_l[MVN_per_point_l <0]
 
 
 plt.hist(MVN_per_point_l)
@@ -198,7 +212,6 @@ log_weight_param_1 = (-0.5*positive_chi2_array_ALL_DATA_4k_diff_param_1)/np.log(
 log_weight_param_1
 
 
-
 log_weight_param_1 = (-0.5*positive_chi2_array_ALL_DATA_4k_diff_param_1)/np.log(positive_MVN_per_point_l_diff_min)
 log_weight_param_1
 
@@ -218,23 +231,119 @@ plt.hist(MVN_4000_MASTER[:,1][MVN_per_point_l_diff_min >0], bins=100, label='Gau
 plt.legend()
 
 
-MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean <0]
+from scipy.stats import multivariate_normal
+def MVG(MVN, mu, sigma):
+    """
+    The density function of multivariate normal distribution.
+    N = size of the mean vector, or number of parameter points (14)
+    MVN = the 2D MV Gaussian for the sampling of the parameters 
+    sigma = the covariance matrix from our best-fit values
+    """
+
+    MVN_per_point_l=[]; MVN_per_point_l_scipy=[]
+    for i in range(MVN.shape[0]):
+        # z is the vector of parameters
+        z = MVN[i,:]
 
 
+        N = z.size
+
+        temp1 = np.linalg.det(sigma) ** (-1/2)
+        temp2 = np.exp(-.5 * (z - mu).T @ np.linalg.inv(sigma) @ (z - mu))
+        MVN_per_point = (2 * np.pi) ** (-N/2) * temp1 * temp2
+        MVN_per_point_l.append(MVN_per_point)
+        MVN_from_func = np.array(MVN_per_point_l)
+        MVN_from_scipy = multivariate_normal.pdf(z, mu, sigma)
+        MVN_per_point_l_scipy.append(MVN_from_scipy)
+    return MVN_from_func, np.array(MVN_per_point_l_scipy)
+
+
+def MVG_BestFit(MVN, mu, sigma):
+    """
+    The density function of multivariate normal distribution.
+    N = size of the mean vector, or number of parameter points (14)
+    MVN = the 2D MV Gaussian function
+    sigma = the covariance matrix from our best-fit values
+    """
+
+#     MVN_per_point_l=[]
+
+    #z = np.atleast_2d(z)
+    z = MVN
+
+
+    N = z.size
+
+    temp1 = np.linalg.det(sigma) ** (-1/2)
+    temp2 = np.exp(-.5 * (z - mu).T @ np.linalg.inv(sigma) @ (z - mu))
+    MVN_per_point = (2 * np.pi) ** (-N/2) * temp1 * temp2
+    
+    MVN_per_point_scipy = multivariate_normal.pdf(z, mu, sigma)
+    return np.array(MVN_per_point), MVN_per_point_scipy
+
+
+#LOAD DATA
 chi2_array_ALL_DATA_4k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
 MVN_4000_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
 COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
 params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
-
+#FLOAT 128 FOR HIGHER PRECISION
 chi2_array_ALL_DATA_4k = chi2_array_ALL_DATA_4k.astype(np.float128)
 MVN_4000_MASTER = MVN_4000_MASTER.astype(np.float128)
 
-MVN_per_point_l = f(MVN_4000_MASTER, params_MASTER, COV_MASTER)
+#EVALUAGE THE MV NORMAL AT EACH POINT (AT EACH SET OF PARAMETERS)
+MVN_per_point_l, MVN_per_point_l_scipy = MVG(MVN_4000_MASTER, params_MASTER, COV_MASTER)
+#EVALUAGE THE MV NORMAL AT THE BEST-FIT POINT
+best_fitchi2_25k =3369.427
+MVG_best_fit, MVG_best_fit_scipy = MVG_BestFit(params_MASTER, params_MASTER, COV_MASTER)
+
+
+
+fix, axs = plt.subplots(1,2, figsize=(13,13))
+
+axs[0].hist(MVN_per_point_l, label = 'MVN_per_point_l')
+axs[1].hist(MVN_per_point_l_scipy, label='MVN_per_point_l_scipy')
+
+print('MVG Best fit = ', MVG_best_fit, 'MVG Best fit from scipy = ', MVG_best_fit_scipy)
+        
+
+
+plt.hist(chi2_array_ALL_DATA_4k/best_fitchi2_25k)
+
+
+MVN_per_point_l_diff_mean[MVN_per_point_l_diff_mean <0]
+
+
+MVN_per_point_l
+import scipy.stats as st
+
+MVN_scipy = st.multivariate_normal(
+
+
+m=MVN_per_point_l/MVG_best_fit 
+n=chi2_array_ALL_DATA_4k/best_fitchi2_25k
+
+plt.hist(n/m)
+
+
+np.mean(m/)
+
+
+
 
 def filter_within_bestfit(chi2_arr, MVG_arr, MVN_sample):
     
 
     MVG_within_1_sigma=[]
+[54]:
+￼
+np.mean(m/)
+[55]:
+0.007298643418836985046
+[288]:
+￼
+​
+​
     chi2_within_1_sigma=[]
     
     MVN_within_1_sigma = []
@@ -350,36 +459,47 @@ def pos_log_mask(chi2_arr, MVG_arr):
 
 def calc_weight_from_log(chi2_arr, MVG_arr):
     log_weight_unnormalized = (-0.5 * chi2_arr) - (np.log(MVG_arr))
-    delta_log_weight_unnormalized = log_weight_unnormalized - np.mean(log_weight_unnormalized)
-    #delta_log_weight_unnormalized = log_weight_unnormalized 
+    #delta_log_weight_unnormalized = log_weight_unnormalized - np.mean(log_weight_unnormalized)
+    delta_log_weight_unnormalized = log_weight_unnormalized 
     weight_unnormalized = np.exp(delta_log_weight_unnormalized)
     weight_normalized = weight_unnormalized.size * weight_unnormalized/np.sum(weight_unnormalized)
     return weight_normalized
 
-chi, MVG = delta_mean(chi2_within_1_sigma[2], MVG_within_1_sigma[2])
+def calc_weight_normally(chi2_arr, MVG_arr):
+    w = np.exp(-0.5 * chi2_arr)/MVG_arr
+    
+    w_norm = w.size * w/np.sum(w)
+    return w_norm
+
+chi, MVG = delta_mean(chi2_array_ALL_DATA_4k, MVN_per_point_l)
 
 chi2, MVG2 = delta_best_fit(chi, MVG)
 
 chi3, MVG3 = delta_best_fit(chi2_within_1_sigma[0], MVG_within_1_sigma[0])
 
 
+
 #chi_pos, MVG_pos, mask = pos_log_mask(chi, MVG) #works
 
-chi_pos, MVG_pos, mask = pos_log_mask(chi2_within_1_sigma[2], MVG_within_1_sigma[2])
+chi_pos, MVG_pos, mask = pos_log_mask(chi, MVG)
+
+#chi_pos2, MVG_pos2, mask = pos_log_mask(chi2_within_1_sigma[0], MVG_within_1_sigma[0])
 
 w = calc_weight_from_log(chi_pos, MVG_pos)
-plt.hist(w, range=(0,1))
+
+w_norm = calc_weight_normally(chi2, MVG2)
+plt.hist(w_norm, range=(0,1))
 print(w.mean())
 
 
 w, w.size
 
 
-mask.size, MVN_within_1_sigma[2].size, MVN_within_1_sigma[2][mask].size
+mask.size, MVN_within_1_sigma[0].size, MVN_within_1_sigma[0][mask].size
 
 
-plt.hist(MVN_within_1_sigma[2][mask], label = 'G', alpha=0.3)
-plt.hist(MVN_within_1_sigma[2][mask], weights= w, label = 'R', alpha=0.3)
+plt.hist(MVN_4000_MASTER[:,0][mask], label = 'G', alpha=0.3)
+plt.hist(MVN_4000_MASTER[:,0][mask], weights= w, label = 'R', alpha=0.3)
 plt.legend()
 
 
