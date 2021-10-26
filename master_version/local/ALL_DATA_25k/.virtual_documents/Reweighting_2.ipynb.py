@@ -375,6 +375,48 @@ for i in range(2):
 plt.tight_layout()
 
 
+m=MVN_per_point_l/MVG_best_fit
+n=chi2_array_ALL_DATA_4k - best_fitchi2_25k #BEST FIT
+
+m_scipy = MVN_per_point_l_scipy/MVG_best_fit_scipy
+
+chi2_minus_mean, MVG_minus_mean = delta_mean(chi2_array_ALL_DATA_4k, MVN_per_point_l)
+
+m_minus_mean = MVG_minus_mean/MVG_best_fit
+n_minus_mean = chi2_minus_mean/best_fitchi2_25k
+
+chi2_minus_mean, MVG_minus_mean_scipy = delta_mean(chi2_array_ALL_DATA_4k, MVN_per_point_l_scipy)
+m_minus_mean_scipy = MVG_minus_mean_scipy/MVG_best_fit_scipy
+
+fig, axs = plt.subplots(2,2, figsize=(13,13))
+
+axs[0,0].hist(m/n, label=r'$\frac{MVN(\theta)/MVN(\hat{\theta})}{\chi^2(\theta)/\chi^2(\hat{\theta})}$')
+axs[0,1].hist(m_scipy/n, label=r'$\frac{MVN(\theta)/MVN(\hat{\theta})}{\chi^2(\theta)/\chi^2(\hat{\theta})}$ from scipy')
+axs[1,0].hist(m_minus_mean/n_minus_mean, label=r'$\frac{(MVN(\theta) - E \left[MVN(\theta)\right])/MVN(\hat{\theta})}{(\chi^2(\theta)-E[\chi^2(\theta)])/\chi^2(\hat{\theta})}$')
+axs[1,1].hist(m_minus_mean_scipy/n_minus_mean, label=r'$\frac{(MVN(\theta) - E \left[MVN(\theta)\right])/MVN(\hat{\theta})}{(\chi^2(\theta)-E[\chi^2(\theta)])/\chi^2(\hat{\theta})}$ from scipy')
+
+print(r'$\frac{(MVN(\theta) - E \left[MVN(\theta)\right])/MVN(\hat{\theta})}{(\chi^2(\theta)-E[\chi^2(\theta)])/\chi^2(\hat{\theta})} = $',np.mean(m_minus_mean/n_minus_mean), np.mean(m_minus_mean_scipy/n_minus_mean))
+for i in range(2):
+    for j in range(2):
+        axs[i,j].legend(fontsize=25)
+plt.tight_layout()
+
+
+MVG_over_MVG_best_fit = MVN_per_point_l/MVG_best_fit
+delta_chi2 = chi2_array_ALL_DATA_4k - best_fitchi2_25k
+
+weight = np.exp(-0.5 * delta_chi2)/MVG_over_MVG_best_fit
+
+weight = weight.shape[0]* weight/np.sum(weight)
+plt.hist(weight)
+
+
+np.mean(weight)
+
+
+plt.hist(MVN_4000_MASTER[:,1], weights=weight)
+
+
 MVG_corrected = MVG_minus_mean_scipy/MVG_best_fit_scipy
 chi2_corrected = chi2_minus_mean/best_fitchi2_25k
 plt.hist(MVG_corrected, label='MVG_corrected', alpha=0.3)
@@ -421,6 +463,19 @@ plt.tight_layout()
 plt.show()
 
 
+weight_filtered=[]
+for i in range(weight_normalized.shape):
+if (weight_normalized > (weight_normalized.mean() - 2*weight_normalized.std())) and (weight_normalized < (weight_normalized.mean() + 2*weight_normalized.std())):
+    weight_filtered.append(
+mask
+
+
+mask1=  (weight_normalized > (weight_normalized.mean() - 2*weight_normalized.std())) #and (weight_normalized < (weight_normalized.mean() + 2*weight_normalized.std())).all()
+mask2= (weight_normalized < (weight_normalized.mean() + 2*weight_normalized.std()))
+filtered_weights=weight_normalized[mask1][mask2]
+filtered_weights.shape, weight_normalized.mean(), weight_normalized.std()
+
+
 
 
 def filter_within_bestfit(chi2_arr, MVG_arr, MVN_sample):
@@ -454,7 +509,7 @@ def filter_within_bestfit(chi2_arr, MVG_arr, MVN_sample):
         MVG_within_1_sigma.append(np.array(MVG_list))
         chi2_within_1_sigma.append(np.array(chi2_list))
     
-    return chi2_within_1_sigma, MVG_within_1_sigma, MVN_within_1_sigma
+    return np.array(chi2_within_1_sigma), np.array(MVG_within_1_sigma), np.array(MVN_within_1_sigma)
 
 
         
@@ -490,21 +545,30 @@ chi2_within_1_sigma, MVG_within_1_sigma, MVN_within_1_sigma = filter_within_best
 #list_of_tuples[1]
 
 
+MVG_within_1_sigma.shape
+chi2_within_1_sigma
+
+
+weight_within_1s = np.exp(-0.5*chi2_within_1_sigma)/abs(MVG_within_1_sigma)
+weight_within_1s = weight_within_1s.shape[0] * weight_within_1s/np.sum(weight_within_1s)
+plt.hist(weight_within_1s, label=r'weight within $2 \ \sigma$')
+
+
 fig, axes = plt.subplots(nrows=7, ncols=2, figsize=(20,20))
 
 titles = ['$B_g$','$C_g$','$A_g$','$B_g$','$B_{u_v}$','$C_{u_v}$','$E_{u_v}$','$B_{d_v}$','$C_{d_v}$','$C_{Ubar}$','$D_U$','$A_{Dbar}$','$B_{Dbar}$','CDbar','CDbar','CDbar','CDbar']
 
 for i in range(7):
-    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
-    axes[i,0].hist(MVN_4000_MASTER[:,i].flatten(), weights=weight_normalized, bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    axes[i,0].hist(MVN_within_1_sigma[i], bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[i,0].hist(MVN_within_1_sigma[i], weights=weight_within_1s, bins=100, color = 'g',alpha=0.3, label='Reweighted')
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[i,0].set_title('All Data '+ titles[i] )
     axes[i,0].set_xlabel('value')
     axes[i,0].set_ylim(0,900)
     axes[i,0].legend(fontsize=20)
 for j in range(0,7):
-    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), bins=100, color = 'r', alpha=0.4,label='Gaussian')
-    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), weights=weight_normalized, bins=100, color = 'g',alpha=0.3, label='Reweighted')
+    axes[j,1].hist(MVN_within_1_sigma[i+7], bins=100, color = 'r', alpha=0.4,label='Gaussian')
+    axes[j,1].hist(MVN_4000_MASTER[:,j+7].flatten(), weights=weight_within_1s, bins=100, color = 'g',alpha=0.3, label='Reweighted')
     #axes[i,1].set(title=titles[i] + ' Weighted', xlabel='value')
     axes[j,1].set_title('All Data ' +titles[j+7] )
     axes[j,1].set_xlabel('value')
