@@ -1,0 +1,9 @@
+Minimizer: MINUIT # CERES 
+MINUIT:
+  Commands: | 
+    call fcn 1
+    set str 2
+    call fcn 3
+
+Parameters:
+  Ag   :  DEPENDENT
