@@ -41,27 +41,27 @@ def f(arr_14):
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
-        second.write('  Adbar   : [ ' + str(format(float(arr_14[:,0]), '.6f')) + ', 0. ]\n')
-        second.write('  Agp   : [ ' + str(format(float(arr_14[:,1]), '.6f')) + ', 0. ]\n')
-        second.write('  Bdbar   : [ ' + str(format(float(arr_14[:,2]), '.6f')) + ', 0. ]\n')
-        second.write('  Bdv   : [ ' + str(format(float(arr_14[:,3]), '.6f')) + ', 0. ]\n')
+        second.write('  Adbar   : [ ' + str(float(arr_14[0])) + ', 0. ]\n')
+        second.write('  Agp   : [ ' + str(format(float(arr_14[1]), '.6f')) + ', 0. ]\n')
+        second.write('  Bdbar   : [ ' + str(format(float(arr_14[2]), '.6f')) + ', 0. ]\n')
+        second.write('  Bdv   : [ ' + str(format(float(arr_14[3]), '.6f')) + ', 0. ]\n')
         second.write('  Cgp   : [ ' + str(25.000) + ', 0. ]\n')
         #note that Cprig is a constant, not a parameter value!
         second.write('  Auv  :  DEPENDENT\n')
-        second.write('  Bg   : [ ' + str(format(float(arr_14[:,4]), '.6f')) + ', 0. ]\n')
-        second.write('  Bgp   : [ ' + str(format(float(arr_14[:,5]), '.6f')) + ', 0. ]\n')
+        second.write('  Bg   : [ ' + str(format(float(arr_14[4]), '.6f')) + ', 0. ]\n')
+        second.write('  Bgp   : [ ' + str(format(float(arr_14[5]), '.6f')) + ', 0. ]\n')
         second.write('  Duv  : [    0     ]\n')
-        second.write('  Buv   : [ ' + str(format(float(arr_14[:,6]), '.6f')) + ', 0. ]\n')
+        second.write('  Buv   : [ ' + str(format(float(arr_14[6]), '.6f')) + ', 0. ]\n')
         second.write('  Adv  :  DEPENDENT\n')
-        second.write('  Cdbar   : [ ' + str(format(float(arr_14[:,7]), '.6f')) + ', 0. ]\n')
-        second.write('  Cdv   : [ ' + str(format(float(arr_14[:,8]), '.6f')) + ', 0. ]\n')
+        second.write('  Cdbar   : [ ' + str(format(float(arr_14[7]), '.6f')) + ', 0. ]\n')
+        second.write('  Cdv   : [ ' + str(format(float(arr_14[8]), '.6f')) + ', 0. ]\n')
         second.write('  Aubar: [ 0.0, 0.0 ]\n')
         second.write('  Bubar: [ 0.0, 0.0  ]\n')
-        second.write('  Cg   : [ ' + str(format(float(arr_14[:,9]), '.6f')) + ', 0. ]\n')
-        second.write('  Cubar   : [ ' + str(format(float(arr_14[:,10]), '.6f')) + ', 0. ]\n')
-        second.write('  Cuv   : [ ' + str(format(float(arr_14[:,11]), '.6f')) + ', 0. ]\n')
-        second.write('  Dubar   : [ ' + str(format(float(arr_14[:,12]), '.6f')) + ', 0. ]\n')
-        second.write('  Euv   : [ ' + str(format(float(arr_14[:,13]), '.6f')) + ', 0. ]\n')
+        second.write('  Cg   : [ ' + str(format(float(arr_14[9]), '.6f')) + ', 0. ]\n')
+        second.write('  Cubar   : [ ' + str(format(float(arr_14[10]), '.6f')) + ', 0. ]\n')
+        second.write('  Cuv   : [ ' + str(format(float(arr_14[11]), '.6f')) + ', 0. ]\n')
+        second.write('  Dubar   : [ ' + str(format(float(arr_14[12]), '.6f')) + ', 0. ]\n')
+        second.write('  Euv   : [ ' + str(format(float(arr_14[13]), '.6f')) + ', 0. ]\n')
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
@@ -160,11 +160,6 @@ def f(arr_14):
 #RUN XFITTER AND PIPE ITS OUTPUT TO S
     s = os.popen("xfitter").read()
 #this executes the command xfitter, and the command that will go to the screen will be captured here
-
-# s= '''kasfoafjiop 
-# @chi2out 505.735 
-# iawshgoeihaoierg'''
-# s = '@chi2out = 234.12'
     
 #THIS IS THE EXPRESSION FORM: 
 # @chi2out__   503.08321706305105     
@@ -174,32 +169,33 @@ def f(arr_14):
     #matches = pattern.finditer(s)
     matches = re.findall(regex, s, re.MULTILINE)
     #print(matches)
-    
-    for match in matches:
-        chi2_val = match.split()[1]
-    
-        return float(np.exp(-0.5 * chi2_val))
+
+    chi2 = matches[0].split()[1]
+
+    return np.exp(-0.5 * float(chi2))  
 
 
 
 ############################BEGIN MCMC M-H ALGORITHM#######
 samples = np.ones((1,14))
-N=2
-num_accept=0
+best_fit = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_4000_MASTER.npy')
+# N=2
+# num_accept=0
+f(best_fit[0])
+# for i in range(N):
+#     candidate = np.random.multivariate_normal(params_MASTER, COV_MASTER, 1)
 
-for _ in range(N):
-    candidate = np.random.multivariate_normal(params_MASTER, COV_MASTER, 1)
+#     #print(f(candidate))
+#     #calculate the probablity of accepting this candidate
+#     accept_prob = np.min(1, f(candidate[0])/f(samples[i]))
 
-    #calculate the probablity of accepting this candidate
-    accept_prob = min(1, f(candidate)/f(samples[-1]))
-
-    if np.random.random() < accept_prob:
-        np.vstack((samples, candidate))
-        num_accept +=1
+    # if np.random.random() < accept_prob:
+    #     np.vstack((samples, candidate))
+    #     num_accept +=1
 
     #otherwise report current sample again
-    else:
-        np.vstack((samples, samples[-1]))
+    # else:
+    #     np.vstack((samples, samples[-1]))
     
 
-np.save('samples_MCMC.npy',samples)
+#np.save('samples_MCMC.npy',samples)
