@@ -2,10 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mp
 from scipy.stats import multivariate_normal
-import seaborn as sns
-import pymc3 as pm
+# import seaborn as sns
+# import pymc3 as pm
 import arviz as az
+import re
 import subprocess as sb 
+import os
 import emcee
 
 
@@ -25,8 +27,10 @@ MVN_25k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Unc
 COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
 params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
 
-init_params = params_MASTER
+#init_params = params_MASTER
 #sb.run("source /home/ali/Desktop/Research/xfitter/xfitter_master_version/setup.sh", shell =True)
+path = os.getcwd()
+chi2_vals =[]
 
 def ll(params):
 
@@ -41,27 +45,27 @@ def ll(params):
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
-        second.write('  Adbar   : [ ' + str(float(params[0][0])) + ', 0. ]\n')
-        second.write('  Agp   : [ ' + str(format(float(params[0][1]), '.6f')) + ', 0. ]\n')
-        second.write('  Bdbar   : [ ' + str(format(float(params[0][2]), '.6f')) + ', 0. ]\n')
-        second.write('  Bdv   : [ ' + str(format(float(params[0][3]), '.6f')) + ', 0. ]\n')
+        second.write('  Adbar   : [ ' + str(float(params[0])) + ', 0. ]\n')
+        second.write('  Agp   : [ ' + str(format(float(params[1]), '.6f')) + ', 0. ]\n')
+        second.write('  Bdbar   : [ ' + str(format(float(params[2]), '.6f')) + ', 0. ]\n')
+        second.write('  Bdv   : [ ' + str(format(float(params[3]), '.6f')) + ', 0. ]\n')
         second.write('  Cgp   : [ ' + str(25.000) + ', 0. ]\n')
         #note that Cprig is a constant, not a parameter value!
         second.write('  Auv  :  DEPENDENT\n')
-        second.write('  Bg   : [ ' + str(format(float(params[0][4]), '.6f')) + ', 0. ]\n')
-        second.write('  Bgp   : [ ' + str(format(float(params[0][5]), '.6f')) + ', 0. ]\n')
+        second.write('  Bg   : [ ' + str(format(float(params[4]), '.6f')) + ', 0. ]\n')
+        second.write('  Bgp   : [ ' + str(format(float(params[5]), '.6f')) + ', 0. ]\n')
         second.write('  Duv  : [    0     ]\n')
-        second.write('  Buv   : [ ' + str(format(float(params[0][6]), '.6f')) + ', 0. ]\n')
+        second.write('  Buv   : [ ' + str(format(float(params[6]), '.6f')) + ', 0. ]\n')
         second.write('  Adv  :  DEPENDENT\n')
-        second.write('  Cdbar   : [ ' + str(format(float(params[0][7]), '.6f')) + ', 0. ]\n')
-        second.write('  Cdv   : [ ' + str(format(float(params[0][8]), '.6f')) + ', 0. ]\n')
+        second.write('  Cdbar   : [ ' + str(format(float(params[7]), '.6f')) + ', 0. ]\n')
+        second.write('  Cdv   : [ ' + str(format(float(params[8]), '.6f')) + ', 0. ]\n')
         second.write('  Aubar: [ 0.0, 0.0 ]\n')
         second.write('  Bubar: [ 0.0, 0.0  ]\n')
-        second.write('  Cg   : [ ' + str(format(float(params[0][9]), '.6f')) + ', 0. ]\n')
-        second.write('  Cubar   : [ ' + str(format(float(params[0][10]), '.6f')) + ', 0. ]\n')
-        second.write('  Cuv   : [ ' + str(format(float(params[0][11]), '.6f')) + ', 0. ]\n')
-        second.write('  Dubar   : [ ' + str(format(float(params[0][12]), '.6f')) + ', 0. ]\n')
-        second.write('  Euv   : [ ' + str(format(float(params[0][13]), '.6f')) + ', 0. ]\n')
+        second.write('  Cg   : [ ' + str(format(float(params[9]), '.6f')) + ', 0. ]\n')
+        second.write('  Cubar   : [ ' + str(format(float(params[10]), '.6f')) + ', 0. ]\n')
+        second.write('  Cuv   : [ ' + str(format(float(params[11]), '.6f')) + ', 0. ]\n')
+        second.write('  Dubar   : [ ' + str(format(float(params[12]), '.6f')) + ', 0. ]\n')
+        second.write('  Euv   : [ ' + str(format(float(params[13]), '.6f')) + ', 0. ]\n')
         second.write('\n')
 
         second.write('  ZERO : [ 0. ]\n')        
@@ -171,24 +175,39 @@ def ll(params):
     #print(matches)
 
     chi2 = matches[0].split()[1]
+    f = -0.5 * float(chi2)
+    
+    if np.isnan(f):
+        return - 1e3
+    else:
+        return f
+ 
 
-    return -0.5 * float(chi2)
+# ndim=14
+# nwalkers =1
 
-ndim=14
-nwalkers =1
+nparams=14
+niter    = 10 # number of iterations
+nwalkers = 28
+
+init_params = np.random.randn(nwalkers, nparams)
 #p0 = np.random.rand(nwalkers, ndim)
 
-sampler = emcee.EnsembleSampler(nwalkers, ndim, ll, args=())
+sampler = emcee.EnsembleSampler(nwalkers, nparams, ll)
 
-niter=10000
+niter=2
 
 state = sampler.run_mcmc(init_params,niter, progress=True)
 #name='likelihood.db'
 #jb.dump(sample, name)
 #sampler.reset()
 #100 is the burn in 
-#sampler.run_mcmc(state, 10000)
 #10000 steps
 
-samples = sampler.get_chain(flat=True)
-print(samples)
+#samples = sampler.get_chain(flat=True)
+ndiscard = 1
+nthin    = 1
+sample   = sampler.get_chain(discard=ndiscard, 
+                             thin=nthin, 
+                             flat=True)
+print(sample)
