@@ -1,13 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mp
-#from scipy.stats import multivariate_normal
-# import seaborn as sns
-# import pymc3 as pm
-#import arviz as az
-import re
+from scipy.stats import multivariate_normal
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
 import subprocess as sb 
-import os
 import emcee
 
 
@@ -15,21 +13,35 @@ plt.style.use('bmh')
 colors = ['#348ABD', '#A60628', '#7A68A6', '#467821', '#D55E00', 
           '#CC79A7', '#56B4E9', '#009E73', '#F0E442', '#0072B2']
 mp.rc('text', usetex=True)
+RANDOM_SEED = 8927
+np.random.seed(RANDOM_SEED)
+az.style.use("arviz-darkgrid")
 
-#az.style.use("arviz-darkgrid")
+get_ipython().run_line_magic("matplotlib", " inline")
 
-#%matplotlib inline
 
 #LOAD DATA
-# chi2_array_ALL_DATA_25k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
-# MVN_25k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
-# COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
-# params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
+chi2_array_ALL_DATA_25k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
+MVN_25k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
+COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
+params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
+params_MASTER.shape
 
-#init_params = params_MASTER
-#sb.run("source /home/ali/Desktop/Research/xfitter/xfitter_master_version/setup.sh", shell =True)
-path = os.getcwd()
-chi2_vals =[]
+
+k=params_MASTER.reshape((1,14))
+k[1]
+
+
+COV_MASTER
+
+
+init_params = params_MASTER
+sb.run("source /home/ali/Desktop/Research/xfitter/xfitter_master_version/setup.sh", shell =True)
+
+
+
+init_params = params_MASTER
+sb.run("source /home/ali/Desktop/Research/xfitter/xfitter_master_version/setup.sh", shell =True)
 
 def ll(params):
 
@@ -108,11 +120,11 @@ def ll(params):
         second.write('\n\n')
         second.write('Evolutions:\n')
         # second.write('  proton-APFELff:\n')
-        # second.write('    ? !include evolutions/APFEL.yaml\n')
+        # second.write('    ? get_ipython().getoutput("include evolutions/APFEL.yaml\n')")
         # second.write('    decomposition: proton\n')
 
         second.write('  proton-QCDNUM:\n')
-        second.write('    ? !include evolutions/QCDNUM.yaml\n')
+        second.write('    ? get_ipython().getoutput("include evolutions/QCDNUM.yaml\n')")
         second.write('    decomposition: proton\n')
 
         # second.write('  antiproton:\n')
@@ -128,28 +140,28 @@ def ll(params):
 
         second.write('Q0 : 1.378404875209\n')
         second.write('\n')
-        second.write('? !include constants.yaml\n')
+        second.write('? get_ipython().getoutput("include constants.yaml\n')")
         second.write('\n')
         second.write('alphas : 0.118\n')
         second.write('\n')
         second.write('byReaction:\n')
         second.write('\n')        
         second.write('  RT_DISNC:\n')
-        second.write('    ? !include reactions/RT_DISNC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/RT_DISNC.yaml\n')")
         second.write('  FONLL_DISNC:\n')
-        second.write('    ? !include reactions/FONLL_DISNC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/FONLL_DISNC.yaml\n')")
         second.write('  FONLL_DISCC:\n')
-        second.write('    ? !include reactions/FONLL_DISCC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/FONLL_DISCC.yaml\n')")
         second.write('  FFABM_DISNC:\n')
-        second.write('    ? !include reactions/FFABM_DISNC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/FFABM_DISNC.yaml\n')")
         second.write('  FFABM_DISCC:\n')
-        second.write('    ? !include reactions/FFABM_DISCC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/FFABM_DISCC.yaml\n')")
         # second.write('  AFB:\n')
-        # second.write('    ? !include reactions/AFB.yaml \n')
+        # second.write('    ? get_ipython().getoutput("include reactions/AFB.yaml \n')")
         second.write('  APPLgrid:\n')
-        second.write('    ? !include reactions/APPLgrid.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/APPLgrid.yaml\n')")
         second.write('  Fractal_DISNC:\n')
-        second.write('    ? !include reactions/Fractal_DISNC.yaml\n')
+        second.write('    ? get_ipython().getoutput("include reactions/Fractal_DISNC.yaml\n')")
         second.write('\n\n')
         second.write('hf_scheme_DISNC :\n')
         second.write('  defaultValue : \'RT_DISNC\' \n')
@@ -166,73 +178,42 @@ def ll(params):
 
     #THIS IS THE EXPRESSION FORM: 
     # @chi2out__   503.08321706305105     
-    #the above chi2 value is what we wexpect if we only use HERA data
-    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+')
-    regex=r'@chi2out__...\d+\.\d+'
+
+    #pattern = re.compile('[@chi2out].[0-9]+[.][0-9]+')
+    pattern = re.compile('[@chi2out].[\d+]+[.][\d+]+'); regex=r'@chi2out__...\d+\.\d+'
     #matches = pattern.finditer(s)
     matches = re.findall(regex, s, re.MULTILINE)
     #print(matches)
 
     chi2 = matches[0].split()[1]
-    f = -0.5 * float(chi2)
-    
-    if np.isnan(f):
-        return - 1e3
-    else:
-        return f
- 
 
-############DEFINE PARAMETERS FOR OUR SAMPLER
+    return np.exp(-0.5 * float(chi2))  
+
 ndim=14
-nwalkers = 28 #has to be even
-nparams=14
-n_burn    = 5 # "burn-in" period to let chains stabilize
-n_steps = 20   # number of MCMC steps to take after burn-in
+nwalkers = 4
+p0 = np.random.rand(nwalkers, ndim)
 
-#seed the random runmber generator
-RANDOM_SEED = 8927
-np.random.seed(RANDOM_SEED)
+sampler = emcee.EnsembleSampler(nwalkers, ndim, log, args=init_params)
 
-
-#Define initial starting values of the parameters
-#below we could start the parameters in the vicinity of the best-fit values, which would reduce burn-in time
-init_params = np.random.randn(nwalkers, nparams)
-#p0 = [np.random.rand(ndim) for i in range(nwalkers)]
-
-#first arg=number of walkers, second: number of parameters, third the log likelihood, threads gives you th eoption to use more cores
-sampler = emcee.EnsembleSampler(nwalkers, nparams, ll, threads=12)
-
-#DO THE BIRN IN, RUN MCMC WITHOUT STORING THE RESULTS
-pos, prob, state = sampler.run_mcmc(init_params, n_burn)
+state = sampler.run_mcmc(p0, 100)
 sampler.reset()
-
-# Sample again, starting from end burn-in state (starting at pos and ending at nsteops)
-_ = sampler.run_mcmc(pos, n_steps, rstate0=state)
-
-#state = sampler.run_mcmc(init_params,niter, progress=True)
-#name='likelihood.db'
-#jb.dump(sample, name)
-#sampler.reset()
 #100 is the burn in 
+sampler.run_mcmc(state, 10000)
 #10000 steps
 
-#samples = sampler.get_chain(flat=True)
-# ndiscard = 50
-# nthin    = 10
-# sample   = sampler.get_chain(discard=ndiscard, 
-#                              thin=nthin, 
-#                              flat=True)
+samples = sampler.get_chain(flat=True)
+print(samples)
 
-fig, ax = plt.subplots(2, 1, sharex=True)
-for i in [0, 1]:
-    ax[i].plot(sampler.chain[0,:,i], 'k-', lw=0.2)
-    ax[i].plot([0, n_steps-1], 
-             [sampler.chain[0,:,i].mean(), sampler.chain[0,:,i].mean()], 'r-')
 
-ax[1].set_xlabel('sample number')
-ax[0].set_ylabel('r')
-ax[1].set_ylabel('p')
+added = np.ones((1,14))
+m = np.vstack((MVN_25k_MASTER, added))
+m[-1]
 
-plt.show()
-print('done')
-#print(sample)
+
+### learning - can erase
+data = np.random.normal(loc=100.0, scale=3.0, size=1000)
+p0 = [np.random.rand(2) for i in range(250)]; nparams=14; nwalkers=28
+np.random.randn(nwalkers, nparams)
+
+
+
