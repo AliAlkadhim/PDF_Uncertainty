@@ -213,7 +213,22 @@ m[-1]
 ### learning - can erase
 data = np.random.normal(loc=100.0, scale=3.0, size=1000)
 p0 = [np.random.rand(2) for i in range(250)]; nparams=14; nwalkers=28
-np.random.randn(nwalkers, nparams)
+np.random.randn(nwalkers, nparams).shape
+
+
+def get_mvn_samples(mu,cov,n,d):
+    samples = np.zeros((n,d))
+    for i in range(n):      
+        samples[i,:] = np.random.multivariate_normal(mu, cov, 1)
+    
+    return samples
+samples = get_mvn_samples(mu=params_MASTER, cov=COV_MASTER, n=28, d=14); samples[0]
+
+
+samples = get_mvn_samples(mu=params_MASTER, cov=COV_MASTER*1000, n=28, d=14); samples[0]
+
+
+samples[1]
 
 
 

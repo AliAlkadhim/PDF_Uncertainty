@@ -9,7 +9,7 @@ import re
 import subprocess as sb 
 import os
 import emcee
-
+import h5py
 
 plt.style.use('bmh')
 colors = ['#348ABD', '#A60628', '#7A68A6', '#467821', '#D55E00', 
@@ -23,8 +23,8 @@ mp.rc('text', usetex=True)
 #LOAD DATA
 # chi2_array_ALL_DATA_25k = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/local/ALL_DATA_25k/chi2_array_ALL_DATA_25k.npy')
 # MVN_25k_MASTER = np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/MVN_25k_MASTER.npy')
-# COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
-# params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
+COV_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/COV_MASTER.npy')
+params_MASTER= np.load('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_version/samples/params_MASTER.npy')
 
 #init_params = params_MASTER
 #sb.run("source /home/ali/Desktop/Research/xfitter/xfitter_master_version/setup.sh", shell =True)
@@ -40,7 +40,7 @@ def ll(params):
         second.write('  Commands: | \n')
         second.write('    call fcn 1\n')
         second.write('    set str 2\n')
-        second.write('    call fcn 3\n')
+        #second.write('    call fcn 3\n')
         second.write('\n')
         second.write('Parameters:\n')
         second.write('  Ag   :  DEPENDENT\n')
@@ -184,55 +184,65 @@ def ll(params):
 
 ############DEFINE PARAMETERS FOR OUR SAMPLER
 ndim=14
-nwalkers = 28 #has to be even
+nwalkers = 14*3 #has to be even, preferabbly a multiple of n_params
 nparams=14
-n_burn    = 5 # "burn-in" period to let chains stabilize
-n_steps = 20   # number of MCMC steps to take after burn-in
+n_burn    = 1 # "burn-in" period to let chains stabilize
+n_steps = 2   # number of MCMC steps to take after burn-in
 
 #seed the random runmber generator
 RANDOM_SEED = 8927
 np.random.seed(RANDOM_SEED)
 
 
-#Define initial starting values of the parameters
+#Define initial starting values of the parameters.
+# each walker gets a set of initial parameters, so the dimension of init_params=(nwalkers, n_params)
 #below we could start the parameters in the vicinity of the best-fit values, which would reduce burn-in time
-init_params = np.random.randn(nwalkers, nparams)
-#p0 = [np.random.rand(ndim) for i in range(nwalkers)]
+#init_params = np.random.randn(nwalkers, nparams)
+def get_mvn_samples(mu,cov,n,d):
+    samples = np.zeros((n,d))
+    for i in range(n):      
+        samples[i,:] = np.random.multivariate_normal(mu, cov, 1)
+    
+    return samples
 
-#first arg=number of walkers, second: number of parameters, third the log likelihood, threads gives you th eoption to use more cores
-sampler = emcee.EnsembleSampler(nwalkers, nparams, ll, threads=12)
+init_params = get_mvn_samples(mu=params_MASTER, cov=COV_MASTER*10000, n=nwalkers, d=14)
+
+#################SAVE THE SAMPLER TO ACCESS LATER: this requires setting a backend with h5py
+filename = 'SAMPLER.h5'
+backend = emcee.backends.HDFBackend(filename)
+backend.reset(nwalkers, ndim)
+#you can access the sampler later (to check convergence, etc) by sampler = emcee.backends.HDFBackend(filename)
+#Start the sampler. first arg=number of walkers, second: number of parameters, third the log likelihood, threads gives you th eoption to use more cores
+sampler = emcee.EnsembleSampler(nwalkers, nparams, ll, backend = backend, threads=15)
 
 #DO THE BIRN IN, RUN MCMC WITHOUT STORING THE RESULTS
-pos, prob, state = sampler.run_mcmc(init_params, n_burn)
+pos, prob, state = sampler.run_mcmc(init_params, n_burn, progress=True)
 sampler.reset()
 
 # Sample again, starting from end burn-in state (starting at pos and ending at nsteops)
-_ = sampler.run_mcmc(pos, n_steps, rstate0=state)
+_ = sampler.run_mcmc(pos, n_steps, rstate0=state, progress=True)
 
-#state = sampler.run_mcmc(init_params,niter, progress=True)
-#name='likelihood.db'
-#jb.dump(sample, name)
-#sampler.reset()
-#100 is the burn in 
-#10000 steps
+#state = sampler.run_mcmc(init_params,n_steps, progress=True)
 
-#samples = sampler.get_chain(flat=True)
+##########GET THE ACTUAL SAMPLES. Samples will have shape (n_walkers, n_params), eg. samples[:,0] is the density of the first parameter
+samples = sampler.get_chain(flat=True)
 # ndiscard = 50
 # nthin    = 10
 # sample   = sampler.get_chain(discard=ndiscard, 
 #                              thin=nthin, 
 #                              flat=True)
+np.save('MCMC_samples.npy', samples)
+# fig, ax = plt.subplots(2, 1, sharex=True)
+# for i in [0, 1]:
+#     ax[i].plot(sampler.chain[0,:,i], 'k-', lw=0.2)
+#     ax[i].plot([0, n_steps-1], 
+#              [sampler.chain[0,:,i].mean(), sampler.chain[0,:,i].mean()], 'r-')
 
-fig, ax = plt.subplots(2, 1, sharex=True)
-for i in [0, 1]:
-    ax[i].plot(sampler.chain[0,:,i], 'k-', lw=0.2)
-    ax[i].plot([0, n_steps-1], 
-             [sampler.chain[0,:,i].mean(), sampler.chain[0,:,i].mean()], 'r-')
+# ax[1].set_xlabel('sample number')
+# ax[0].set_ylabel('r')
+# ax[1].set_ylabel('p')
 
-ax[1].set_xlabel('sample number')
-ax[0].set_ylabel('r')
-ax[1].set_ylabel('p')
-
-plt.show()
+#plt.show()
 print('done')
-#print(sample)
+print(samples)
+quit()
