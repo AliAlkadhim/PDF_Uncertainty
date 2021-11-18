@@ -1,0 +1,1 @@
+./configure --with-blas=/storage/5/home/aalkadhim/xfitter/BLAS-3.10.0/libblas.a --with-lapack=/storage/5/home/aalkadhim/xfitter/lapack/liblapack.a --enable-lhapdf --enable-applgrid --prefix=/storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src LDFLAGS=-L/storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/zlib-1.2.11 FFLAGS=-mcmodel=medium

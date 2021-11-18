@@ -1,0 +1,8 @@
+source ./setup.sh
+export PATH=$CURRENTDIR/deps/hoppet/bin/:$PATH
+export PATH=$CURRENTDIR/deps/lhapdf/bin/:$PATH
+export HATHOR_DIR=/storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/deps/Hathor-2.0
+export PATH=$CURRENTDIR/deps/applgrid/bin/:$PATH
+export PATH=$CURRENTDIR/deps/apfel/bin/:$PATH
+export PATH=$CURRENTDIR/deps/mela/bin/:$PATH
+source /storage/5/home/aalkadhim/cms04/CMSSW_10_2_23/src/setup_yaml.sh

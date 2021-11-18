@@ -23,8 +23,8 @@ skip_apfelgrid=0
 ## Option 1: Use local environment
 ## These settings assume that root is already in your PATH and boost lib is installed
 ## For versions older than 1.1.0, need to specify the location of CERNLIB
-MODE=local
-export CERN_ROOT=/usr/lib
+#MODE=local
+#export CERN_ROOT=/usr/lib
 
 ## Option 2: Setup environment from CERN cvmfs
 ## These settings include compiler, cernlib and root
@@ -169,7 +169,7 @@ then
         then
             echo "Detected SL6 Linux distribution"
             MODE=cern
-            gccv=4.9
+            gccv=7
             echo "Using gcc version = ${gccv}"
             os=slc6
             arch=x86_64
@@ -180,7 +180,7 @@ then
         then
             echo "Detected CentOS7 Linux distribution"
             MODE=cern
-            gccv=4.9
+            gccv=7
             os=centos7
             arch=x86_64
             rootversion=6.06.08
@@ -205,7 +205,7 @@ then
             echo "Sorry, I don't recognize your system:"
             echo "$SYS $ver"
             echo "I will assume you have root installed in your system,"
-            echo "gcc version >= 4.3, python, boost libraries, and wget"
+            echo "gcc version >= 4.3, python, boost libraries, and wget --no-check-certificate"
             echo "If this doesn't work, and you have /cvmfs/sft.cern.ch mounted"
             echo "edit me (I am $0) and try to setup appropriate settings"
             echo "in the section: manual configuration"
@@ -264,17 +264,17 @@ then
     exit
 fi
 
-which wget >& /dev/null
+which wget --no-check-certificate >& /dev/null
 if [[ $? == 0 ]]
 then
-    http=wget
+    http=wget --no-check-certificate
 else
     which curl >& /dev/null
     if [[ $? == 0 ]]
     then
         http=curl
     else
-        echo "Error, wget or curl not found"
+        echo "Error, wget --no-check-certificate or curl not found"
         exit
     fi
 fi
@@ -315,8 +315,8 @@ else
 #       curl https://www.hepforge.org/archive/lhapdf/${lhapdf}-${lhapdfver}.tar.gz > ${lhapdf}-${lhapdfver}.tar.gz 2>> $CURRENTDIR/install.log
         curl https://lhapdf.hepforge.org/downloads/${lhapdf}-${lhapdfver}.tar.gz > ${lhapdf}-${lhapdfver}.tar.gz 2>> $CURRENTDIR/install.log
     else
-#       wget https://www.hepforge.org/archive/lhapdf/${lhapdf}-${lhapdfver}.tar.gz >> $CURRENTDIR/install.log 2>&1
-        wget https://lhapdf.hepforge.org/downloads/${lhapdf}-${lhapdfver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+#       wget --no-check-certificate https://www.hepforge.org/archive/lhapdf/${lhapdf}-${lhapdfver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate https://lhapdf.hepforge.org/downloads/${lhapdf}-${lhapdfver}.tar.gz >> $CURRENTDIR/install.log 2>&1
     fi
     tar xfz ${lhapdf}-${lhapdfver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
     cd ${lhapdf}-${lhapdfver}
@@ -326,7 +326,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9 >> $CURRENTDIR/install.log  2>&1
+    make -j 12 >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -335,25 +335,25 @@ else
     cd - >& /dev/null
 
 #Hathor:
-    echo "Installing Hathor $hathorver..."
-    hathor="Hathor"
-    if [[ $http == "curl" ]]
-    then
+#    echo "Installing Hathor $hathorver..."
+#    hathor="Hathor"
+#    if [[ $http == "curl" ]]
+#    then
         # alternative link https://www-zeuthen.desy.de/~moch/hathor/Hathor-2.0.tar.gz
-        curl https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz 2>> $CURRENTDIR/install.log
-    else
-        wget https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz >> $CURRENTDIR/install.log 2>&1
-    fi
-    tar xfz Hathor-${hathorver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
-    cd Hathor-${hathorver}/lib
+#        curl https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz 2>> $CURRENTDIR/install.log
+#    else
+#        wget --no-check-certificate https://www.physik.hu-berlin.de/de/pep/tools/Hathor-${hathorver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+#    fi
+#    tar xfz Hathor-${hathorver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
+#    cd Hathor-${hathorver}/lib
     # need to provide LHAPDF directory and add -fPIC flag to CFLAGS and FFLAGS
-    make LHAPDF=$CURRENTDIR/deps/lhapdf V=1 CFLAGS='-O2 -Wall -fPIC' FFLAGS='-ffixed-line-length-132 -fPIC' -j9 >> $CURRENTDIR/install.log  2>&1
-    if [[ $? != 0 ]]
-    then
-        echo "Error, check install.log for details"
-        exit
-    fi
-    cd - >& /dev/null
+#    make LHAPDF=$CURRENTDIR/deps/lhapdf V=1 CFLAGS='-O2 -Wall -fPIC' FFLAGS='-ffixed-line-length-132 -fPIC' -j9 >> $CURRENTDIR/install.log  2>&1
+#    if [[ $? != 0 ]]
+#    then
+#        echo "Error, check install.log for details"
+#        exit
+#    fi
+#    cd - >& /dev/null
 
  #hoppet:
     echo "Installing HOPPET $hoppetver..."
@@ -361,7 +361,7 @@ else
     then
         curl http://hoppet.hepforge.org/downloads/hoppet-${hoppetver}.tgz > hoppet-${hoppetver}.tgz 2>> $CURRENTDIR/install.log
     else
-        wget http://hoppet.hepforge.org/downloads/hoppet-${hoppetver}.tgz >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate http://hoppet.hepforge.org/downloads/hoppet-${hoppetver}.tgz >> $CURRENTDIR/install.log 2>&1
     fi
     tar xfz hoppet-${hoppetver}.tgz  >> $CURRENTDIR/install.log  2>&1
     cd hoppet-${hoppetver}
@@ -371,7 +371,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9  >> $CURRENTDIR/install.log  2>&1
+    make -j 12  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -396,12 +396,12 @@ else
     then
         curl $APPLGRID_URL > applgrid-$applgridver.tgz  2>> $CURRENTDIR/install.log
     else
-        wget $APPLGRID_URL >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate $APPLGRID_URL >> $CURRENTDIR/install.log 2>&1
     fi
     tar xfz applgrid-$applgridver.tgz  >> $CURRENTDIR/install.log  2>&1
     cd applgrid-$applgridver
     # need to supply c++11 flag explicitly
-    ./configure CXXFLAGS='--std=c++11' --prefix=$CURRENTDIR/deps/applgrid  >> $CURRENTDIR/install.log  2>&1
+    ./configure CXXFLAGS='--std=c++17' --prefix=$CURRENTDIR/deps/applgrid  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -413,7 +413,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9  >> $CURRENTDIR/install.log  2>&1
+    make -j 12  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -429,7 +429,7 @@ else
     then
         curl https://github.com/scarrazza/apfel/archive/${apfelver}.tar.gz > ${apfelver}.tar.gz 2 >> $CURRENTDIR/install.log
     else
-        wget https://github.com/scarrazza/apfel/archive/${apfelver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate https://github.com/scarrazza/apfel/archive/${apfelver}.tar.gz >> $CURRENTDIR/install.log 2>&1
     fi
     mv ${apfelver}.tar.gz apfel-${apfelver}.tar.gz
     tar xfvz apfel-${apfelver}.tar.gz >> $CURRENTDIR/install.log 2>&1
@@ -441,7 +441,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9  >> $CURRENTDIR/install.log  2>&1
+    make -j 12  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -458,8 +458,8 @@ else
       curl https://www.ge.infn.it/~bonvini/hell/downloads/HELLx.v3.0.tgz > HELLx.v3.0.tgz 2 >> $CURRENTDIR/install.log
       curl https://www.ge.infn.it/~bonvini/hell/downloads/HELLx-data.v3.tgz > HELLx-data.v3.tgz 2 >> $CURRENTDIR/install.log
     else
-      wget https://www.ge.infn.it/~bonvini/hell/downloads/HELLx.v3.0.tgz >> $CURRENTDIR/install.log  2>&1
-      wget https://www.ge.infn.it/~bonvini/hell/downloads/HELLx-data.v3.tgz >> $CURRENTDIR/install.log  2>&1
+      wget --no-check-certificate https://www.ge.infn.it/~bonvini/hell/downloads/HELLx.v3.0.tgz >> $CURRENTDIR/install.log  2>&1
+      wget --no-check-certificate https://www.ge.infn.it/~bonvini/hell/downloads/HELLx-data.v3.tgz >> $CURRENTDIR/install.log  2>&1
     fi
 
     tar xzf HELLx.v3.0.tgz >> $CURRENTDIR/install.log  2>&1
@@ -473,7 +473,7 @@ else
       then
                   lhapdf get NNPDF30_nlo_as_0118  >> $CURRENTDIR/install.log  2>&1
           else
-                  wget http://www.hepforge.org/archive/lhapdf/pdfsets/6.2/NNPDF30_nlo_as_0118.tar.gz  >> $CURRENTDIR/install.log  2>&1
+                  wget --no-check-certificate http://www.hepforge.org/archive/lhapdf/pdfsets/6.2/NNPDF30_nlo_as_0118.tar.gz  >> $CURRENTDIR/install.log  2>&1
                   tar xvzpf NNPDF30_nlo_as_0118.tar.gz >> $CURRENTDIR/install.log  2>&1
                   mv NNPDF30_nlo_as_0118 `lhapdf-config --datadir` >> $CURRENTDIR/install.log  2>&1
                   rm NNPDF30_nlo_as_0118.tar.gz  >> $CURRENTDIR/install.log  2>&1
@@ -486,8 +486,8 @@ else
   #       curl https://github.com/nhartland/APFELgrid/archive/v${apfelgridver}.tar.gz > v${apfelgridver}.tar.gz 2 >> $CURRENTDIR/install.log
           curl https://github.com/zenaiev/APFELgrid/archive/v${apfelgridver}.tar.gz > v${apfelgridver}.tar.gz 2 >> $CURRENTDIR/install.log
       else
-  #       wget https://github.com/nhartland/APFELgrid/archive/v${apfelgridver}.tar.gz >> $CURRENTDIR/install.log 2>&1
-          wget https://github.com/zenaiev/APFELgrid/archive/v${apfelgridver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+  #       wget --no-check-certificate https://github.com/nhartland/APFELgrid/archive/v${apfelgridver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+          wget --no-check-certificate https://github.com/zenaiev/APFELgrid/archive/v${apfelgridver}.tar.gz >> $CURRENTDIR/install.log 2>&1
       fi
       mv v${apfelgridver}.tar.gz APFELgrid-${apfelgridver}.tar.gz
       tar xfvz APFELgrid-${apfelgridver}.tar.gz >> $CURRENTDIR/install.log 2>&1
@@ -509,7 +509,7 @@ else
       then
           curl https://github.com/vbertone/MELA/archive/${melaver}.tar.gz > ${melaver}.tar.gz 2 >> $CURRENTDIR/install.log
       else
-          wget https://github.com/vbertone/MELA/archive/${melaver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+          wget --no-check-certificate https://github.com/vbertone/MELA/archive/${melaver}.tar.gz >> $CURRENTDIR/install.log 2>&1
       fi
       mv ${melaver}.tar.gz MELA-${melaver}.tar.gz
       tar xfvz MELA-${melaver}.tar.gz >> $CURRENTDIR/install.log 2>&1
@@ -521,7 +521,7 @@ else
           echo "Error, check install.log for details"
           exit
       fi
-      make -j 9  >> $CURRENTDIR/install.log  2>&1
+      make -j 12  >> $CURRENTDIR/install.log  2>&1
       if [[ $? != 0 ]]
       then
           echo "Error, check install.log for details"
@@ -538,7 +538,7 @@ else
     then
         curl https://github.com/vbertone/apfelxx/archive/v${apfelxxver}.tar.gz > v${apfelxxver}.tar.gz 2 >> $CURRENTDIR/install.log
     else
-        wget https://github.com/vbertone/apfelxx/archive/v${apfelxxver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate https://github.com/vbertone/apfelxx/archive/v${apfelxxver}.tar.gz  >> $CURRENTDIR/install.log 2>&1
     fi
     mv v${apfelxxver}.tar.gz apfelxx-${apfelxxver}.tar.gz
     tar xfvz apfelxx-${apfelxxver}.tar.gz >> $CURRENTDIR/install.log 2>&1
@@ -557,7 +557,7 @@ else
     then
         curl http://www.nikhef.nl/user/h24/qcdnum-files/download/qcdnum${qcdnumstripver}.tar.gz > qcdnum${qcdnumstripver}.tar.gz 2>> $CURRENTDIR/install.log
     else
-        wget http://www.nikhef.nl/user/h24/qcdnum-files/download/qcdnum${qcdnumstripver}.tar.gz >> $CURRENTDIR/install.log 2>&1
+        wget --no-check-certificate http://www.nikhef.nl/user/h24/qcdnum-files/download/qcdnum${qcdnumstripver}.tar.gz >> $CURRENTDIR/install.log 2>&1
     fi
     tar xfz qcdnum${qcdnumstripver}.tar.gz  >> $CURRENTDIR/install.log  2>&1
     cd qcdnum-${qcdnumver}
@@ -570,7 +570,7 @@ else
         echo "Error, check install.log for details"
         exit
     fi
-    make -j 9  >> $CURRENTDIR/install.log  2>&1
+    make -j 12  >> $CURRENTDIR/install.log  2>&1
     if [[ $? != 0 ]]
     then
         echo "Error, check install.log for details"
@@ -590,7 +590,7 @@ else
       then
           curl ${numdiff_url} > qcdnum${qcdnumstripver}.tar.gz 2>> $CURRENTDIR/install.log
       else
-          wget ${numdiff_url} >> $CURRENTDIR/install.log 2>&1
+          wget --no-check-certificate ${numdiff_url} >> $CURRENTDIR/install.log 2>&1
       fi
       tar xfz numdiff-${numdiffver}.tar.gz  >> $CURRENTDIR/install.log  2>&1
       cd numdiff-${numdiffver}
@@ -601,7 +601,7 @@ else
           echo "Error, check install.log for details"
           exit
       fi
-      make -j 9  >> $CURRENTDIR/install.log  2>&1
+      make -j 12  >> $CURRENTDIR/install.log  2>&1
       if [[ $? != 0 ]]
       then
           echo "Error, check install.log for details"
@@ -630,11 +630,11 @@ then
 #            curl https://xfitter.hepforge.org/downloads/tar_files/xfitter-$version.tar.gz > xfitter-$version.tar.gz
             curl 'https://www.xfitter.org/xFitter/xFitter/DownloadPage?action=AttachFile&do=get&target=xfitter-'$version'.tgz' > xfitter-$version.tar.gz
         else
-#           wget  https://gitlab.cern.ch/fitters/xfitter/repository/archive.tar.gz\?ref=$version >> $CURRENTDIR/install.log 2>&1
+#           wget --no-check-certificate  https://gitlab.cern.ch/fitters/xfitter/repository/archive.tar.gz\?ref=$version >> $CURRENTDIR/install.log 2>&1
 #           mv archive.tar.gz\?ref=$version xfitter-$version.tar.gz
-#           wget https://www.hepforge.org/archive/xfitter/tar_files/xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
-#            wget https://xfitter.hepforge.org/downloads/tar_files/xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
-            wget 'https://www.xfitter.org/xFitter/xFitter/DownloadPage?action=AttachFile&do=get&target=xfitter-'$version'.tgz' -O xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
+#           wget --no-check-certificate https://www.hepforge.org/archive/xfitter/tar_files/xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
+#            wget --no-check-certificate https://xfitter.hepforge.org/downloads/tar_files/xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
+            wget --no-check-certificate 'https://www.xfitter.org/xFitter/xFitter/DownloadPage?action=AttachFile&do=get&target=xfitter-'$version'.tgz' -O xfitter-$version.tar.gz  >> $CURRENTDIR/install.log 2>&1
         fi
        # unpack nicely:
         rm -fr xfitter-${version}
@@ -705,7 +705,7 @@ if [[ $version != "2.0.0" ]] && [[ $version != "2.0.1" ]]; then
   rm -f test-tmp.cc
   echo "#include <yaml.h>" >> test-tmp.cc
   echo "yaml_document_t doc;" >> test-tmp.cc
-  g++ -c -std=c++11 $CPPFLAGS test-tmp.cc >& /dev/null
+  g++ -c -std=c++17 $CPPFLAGS test-tmp.cc >& /dev/null
   if [ `echo $?` -eq 0 ]; then
     echo "YAML yes" >> $CURRENTDIR/install.log
     HAVEYAML=1
@@ -716,7 +716,7 @@ if [[ $version != "2.0.0" ]] && [[ $version != "2.0.1" ]]; then
   rm -f test-tmp.cc
   echo "#include <yaml-cpp/yaml.h>" >> test-tmp.cc
   echo "YAML::Node node;" >> test-tmp.cc
-  g++ -c -std=c++11 $CPPFLAGS test-tmp.cc >& /dev/null
+  g++ -c -std=c++17 $CPPFLAGS test-tmp.cc >& /dev/null
   if [ `echo $?` -eq 0 ]; then
     echo "YAMLCPP yes" >> $CURRENTDIR/install.log
     HAVEYAMLCPP=1
@@ -742,15 +742,15 @@ then
   if [[ $version == "2.0.0" ]] || [[ $version == "2.0.1" ]]; then
     echo autoreconf --install                                 >> compile
     echo ./configure --enable-applgrid --enable-lhapdf --enable-apfel --enable-apfelxx --enable-mela  --enable-apfelgrid --enable-process    >> compile
-    echo make -j 9                                     >> compile
+    echo make -j 12                                    >> compile
   elif [[ $version == "master_before_PionCeres_merge" ]] || [[ $version == "test_ceres_v0.01" ]]; then
     # SZ 10.07.2019 apfelgrid produces linking error in PionCeres
     echo ./configure --enable-applgrid --enable-lhapdf --enable-hathor --enable-apfel --enable-apfelxx --enable-mela --enable-process    >> compile
-    echo make -j 9                                     >> compile
+    echo make -j 12                                    >> compile
     echo autoreconf --install                                 >> compile
   else
     # cmake compilation
-    echo ./make.sh >> compile
+    echo ./make.sh install >> compile
   fi
   echo "Compiling xFitter $version..."
 fi
@@ -821,4 +821,3 @@ else
       echo "Have fun!"
   fi
 fi
-
