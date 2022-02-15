@@ -2,27 +2,27 @@
 
  PARAMETER DEFINITIONS:
     NO.   NAME         VALUE      STEP SIZE      LIMITS
-     1 'Adbar     '   0.35997      constant
+     1 'Adbar     '  -0.42203E-01  constant
      2 'Adv       '    1.0000      constant
      3 'Ag        '    1.0000      constant
-     4 'Agp       '   -1.3894      constant
+     4 'Agp       '   -3.9296      constant
      5 'Aubar     '    0.0000      constant
      6 'Auv       '    1.0000      constant
-     7 'Bdbar     '   0.10861      constant
-     8 'Bdv       '   0.25237      constant
-     9 'Bg        '    1.0715      constant
-    10 'Bgp       '   -1.1190      constant
+     7 'Bdbar     '  -0.24178      constant
+     8 'Bdv       '   -1.5835      constant
+     9 'Bg        '    4.7666      constant
+    10 'Bgp       '   -1.2696      constant
     11 'Bubar     '    0.0000      constant
-    12 'Buv       '    1.1024      constant
-    13 'Cdbar     '   -4.2306      constant
-    14 'Cdv       '   -10.252      constant
-    15 'Cg        '    17.736      constant
+    12 'Buv       '   0.52916      constant
+    13 'Cdbar     '    25.981      constant
+    14 'Cdv       '    7.6214      constant
+    15 'Cg        '    29.278      constant
     16 'Cgp       '    25.000      constant
-    17 'Cubar     '    28.703      constant
-    18 'Cuv       '    3.7044      constant
-    19 'Dubar     '    4.3577      constant
+    17 'Cubar     '   -34.937      constant
+    18 'Cuv       '  -0.75489      constant
+    19 'Dubar     '   -13.438      constant
     20 'Duv       '    0.0000      constant
-    21 'Euv       '   -3.0136      constant
+    21 'Euv       '   -20.298      constant
     22 'ZERO      '    0.0000      constant
     23 'fs        '   0.40000      constant
  **********
@@ -34,27 +34,27 @@
 
   EXT PARAMETER               CURRENT GUESS      PHYSICAL LIMITS       
   NO.   NAME        VALUE          ERROR       NEGATIVE      POSITIVE  
-   1    Adbar      0.35997       constant   
+   1    Adbar     -0.42203E-01   constant   
    2    Adv         1.0000       constant   
    3    Ag          1.0000       constant   
-   4    Agp        -1.3894       constant   
+   4    Agp        -3.9296       constant   
    5    Aubar       0.0000       constant   
    6    Auv         1.0000       constant   
-   7    Bdbar      0.10861       constant   
-   8    Bdv        0.25237       constant   
-   9    Bg          1.0715       constant   
-  10    Bgp        -1.1190       constant   
+   7    Bdbar     -0.24178       constant   
+   8    Bdv        -1.5835       constant   
+   9    Bg          4.7666       constant   
+  10    Bgp        -1.2696       constant   
   11    Bubar       0.0000       constant   
-  12    Buv         1.1024       constant   
-  13    Cdbar      -4.2306       constant   
-  14    Cdv        -10.252       constant   
-  15    Cg          17.736       constant   
+  12    Buv        0.52916       constant   
+  13    Cdbar       25.981       constant   
+  14    Cdv         7.6214       constant   
+  15    Cg          29.278       constant   
   16    Cgp         25.000       constant   
-  17    Cubar       28.703       constant   
-  18    Cuv         3.7044       constant   
-  19    Dubar       4.3577       constant   
+  17    Cubar      -34.937       constant   
+  18    Cuv       -0.75489       constant   
+  19    Dubar      -13.438       constant   
   20    Duv         0.0000       constant   
-  21    Euv        -3.0136       constant   
+  21    Euv        -20.298       constant   
   22    ZERO        0.0000       constant   
   23    fs         0.40000       constant   
  **********

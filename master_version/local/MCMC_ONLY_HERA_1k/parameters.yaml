@@ -1,0 +1,101 @@
+Minimizer: MINUIT # CERES 
+MINUIT:
+  Commands: | 
+    call fcn 1
+    set str 2
+
+Parameters:
+  Ag   :  DEPENDENT
+  Adbar   : [ 689.4305990819239, 0. ]
+  Agp   : [ 2254.809354, 0. ]
+  Bdbar   : [ 439.767896, 0. ]
+  Bdv   : [ -1683.041343, 0. ]
+  Cgp   : [ 25.0, 0. ]
+  Auv  :  DEPENDENT
+  Bg   : [ -2584.872645, 0. ]
+  Bgp   : [ 1428.799505, 0. ]
+  Duv  : [    0     ]
+  Buv   : [ 219.343982, 0. ]
+  Adv  :  DEPENDENT
+  Cdbar   : [ 1854.787245, 0. ]
+  Cdv   : [ -15207.562849, 0. ]
+  Aubar: [ 0.0, 0.0 ]
+  Bubar: [ 0.0, 0.0  ]
+  Cg   : [ -17843.101000, 0. ]
+  Cubar   : [ -32276.464212, 0. ]
+  Cuv   : [ 9991.093751, 0. ]
+  Dubar   : [ -74270.046194, 0. ]
+  Euv   : [ 68821.776151, 0. ]
+
+  ZERO : [ 0. ]
+  fs   :   [ 0.4, 0.0 ]
+Parameterisations:
+  par_uv:
+    class: HERAPDF
+    parameters: [Auv,Buv,Cuv,Duv,Euv]
+  par_dv:
+    class: HERAPDF
+    parameters: [Adv,Bdv,Cdv]
+  par_ubar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cubar,Dubar]
+  par_dbar:
+    class: HERAPDF
+    parameters: [Adbar,Bdbar,Cdbar]
+  par_s:
+    class: Expression
+    expression: "Adbar*fs/(1-fs)*(x^Bdbar*(1-x)^Cdbar)"
+
+  par_g:
+    class: NegativeGluon
+    parameters: [Ag,Bg,Cg,ZERO,ZERO,Agp,Bgp,Cgp]
+
+
+DefaultDecomposition: proton
+Decompositions:
+  proton:
+    class: UvDvUbarDbarS
+    xuv: par_uv
+    xdv: par_dv
+    xubar: par_ubar
+    xdbar: par_dbar
+    xs: par_s
+    xg: par_g
+
+DefaultEvolution: proton-QCDNUM
+
+
+Evolutions:
+  proton-QCDNUM:
+    ? !include evolutions/QCDNUM.yaml
+    decomposition: proton
+Q0 : 1.378404875209
+
+? !include constants.yaml
+
+alphas : 0.118
+
+byReaction:
+
+  RT_DISNC:
+    ? !include reactions/RT_DISNC.yaml
+  FONLL_DISNC:
+    ? !include reactions/FONLL_DISNC.yaml
+  FONLL_DISCC:
+    ? !include reactions/FONLL_DISCC.yaml
+  FFABM_DISNC:
+    ? !include reactions/FFABM_DISNC.yaml
+  FFABM_DISCC:
+    ? !include reactions/FFABM_DISCC.yaml
+  APPLgrid:
+    ? !include reactions/APPLgrid.yaml
+  Fractal_DISNC:
+    ? !include reactions/Fractal_DISNC.yaml
+
+
+hf_scheme_DISNC :
+  defaultValue : 'RT_DISNC' 
+
+hf_scheme_DISCC :
+  defaultValue : 'BaseDISCC' 
+

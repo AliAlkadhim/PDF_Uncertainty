@@ -141,3 +141,5 @@ cython_debug/
 #output/
 proton/
 Kite*
+*kite*
+*Kite*

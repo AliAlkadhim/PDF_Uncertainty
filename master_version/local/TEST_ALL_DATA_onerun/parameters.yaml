@@ -67,16 +67,16 @@ DefaultEvolution: proton-QCDNUM
 
 
 Evolutions:
-#  proton-APFELff:
-#    ? !include evolutions/APFEL.yaml
-#    decomposition: proton
+  proton-APFELff:
+    ? !include evolutions/APFEL.yaml
+    decomposition: proton
   proton-QCDNUM:
     ? !include evolutions/QCDNUM.yaml
     decomposition: proton
-#  antiproton:
-#    class: FlipCharge
-#  neutron:
-#    class: FlipUD
+  antiproton:
+    class: FlipCharge
+  neutron:
+    class: FlipUD
 
 Q0 : 1.378404875209
 

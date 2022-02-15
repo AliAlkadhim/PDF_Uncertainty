@@ -131,6 +131,7 @@ for line in lines[127:143]:
         print(row, '\n')
 
 
+import numpy as np
 COV = np.empty((14,14))
 cov_list = [None]*14
 cov_list[0] = [0.632E-03] 
@@ -199,6 +200,36 @@ def get_mvn_samples(mu,cov,n,d):
         samples[i,:] = np.random.multivariate_normal(mu, cov, 1)
     
     return samples
+
+
+np.random.multivariate_normal(params, COV, 1)
+
+
+def f(z, μ, Σ):
+    """
+    The density function of multivariate normal distribution.
+
+    Parameters
+    ---------------
+    z: ndarray(float, dim=2)
+        random vector, N by 1
+    μ: ndarray(float, dim=1 or 2)
+        the mean of z, N by 1
+    Σ: ndarray(float, dim=2)
+        the covarianece matrix of z, N by 1
+    """
+
+#     z = np.atleast_2d(z)
+#     μ = np.atleast_2d(μ)
+#     Σ = np.atleast_2d(Σ)
+
+    N = z.size[0]
+
+    temp1 = np.linalg.det(Σ) ** (-1/2)
+    temp2 = np.exp(-.5 * (z - μ).T @ np.linalg.inv(Σ) @ (z - μ))
+
+    return (2 * np.pi) ** (-N/2) * temp1 * temp2
+f(n1,params, COV)
 
 
 MVN_4000 = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)

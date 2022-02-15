@@ -60,10 +60,13 @@ print( params, generated_uniform_params, '\n\n', len(params), len(generated_unif
 
 import numpy as np
 param_labels = [1,4, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 21]
-param_names= ['Adbar', 'Agp', 'Bdbar', 'Bdv', 'Bg', 'Bgp', 'Buv', 'Cdbar', 'Cdv',  'Cg', 'Cubar', 'Cuv', 'Dubar', 'Euv' ] #notice the different parameters than version 2.0.1
-param_values = np.array([0.16126, 0.73153E-01, -0.12732, 1.0301, -0.61872E-01, -0.38304, 0.81058, 9.5821, 4.8458, 5.5585, 7.0602, 4.8240, 1.5433, 9.9230 ])
+param_names= [           'Adbar', 'Agp'       , 'Bdbar'  , 'Bdv'    , 'Bg'             , 'Bgp'         , 'Buv'          , 'Cdbar'       , 'Cdv'     ,  'Cg'      , 'Cubar'    , 'Cuv'      , 'Dubar'    , 'Euv' ] #notice the different parameters than version 2.0.1
+param_values = np.array([0.16126,  0.73153E-01, -0.12732 , 1.0301   , -0.61872E-01     , -0.38304      , 0.81058        , 9.5821        , 4.8458    , 5.5585     , 7.0602     , 4.8240     , 1.5433     , 9.9230 ])
 print(r'$\vec{\theta}= $', param_values)
 means=param_values
+
+
+#np.save('params.npy', param_values)
 
 
 COV = np.empty((14,14))
@@ -101,13 +104,23 @@ COV
 COV.shape
 
 
+COV_scaled=COV*1000
+COV_scaled
+
+
+#np.save('COV_MASTER.npy', COV)
+
+
+np.save('COV_MASTER_SCALED.npy', COV_scaled)
+
+
 cov_diag = COV.diagonal()
 np.sqrt(cov_diag)
 
 
 
-d=COV.shape[0] #this has to be 13 since
-n=50000 #number of samples, could be anything
+d=COV_scaled.shape[0] #this has to be 13 since
+n=1000 #number of samples, could be anything
 
 def get_mvn_samples(mu,cov,n,d):
     samples = np.zeros((n,d))
@@ -117,13 +130,10 @@ def get_mvn_samples(mu,cov,n,d):
     return samples
 
 
-MVN_25k_MASTER = get_mvn_samples(mu=means, cov=COV, n=25000, d=d) ; MVN_25k_MASTER
+MVN_1k_MASTER_COVSCALED = get_mvn_samples(mu=means, cov=COV_scaled, n=1000, d=d) ; MVN_1k_MASTER_COVSCALED
 
 
-np.save('../samples/MVN_25k_MASTER.npy', MVN_25k_MASTER)
-
-
-np.save('../samples/MVN_12k_MASTER.npy', MVN_12k_MASTER)
+np.save('../samples/MVN_1k_MASTER_COVSCALED.npy', MVN_1k_MASTER_COVSCALED)
 
 
 MVN_4000_MASTER = get_mvn_samples(mu=means, cov=COV, n=4000, d=d)
@@ -143,6 +153,9 @@ np.save('/home/ali/Desktop/Pulled_Github_Repositories/NNPDF_Uncertainty/master_v
 MVN_50k = get_mvn_samples(mu=means, cov=COV, n=50000, d=d)
 np.save('../Compute_chi2/MVN_samples/MVN_50k.npy', MVN_50k)
 MVN_50k
+
+
+np.random.multivariate_normal(means, COV, 1)
 
 
 MVN_25k = get_mvn_samples(mu=means, cov=COV, n=25000, d=d)
@@ -201,6 +214,47 @@ axes[3,0].hist(MVN[:,12],bins=100,label='CDbar',weights=np.array([91]*10000))
 axes[3,1].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
 axes[3,2].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
 axes[3,3].hist(MVN[:,13],bins=100,label='CDbar',weights=np.array([91]*10000))
+plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
+titles = ['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
+for i, ax in enumerate(axes.flatten()):
+    ax.set(title=titles[i], xlabel='value')
+    ax.legend()
+# plt.minorticks_on()
+# plt.tick_params(direction='in',right=True, top=True)
+# plt.tick_params(labelsize=14)
+# plt.tick_params(labelbottom=True, labeltop=False, labelright=False, labelleft=True)
+plt.subplots_adjust(left=0.125, bottom=0.1, right=0.9 , top=0.9, wspace=0.2, hspace=0.4)
+#plt.savefig('HERAPDF_params_MVN.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+colors=sns.color_palette("rocket",3)
+# sns.set_style("white")
+
+# sns.set_context("poster")
+plt.style.use('seaborn-paper')
+
+fig, axes = plt.subplots(nrows=4, ncols=4,figsize=(10,15))
+axes[0,0].hist(MVN_1k_MASTER_COVSCALED[:,0],bins=100, label='Bg')
+#axes[0,0].set(title='Bg', xlabel='value')
+axes[0,1].hist(MVN_1k_MASTER_COVSCALED[:,1],bins=100, label='Cg')
+axes[0,2].hist(MVN_1k_MASTER_COVSCALED[:,2],bins=100,label='Aprig')
+axes[0,3].hist(MVN_1k_MASTER_COVSCALED[:,3],bins=100, label='Buv')
+axes[1,0].hist(MVN_1k_MASTER_COVSCALED[:,4],bins=100, label='Cuv')
+axes[1,1].hist(MVN_1k_MASTER_COVSCALED[:,5],bins=100,label='Euv')
+axes[1,2].hist(MVN_1k_MASTER_COVSCALED[:,6],bins=100, label='Bdv')
+axes[1,3].hist(MVN_1k_MASTER_COVSCALED[:,7],bins=100, label='Cdv')
+axes[2,0].hist(MVN_1k_MASTER_COVSCALED[:,8],bins=100, label='CUbar')
+axes[2,1].hist(MVN_1k_MASTER_COVSCALED[:,9],bins=100,label='DUbar')
+axes[2,2].hist(MVN_1k_MASTER_COVSCALED[:,10],bins=100,label='ADbar')
+axes[2,3].hist(MVN_1k_MASTER_COVSCALED[:,11],bins=100,label='BDbar')
+axes[3,0].hist(MVN_1k_MASTER_COVSCALED[:,12],bins=100,label='CDbar')
+axes[3,1].hist(MVN_1k_MASTER_COVSCALED[:,13],bins=100,label='CDbar')
+axes[3,2].hist(MVN_1k_MASTER_COVSCALED[:,13],bins=100,label='CDbar')
+axes[3,3].hist(MVN_1k_MASTER_COVSCALED[:,13],bins=100,label='CDbar')
 plt.tight_layout(); plt.suptitle('HERAPDF Parameters')
 titles = ['Bg','Cg','Aprig','Bprig','Buv','Cuv','Euv','Bdv','Cdv','CUbar','DUbar','ADbar','BDbar','CDbar','CDbar','CDbar','CDbar']
 for i, ax in enumerate(axes.flatten()):
