@@ -41,5 +41,5 @@ To make quick plots of comparisons of different fits, do for example
 
 
 # Docker image for xFitter-master and this repository
-xFitter has a huge number of dependencies (ROOT, Blas/lapack, QCDNUM, APFEL, FASTNLO, etc.) and xFitter-master has even more dependencies (such as yaml, cmake, etc.), and they all need to be installed locally, which could be a huge problem when a user is using a different architecture or environment. For this reason we have made an xFitter Docker image uses Ubuntu20.04 with xFitter and its dependencies installed
+xFitter has a huge number of dependencies (ROOT, Blas/lapack, QCDNUM, APFEL, FASTNLO, etc.) and xFitter-master has even more dependencies (such as yaml, cmake, etc.), and they all need to be installed locally, which could be a huge problem when a user is using a different architecture or environment. For this reason we have made an xFitter Docker image uses Ubuntu 20.04 with xFitter and its dependencies installed. This was done with the help of conda environments (see https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) and ROOT on conda-forge (https://anaconda.org/conda-forge/root/). 
 
