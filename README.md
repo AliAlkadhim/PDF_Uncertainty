@@ -2,7 +2,7 @@ This repository is intended for the statistical analysis of PDFs (especially NNP
 # Docker image for xFitter-master and this repository
 xFitter has a huge number of dependencies (ROOT, Blas/lapack, QCDNUM, APFEL, FASTNLO, etc.) and xFitter-master has even more dependencies (such as yaml, cmake, etc.), and they all need to be installed locally, which could be a huge problem when a user is using a different architecture or environment. For this reason we have made an xFitter Docker image uses Ubuntu 20.04 with xFitter and its dependencies installed. This was done with the help of conda environments (see https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html) and the Ubuntu Docker image. To pull the image, do
 
-`docker pull alialkadhim/pdf_uncertainty:v0'
+`docker pull alialkadhim/pdf_uncertainty:v0`
 
 Then you could use it as you would any other image, like
 
