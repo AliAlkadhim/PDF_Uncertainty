@@ -8,7 +8,7 @@ Then you could use it as you would any other image, like
 
 `docker run -it alialkadhim/pdf_uncertainty:v0`
 
-Now you have a complete environment with ROTT, xfitter-master, and all its dependencies (even all optional ones). Once you're inside the image, clone this repository to use it
+Now you have a complete environment with ROOT, xfitter-master, and all its dependencies (even all optional ones). Once you're inside the image, clone this repository to use it
 
 `git clone https://github.com/AliAlkadhim/NNPDF_Uncertainty.git`
 
