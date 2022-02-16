@@ -1,0 +1,6 @@
+apt-get install libgsl-dev
+apt-get install libblas-dev liblapack-dev
+
+git config --global core.compression 9
+git config --global http.postBuffer 1048576000
+git config --global http.sslVerify false

@@ -161,7 +161,6 @@ dependencies:
   - openpyxl=2.6.3=py_0
   - openssl=1.1.1d=h7b6447c_2
   - packaging=19.2=py_0
-  - pandas=0.24.2=py27he6710b0_0
   - pandoc=2.2.3.2=0
   - pandocfilters=1.4.2=py27_1
   - pango=1.42.4=h049681c_0
