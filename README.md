@@ -14,8 +14,9 @@ Now you have a complete environment with ROOT, xfitter-master, and all its depen
 
 Please use the docker image in order to avoid countless hours of installation/configuration errors. It is a few gigabytes, even without this repository, but now you have access to the most advanced PDF fitting packages and all associated experimental data.
 
+
 # xFitter Installation
-This uses xFitter 2.0.1 (https://www.xfitter.org/xFitter/), as well as xfitter master (master is recommended). If you want to run the fits associated with xFitter, make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
+If you're using docker, there is no need to read this! This uses xFitter 2.0.1 (https://www.xfitter.org/xFitter/), as well as xfitter master (master is recommended). If you want to run the fits associated with xFitter, make sure you have LHAPDF and APPLgrid enabled with xFitter, with:
 
 `cd [path to xFitter]`
 
