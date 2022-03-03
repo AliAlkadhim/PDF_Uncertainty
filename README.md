@@ -10,7 +10,7 @@ Then you could use it as you would any other image, like
 
 Now you have a complete environment with ROOT, xfitter-master, and all its dependencies (even all optional ones). Once you're inside the image, clone this repository to use it
 
-`git clone https://github.com/AliAlkadhim/NNPDF_Uncertainty.git`
+`git clone https://github.com/AliAlkadhim/PDF_Uncertainty.git`
 
 Please use the docker image in order to avoid countless hours of installation/configuration errors. It is a few gigabytes, even without this repository, but now you have access to the most advanced PDF fitting packages and all associated experimental data.
 
